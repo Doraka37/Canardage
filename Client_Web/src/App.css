@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+}
+
+.rectangle {
+  display: inline-block;
+  width: 28%;
+  height: 70vh;
+  background: red;
+  margin-top: 10vh;
+}
+
+.rectangle2 {
+  display: inline-block;
+  width: 28%;
+  height: 70vh;
+  background: blue;
+  margin-left: 100px;
+  margin-top: 10vh;
+}
+
+.rectangle3 {
+  display: inline-block;
+  width: 28%;
+  height: 70vh;
+  background: yellow;
+  margin-left: 100px;
+  margin-top: 10vh;
+}
