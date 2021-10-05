@@ -1,29 +1,43 @@
+
 .App {
   text-align: center;
 }
 
+.font-link {
+  font-family: 'Gemunu Libre', sans-serif;
+}
+
 .rectangle {
+  position: fixed;
   display: inline-block;
-  width: 28%;
+  width: 30%;
   height: 70vh;
-  background: red;
+  background: #FF00C1;
   margin-top: 10vh;
+  left: 2.5%;
+  align-content: center;
+  flex-direction: column;
+}
+
+img {
+    max-width:100%;
+    max-height:50%;
 }
 
 .rectangle2 {
   display: inline-block;
-  width: 28%;
+  width: 30%;
   height: 70vh;
-  background: blue;
-  margin-left: 100px;
+  background: #00FFE4;
+  margin-left: 32.5%;
   margin-top: 10vh;
 }
 
 .rectangle3 {
   display: inline-block;
-  width: 28%;
+  width: 30%;
   height: 70vh;
-  background: yellow;
-  margin-left: 100px;
+  background: #E4FF00;
+  margin-left: 2.5%;
   margin-top: 10vh;
 }

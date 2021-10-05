@@ -3,22 +3,18 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useRouteMatch,
-  useParams
 } from "react-router-dom";
 
-function sayHello() {
-  alert('You clicked me!');
-}
+import Game from './Components/game'
+import Home from './Components/Home'
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/Test">
-            <Test/>
+          <Route path="/Game">
+            <Game/>
           </Route>
           <Route path="/">
             <Home/>
@@ -27,23 +23,6 @@ function App() {
       </div>
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
-}
-
-function Test() {
-  return (
-    <div className="App">
-      <div className="rectangle">
-      </div>
-      <div className="rectangle2">
-      </div>
-      <div className="rectangle3">
-      </div>
-    </div>
-  )
 }
 
 export default App;
