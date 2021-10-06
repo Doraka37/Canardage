@@ -3,8 +3,17 @@
   text-align: center;
 }
 
+.Zoom {
+  flex-direction: column;
+}
+
 .font-link {
   font-family: 'Gemunu Libre', sans-serif;
+}
+
+.p-font {
+  font-family: 'Gemunu Libre', sans-serif;
+  font-size: 30px
 }
 
 .rectangle {
@@ -40,4 +49,42 @@ img {
   background: #E4FF00;
   margin-left: 2.5%;
   margin-top: 10vh;
+}
+
+.bigCard {
+  display: inline-block;
+  width: 40%;
+  height: 70vh;
+  background: #E4FF00;
+  margin-left: 2.5%;
+  margin-top: 10vh;
+}
+
+.ZoomButton {
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 22px;
+  font-family: 'Gemunu Libre', sans-serif;
+  text-align: center;
+  width: 40%;
+  height: 5vh;
+  background: #00FFE4;
+  margin-left: 2.5%;
+}
+
+.Home {
+  margin-top: 20vh;
+  flex-direction: column;
+}
+
+.input {
+  height: 10vh;
+  width: 30%;
+  font-size: 40px;
+  font-family: 'Gemunu Libre', sans-serif;
+  text-align: center;
 }

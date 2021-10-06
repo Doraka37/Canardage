@@ -7,12 +7,16 @@ import {
 
 import Game from './Components/game'
 import Home from './Components/Home'
+import CardZoom from './Components/CardZoom'
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
+          <Route path="/CardZoom">
+            <CardZoom/>
+          </Route>
           <Route path="/Game">
             <Game/>
           </Route>
