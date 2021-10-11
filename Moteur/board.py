@@ -5,38 +5,120 @@ import protectCard
 import attackCard
 
 class ClassBoardGame:
+    ErrorMessage = ""
     DuckList = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
     DuckDrawList = []
+    CardList = [
+        {
+            'id':1,
+            'number':13
+        },
+        {
+            'id':2,
+            'number':11
+        },
+        {
+            'id':3,
+            'number':1
+        },
+        {
+            'id':4,
+            'number':1
+        },
+        {
+            'id':5,
+            'number':2
+        },
+        {
+            'id':6,
+            'number':2
+        },
+        {
+            'id':7,
+            'number':1
+        },
+        {
+            'id':8,
+            'number':1
+        },
+        {
+            'id':9,
+            'number':3
+        },
+        {
+            'id':10,
+            'number':2
+        },
+        {
+            'id':11,
+            'number':1
+        },
+        {
+            'id':12,
+            'number':1
+        },
+        {
+            'id':13,
+            'number':1
+        },
+        {
+            'id':14,
+            'number':1
+        },
+        {
+            'id':15,
+            'number':6
+        },
+        {
+            'id':16,
+            'number':1
+        },
+        {
+            'id':17,
+            'number':3
+        },
+        {
+            'id':18,
+            'number':3
+        },
+    ]
+    CardDrawList = []
     PlayerList = [
         {
             'duck':'red',
             'death':0,
-            'id':0
+            'id':0,
+            'card': []
         },
         {
             'duck':'blue',
             'death':0,
-            'id':0
+            'id':0,
+            'card': []
         },
         {
             'duck':'green',
             'death':0,
-            'id':0
+            'id':0,
+            'card': []
         },
         {
             'duck':'yellow',
             'death':0,
-            'id':0
+            'id':0,
+            'card': []
         },
         {
             'duck':'orange',
             'death':0,
-            'id':0
+            'id':0,
+            'card': []
         },
         {
             'duck':'purple',
             'death':0,
-            'id':0
+            'id':0,
+            'card': []
         },
     ]
     BoardGame = [
@@ -96,6 +178,11 @@ class ClassBoardGame:
             x.update({"duck":self.DuckDrawList[0]})
             self.DuckDrawList.pop(0)
 
+        for x in self.CardList:
+            for i in range(x["number"]):
+                self.CardDrawList.append(x["id"])
+        random.shuffle(self.CardDrawList)
+
     def DeathMove(self, value):
         if self.BoardGame[value - 1]["duck"] == 'empty':
             return
@@ -122,12 +209,63 @@ def test():
     print(Board.BoardGame)
     Board = moveCard.WalkPlay(Board)
 
+def PlayCard(ID, value1, value2, valueList, playerID):
+    global Board
+    Board.ErrorMessage = ""
+    switcher = {
+        1: lambda : attackCard.Pan(Board, value),
+        2: lambda : attackCard.Aim(Board, value),
+        3: lambda : attackCard.Oups(Board, value),
+        4: lambda : attackCard.DuckyLuck(Board, value),
+        5: lambda : attackCard.AimRight(Board, value),
+        6: lambda : attackCard.AimLeft(Board, value),
+        7: lambda : attackCard.TwoForOne(Board, value, value2),
+        8: lambda : attackCard.DoublePan(Board, value, value2),
+        9: lambda : protectCard.Protect(Board, value, playerID),
+        10: lambda : protectCard.Hide(Board, value, value2, playerID),
+        11: lambda : protectCard.Canarchie(Board, valueList),
+        12: lambda : protectCard.CrazyDance(Board),
+        13: lambda : protectCard.PeaceLove(Board),
+        14: lambda : protectCard.WalkingDuck(Board, value),
+        15: lambda : moveCard.Walk(Board),
+        16: lambda : moveCard.Fulguro(Board, value, playerID),
+        17: lambda : moveCard.DuckLeft(Board, value, playerID),
+        18: lambda : moveCard.DuckRight(Board, value, playerID),
+    }
+
+    Board = switcher.get(ID, lambda : "ERROR: ID not valid")()
+
+def GlobalCheckCard(ID, playerID):
+    global Board
+    switcher = {
+        1: lambda : attackCard.PanGlobalCheck(Board),
+        2: lambda : attackCard.AimGlobalCheck(Board),
+        3: lambda : attackCard.OupsGlobalCheck(Board),
+        4: lambda : attackCard.DuckyLuckGlobalCheck(Board),
+        5: lambda : attackCard.AimRightGlobalCheck(Board),
+        6: lambda : attackCard.AimLeftGlobalCheck(Board),
+        7: lambda : attackCard.TwoForOneGlobalCheck(Board),
+        8: lambda : attackCard.DoublePanGlobalCheck(Board),
+        9: lambda : protectCard.ProtectGlobalCheck(Board, playerID),
+        10: lambda : protectCard.HideGlobalCheck(Board, playerID),
+        11: lambda : protectCard.CanarchieGlobalCheck(Board),
+        12: lambda : protectCard.CrazyDanceGlobalCheck(Board),
+        13: lambda : protectCard.PeaceLoveGlobalCheck(Board),
+        14: lambda : protectCard.WalkingDuckGlobalCheck(Board),
+        15: lambda : moveCard.WalkGlobalCheck(Board),
+        16: lambda : moveCard.FulguroGlobalCheck(Board, playerID),
+        17: lambda : moveCard.DuckLeftGlobalCheck(Board, playerID),
+        18: lambda : moveCard.DuckRightGlobalCheck(Board, playerID),
+    }
+
+    return switcher.get(ID, lambda : "ERROR: ID not valid")()
+
 def main():
     valueList = [4, 3, 5, 2, 6, 1]
     global Board
-    print(Board.BoardGame, "\n")
-    Board = attackCard.PanPlay(Board, 2)
-    print(Board.BoardGame)
+    print(Board.CardDrawList, "\n")
+    #Board = attackCard.PanPlay(Board, 2)
+    #print(Board.BoardGame)
 
 
 # Using the special variable

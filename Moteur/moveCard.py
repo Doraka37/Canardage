@@ -1,5 +1,12 @@
 import board
 
+def Walk(Board):
+    if WalkCheck(Board) == True:
+        Board = WalkPlay(Board)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def WalkPlay(Board):
     Board.DuckDrawList.append(Board.BoardGame[0]["duck"])
     Board.DuckDrawList.append(Board.BoardGame[0]["hideDuck"])
@@ -14,6 +21,16 @@ def WalkPlay(Board):
 
 def WalkCheck(Board):
     return True
+
+def WalkGlobalCheck(Board):
+    return True
+
+def Fulguro(Board, value, PlayerID):
+    if FulguroCheck(Board, value, PlayerID) == True:
+        Board = FulguroPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
 
 def FulguroPlay(Board, value):
     tmpDuck = Board.BoardGame[value - 1]["duck"]
@@ -37,6 +54,25 @@ def FulguroCheck(Board, value, playerID):
 
     return False
 
+def FulguroGlobalCheck(Board, playerID):
+    playerDuckTmp = ""
+    for player in Board.PlayerList:
+        if player["id"] == playerID:
+            playerDuckTmp = player["duck"]
+
+    for i in range(Board.BoardGame):
+        if i > 0 and Board.BoardGame[i]["duck"] == playerDuckTmp:
+            return True
+
+    return False
+
+def DuckLeft(Board, value, PlayerID):
+    if DuckLeftCheck(Board, value, PlayerID) == True:
+        Board = DuckLeftPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def DuckLeftPlay(Board, value):
     tmpDuck = Board.BoardGame[value - 1]["duck"]
     tmpHideDuck = Board.BoardGame[value - 1]["hideDuck"]
@@ -59,6 +95,25 @@ def DuckLeftCheck(Board, value, playerID):
 
     return False
 
+def DuckLeftGlobalCheck(Board, playerID):
+    playerDuckTmp = ""
+    for player in Board.PlayerList:
+        if player["id"] == playerID:
+            playerDuckTmp = player["duck"]
+
+    for i in range(Board.BoardGame):
+        if i > 0 and Board.BoardGame[i]["duck"] == playerDuckTmp:
+            return True
+
+    return False
+
+def DuckRight(Board, value, PlayerID):
+    if DuckRightCheck(Board, value, PlayerID) == True:
+        Board = DuckRightPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def DuckRightPlay(Board, value):
     tmpDuck = Board.BoardGame[value - 1]["duck"]
     tmpHideDuck = Board.BoardGame[value - 1]["hideDuck"]
@@ -78,5 +133,17 @@ def DuckRightCheck(Board, value, playerID):
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value - 1]["duck"]:
                 return True
+
+    return False
+
+def DuckRightGlobalCheck(Board, PlayerID):
+    playerDuckTmp = ""
+    for player in Board.PlayerList:
+        if player["id"] == playerID:
+            playerDuckTmp = player["duck"]
+
+    for i in range(Board.BoardGame):
+        if i < 5 and Board.BoardGame[i]["duck"] == playerDuckTmp:
+            return True
 
     return False

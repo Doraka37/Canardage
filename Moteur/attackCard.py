@@ -1,3 +1,10 @@
+def Pan(Board, value):
+    if PanCheck(Board, value) == True:
+        Board = PanPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def PanPlay(Board, value):
     Board.BoardGame[value - 1].update({"target":False})
     Board.DeathMove(value)
@@ -8,6 +15,19 @@ def PanCheck(Board, value):
         return False
     return True
 
+def PanGlobalCheck(Board):
+    for x in Board.BoardGame:
+        if x["target"] == True:
+            return True
+    return False
+
+def Aim(Board, value):
+    if AimCheck(Board, value) == True:
+        Board = AimPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def AimPlay(Board, value):
     Board.BoardGame[value - 1].update({"target":True})
     return Board
@@ -17,8 +37,25 @@ def AimCheck(Board, value):
         return False
     return True
 
+def AimGlobalCheck(Board):
+    for x in Board.BoardGame:
+        if x["target"] == False:
+            return True
+    return False
+
+def Oups(Board, value):
+    if OupsCheck(Board, value) == True:
+        Board = OupsPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def OupsPlay(Board, value):
-    if value > 1 and Board.BoardGame[value - 2]["target"] == True:
+    if value == 1:
+        Board.BoardGame[value].update({"target":False})
+    elif value == 6:
+        Board.BoardGame[value - 2].update({"target":False})
+    elif Board.BoardGame[value - 2]["target"] == True:
         Board.BoardGame[value - 2].update({"target":False})
     else:
         Board.BoardGame[value].update({"target":False})
@@ -26,11 +63,26 @@ def OupsPlay(Board, value):
     return Board
 
 def OupsCheck(Board, value):
-    if value > 1 and Board.BoardGame[value - 2]["target"] == True:
-        return True
-    elif value < 6 and Board.BoardGame[value]["target"] == True:
-        return True
+    if value == 1 and Board.BoardGame[value]["target"] == False:
+        return False
+    elif value == 6 and Board.BoardGame[value - 2]["target"] == False:
+        return False
+    elif Board.BoardGame[value - 2]["target"] == False and Board.BoardGame[value]["target"] == False:
+        return False
+    return True
+
+def OupsGlobalCheck(Board):
+    for x in Board.BoardGame:
+        if x["target"] == True:
+            return True
     return False
+
+def DuckyLuck(Board, value):
+    if DuckyLuckCheck(Board, value) == True:
+        Board = DuckyLuckPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
 
 def DuckyLuckPlay(Board, value):
     Board.BoardGame[value - 1].update({"target":False})
@@ -39,6 +91,16 @@ def DuckyLuckPlay(Board, value):
 
 def DuckyLuckCheck(Board, value):
     return True
+
+def DuckyLuckGlobalCheck(Board):
+    return True
+
+def AimRight(Board, value):
+    if AimRightCheck(Board, value) == True:
+        Board = AimRightPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
 
 def AimRightPlay(Board, value):
     Board.BoardGame[value - 1].update({"target":False})
@@ -52,6 +114,19 @@ def AimRightCheck(Board, value):
         return False
     return True
 
+def AimRightGlobalCheck(Board):
+    for i in range(Board.BoardGame):
+        if Board.BoardGame[i]["target"] == True and i < 5 and Board.BoardGame[i + 1]["target"] == False:
+            return True
+    return False
+
+def AimLeft(Board, value):
+    if AimLeftCheck(Board, value) == True:
+        Board = AimLeftPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def AimLeftPlay(Board, value):
     Board.BoardGame[value - 1].update({"target":False})
     Board.BoardGame[value - 2].update({"target":True})
@@ -63,6 +138,19 @@ def AimLeftCheck(Board, value):
     if Board.BoardGame[value - 2]["target"] == True:
         return False
     return True
+
+def AimLeftGlobalCheck(Board):
+    for i in range(Board.BoardGame):
+        if Board.BoardGame[i]["target"] == True and i > 0 and Board.BoardGame[i - 1]["target"] == False:
+            return True
+    return False
+
+def TwoForOne(Board, value, value2):
+    if TwoForOneCheck(Board, value, value2) == True:
+        Board = TwoForOnePlay(Board, value, value2)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
 
 def TwoForOnePlay(Board, value, value2):
     Board.BoardGame[value - 1].update({"target":True})
@@ -78,6 +166,19 @@ def TwoForOneCheck(Board, value, value2):
     if Board.BoardGame[value2 - 1]["target"] == True:
         return False
     return True
+
+def TwoForOneGlobalCheck(Board):
+    for i in range(Board.BoardGame):
+        if Board.BoardGame[i]["target"] == False and i < 5 and Board.BoardGame[i + 1]["target"] == False:
+            return True
+    return False
+
+def DoublePan(Board, value, value2):
+    if DoublePanCheck(Board, value, value2) == True:
+        Board = DoublePanPlay(Board, value, value2)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
 
 def DoublePanPlay(Board, value, value2):
     Board.BoardGame[value - 1].update({"target":False})
@@ -99,3 +200,9 @@ def DoublePanCheck(Board, value, value2):
     if Board.BoardGame[value2 - 1]["target"] == False:
         return False
     return True
+
+def DoublePanGlobalCheck(Board):
+    for i in range(Board.BoardGame):
+        if Board.BoardGame[i]["target"] == True and i < 5 and Board.BoardGame[i + 1]["target"] == True:
+            return True
+    return False

@@ -1,6 +1,13 @@
 import random
 from random import randrange
 
+def Protect(Board, value, playerID):
+    if ProtectCheck(Board, value) == True:
+        Board = ProtectPlay(Board, value, playerID)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def ProtectPlay(Board, value, playerID):
     ## Check a chaque tour de jeu si une case est protégé par le joueur
     Board.BoardGame[value - 1].update({"protected":playerID})
@@ -10,6 +17,20 @@ def ProtectCheck(Board, value):
     if Board.BoardGame[value - 1]["duck"] == 'empty':
         return False
     return True
+
+def ProtectGlobalCheck(Board):
+    for x in Board.BoardGame:
+        if x["duck"] != "empty":
+            return True
+
+    return False
+
+def Hide(Board, value, value2, PlayerID):
+    if HideCheck(Board, value, value2, PlayerID) == True:
+        Board = HidePlay(Board, value, value2)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
 
 def HidePlay(Board, value, value2):
     Board.BoardGame[value2 - 1].update({"hideDuck":Board.BoardGame[value - 1]["duck"]})
@@ -38,6 +59,30 @@ def HideCheck(Board, value, value2, playerID):
 
     return False
 
+def HideGlobalCheck(Board, PlayerID):
+    playerDuckTmp = ""
+    for player in Board.PlayerList:
+        if player["id"] == playerID:
+            playerDuckTmp = player["duck"]
+
+    for i in range(Board.BoardGame):
+        if Board.BoardGame[i]["duck"] == playerDuckTmp:
+            if i == 0 and Board.BoardGame[i + 1]["hideDuck"] == 'none':
+                return True
+            elif i == 5 and Board.BoardGame[i - 1]["hideDuck"] == 'none':
+                return True
+            elif Board.BoardGame[i - 1]["hideDuck"] == 'none' or Board.BoardGame[i + 1]["hideDuck"] == 'none':
+                return True
+
+    return False
+
+def Canarchie(Board, valueList):
+    if CanarchieCheck(Board) == True:
+        Board = CanarchiePlay(Board, valueList)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def CanarchiePlay(Board, valueList):
     BoardGameTmp = []
     for i in range(6):
@@ -57,6 +102,16 @@ def CanarchiePlay(Board, valueList):
 def CanarchieCheck(Board):
     return True
 
+def CanarchieGlobalCheck(Board):
+    return True
+
+def CrazyDance(Board):
+    if CrazyDanceCheck(Board) == True:
+        Board = CrazyDancePlay(Board)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def CrazyDancePlay(Board):
     for i in range(6):
         Board.DuckDrawList.append(Board.BoardGame[i]["duck"])
@@ -74,6 +129,16 @@ def CrazyDancePlay(Board):
 def CrazyDanceCheck(Board):
     return True
 
+def CrazyDanceGlobalCheck(Board):
+    return True
+
+def PeaceLove(Board):
+    if PeaceLoveCheck(Board) == True:
+        Board = PeaceLovePlay(Board)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def PeaceLovePlay(Board):
     for x in Board.BoardGame:
         x.update({"target":False})
@@ -87,6 +152,20 @@ def PeaceLoveCheck(Board):
 
     return False
 
+def PeaceLoveGlobalCheck(Board):
+    for x in Board.BoardGame:
+        if x["target"] == True:
+            return True
+
+    return False
+
+def WalkingDuck(Board, value):
+    if WalkingDuckCheck(Board, value) == True:
+        Board = WalkingDuckPlay(Board, value)
+    else:
+        Board.ErrorMessage = "Card can't by play"
+    return Board
+
 def WalkingDuckPlay(Board, value):
     Board.PlayerList[value - 1]["death"].update({"death":Board.PlayerList[value - 1]["death"] - 1})
     BoardGame.DuckDrawList.append(Board.PlayerList[value - 1]["duck"])
@@ -96,3 +175,11 @@ def WalkingDuckPlay(Board, value):
 def WalkingDuckCheck(Board, value):
     if Board.PlayerList[value - 1]["death"] < 2:
         return False
+    return True
+
+def WalkingDuckGlobalCheck(Board):
+    for x in Board.PlayerList:
+        if x["death"] > 1:
+            return True
+
+    return False
