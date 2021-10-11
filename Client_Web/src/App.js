@@ -8,6 +8,7 @@ import {
 import Game from './Components/game'
 import Home from './Components/Home'
 import CardZoom from './Components/CardZoom'
+import Rules from './Components/Rules'
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
           </Route>
           <Route path="/Game">
             <Game/>
+          </Route>
+          <Route path="/Rules">
+            <Rules/>
           </Route>
           <Route path="/">
             <Home/>

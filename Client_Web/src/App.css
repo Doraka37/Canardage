@@ -7,8 +7,14 @@
   flex-direction: column;
 }
 
+.font-link-title {
+  font-family: 'Gemunu Libre', sans-serif;
+  font-size: 40px;
+}
+
 .font-link {
   font-family: 'Gemunu Libre', sans-serif;
+  font-size: 30px;
 }
 
 .p-font {
@@ -51,6 +57,14 @@ img {
   margin-top: 10vh;
 }
 
+.rule-rectangle {
+  display: inline-block;
+  width: 30%;
+  height: 70vh;
+  background: #E4FF00;
+  margin-left: 2.5%;
+}
+
 .bigCard {
   display: inline-block;
   width: 40%;
@@ -87,4 +101,32 @@ img {
   font-size: 40px;
   font-family: 'Gemunu Libre', sans-serif;
   text-align: center;
+}
+
+
+.RuleButton {
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 22px;
+  font-family: 'Gemunu Libre', sans-serif;
+  text-align: center;
+  width: 40%;
+  height: 8vh;
+  background: #00FFE4;
+  margin-left: 2.5%;
+}
+
+.rule-title-font {
+  background: #00FFE4;
+  font-family: 'Gemunu Libre', sans-serif;
+  font-size: 30px;
+}
+
+.rule-font {
+  font-family: 'Gemunu Libre', sans-serif;
+  font-size: 30px;
+  text-align: left;
 }

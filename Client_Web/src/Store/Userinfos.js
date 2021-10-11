@@ -1,5 +1,6 @@
 const initialState = {
-  pseudo: ""
+  pseudo: "",
+  userList: []
 };
 
 function UserInfos(state = initialState, action) {
@@ -9,6 +10,12 @@ function UserInfos(state = initialState, action) {
       nextState = {
         ...state,
         pseudo: action.value
+      };
+      return nextState;
+    case 'SET_USER_LIST':
+      nextState = {
+        ...state,
+        userList: action.value
       };
       return nextState;
     default:

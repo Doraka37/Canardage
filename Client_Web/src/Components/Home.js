@@ -9,7 +9,7 @@ function Home() {
   const [value, setValue] = useState('');
   const [pseudo, setPseudo] = useState(store.UserInfos.pseudo);
   const [color, setColor] = useState('');
-  const [playerList, setPlayerlist] = useState([]);
+  const [playerList, setPlayerlist] = useState(store.UserInfos.userList);
   const [playerNbr, setplayerNbr] = useState('1');
 
   //const testArray = ["hello", "he test", "un truc"];
@@ -28,9 +28,14 @@ function Home() {
     list.push(value)
     setPseudo(value);
     setPlayerlist(list)
+    action = {
+      type: 'SET_USER_LIST',
+      value: list
+    }
+    Store.dispatch(action);
     setColor("rouge")
     //CALL API POUR PASSER LE PSEUDO
-    history.push('/game');
+    //history.push('/game');
   }
 
   function Item(props) {
@@ -43,11 +48,28 @@ function Home() {
           <h2>Home</h2>
         {pseudo !== '' ?
           <div className="Home">
+            <div>
+              <button
+                type="button"
+                onClick={() => history.push('/game')}
+              >
+                debug
+              </button>
+            </div>
             <p className="p-font"> Bienvenue {pseudo} lors de cette partie vous jouer les canards {color}</p>
             <p className="p-font"> Il y a {playerNbr} joueur·euse.s connecté </p>
             <ul>
               {playerList.map((item) => <Item value={item}/>)}
             </ul>
+            <div>
+              <button
+              className="RuleButton"
+                type="button"
+                onClick={() => history.push('/Rules')}
+              >
+                Regles du jeu
+              </button>
+            </div>
           </div>
             :
           <div className="Home">
