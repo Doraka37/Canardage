@@ -88,37 +88,43 @@ class ClassBoardGame:
             'duck':'red',
             'death':0,
             'id':0,
-            'card': []
+            'card': [],
+            'name' : ""
         },
         {
             'duck':'blue',
             'death':0,
             'id':0,
-            'card': []
+            'card': [],
+            'name' : ""
         },
         {
             'duck':'green',
             'death':0,
             'id':0,
-            'card': []
+            'card': [],
+            'name' : ""
         },
         {
             'duck':'yellow',
             'death':0,
             'id':0,
-            'card': []
+            'card': [],
+            'name' : ""
         },
         {
             'duck':'orange',
             'death':0,
             'id':0,
-            'card': []
+            'card': [],
+            'name' : ""
         },
         {
             'duck':'purple',
             'death':0,
             'id':0,
-            'card': []
+            'card': [],
+            'name' : ""
         },
     ]
     BoardGame = [
@@ -259,6 +265,10 @@ def GlobalCheckCard(ID, playerID):
     }
 
     return switcher.get(ID, lambda : "ERROR: ID not valid")()
+
+def getBoard():
+    global Board
+    return Board
 
 def main():
     valueList = [4, 3, 5, 2, 6, 1]
