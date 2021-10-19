@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 import pandas as pd
 import ast
+import board
 
 app = Flask(__name__)
 CORS(app)
@@ -10,7 +11,8 @@ api = Api(app)
 
 class Users(Resource):
     def get(self):
-        return("hello world")
+        test = board.getBoard()
+        return(test.PlayerList)
 
 class Connect(Resource):
     def post(self):
