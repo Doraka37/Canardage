@@ -1,0 +1,18 @@
+{
+	"cards": [{
+			"name": "Canard1",
+			"desc": "ceci est la premiére carte du jeu elle est sympa lorem ipsul dolores jzkaejkzaejkzaejikzjekzejkzejzaekjekjzeakjeakzakejzakej",
+			"src": 0
+		},
+		{
+			"name": "Canard2",
+			"desc": "ceci est la deuxiéme carte du jeu elle est cool",
+			"src": 1
+		},
+		{
+			"name": "Canard3",
+			"desc": "3e carte",
+			"src": 2
+		}
+	]
+}

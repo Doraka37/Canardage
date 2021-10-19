@@ -1,0 +1,43 @@
+{
+	"cards": [{
+			"name": "PAN !!!",
+			"desc": "Tirez sur un emplacement possédant une cible et un canard. Enlever la cible ensuite.",
+			"src": 0
+		},
+		{
+			"name": "En joue",
+			"desc": "Placez une cible sur une case n’en possédant pas. ",
+			"src": 1
+		},
+		{
+			"name": "Oups",
+			"desc": "Tirez sur une case adjacente d’une case possédant un viseur.",
+			"src": 2
+		},
+    {
+			"name": "Ducky Luke",
+			"desc": "Tirez sur n’importe quelle case. Retirer la cible ensuite s’il y en avait une.",
+			"src": 2
+		},
+    {
+			"name": "Rectifier le tir (droite)",
+			"desc": "Déplacez une cible d’une case vers la droite.",
+			"src": 2
+		},
+    {
+			"name": "Rectifier le tir (gauche)",
+			"desc": "Déplacez une cible d’une case vers la gauche.",
+			"src": 2
+		},
+    {
+			"name": "2 pour le prix d’un",
+			"desc": "Placez deux cibles sur deux emplacements différents.",
+			"src": 2
+		},
+    {
+			"name": "Canard enchainé",
+			"desc": "Abattez deux canards adjacent mis en joue. Les deux cibles sont ensuite enlevées.",
+			"src": 2
+		}
+  ]
+}

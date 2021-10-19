@@ -16,26 +16,19 @@ function Home() {
 
   function test_req() {
 
-    var formdata = new FormData();
-    formdata.append('username', 'doraka')
+    const test = JSON.stringify({user: "doraka"})
 
-    var myHeaders = new Headers();
-    myHeaders.append('Access-Control-Allow-Origin', '*')
-
-    var requestOptions = {
+    await fetch(`http://${IP_SERVER}:${PORT_SERVER}/generator/generate_popup`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: test,
       method: 'POST',
-      redirect: 'follow',
-      body: formdata,
-      headers: myHeaders
-    };
-
-    fetch("http://127.0.0.1:4004/connect", requestOptions)
-      .then(response => {
-        console.log("reo: ", response);
-        response.text()
       })
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+      .then(res => res.json())
+      .then(json => {
+    });
   }
 
   function handleChange(event) {
@@ -77,7 +70,7 @@ function Home() {
                 type="button"
                 onClick={() => test_req()}
               >
-                test
+                testreq
               </button>
             </div>
             <p className="p-font"> Bienvenue {pseudo} lors de cette partie vous jouer les canards {color}</p>
@@ -104,7 +97,7 @@ function Home() {
                 </label>
               </div>
               <div>
-                <input className="input" type="submit" value="Rejoindre la partie" />
+                <input className="input" type="submit" value="Rejoidre la partie" />
               </div>
             </form>
           </div>
