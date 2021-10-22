@@ -1,8 +1,9 @@
 def Pan(Board, value):
     if PanCheck(Board, value) == True:
         Board = PanPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def PanPlay(Board, value):
@@ -24,8 +25,9 @@ def PanGlobalCheck(Board):
 def Aim(Board, value):
     if AimCheck(Board, value) == True:
         Board = AimPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def AimPlay(Board, value):
@@ -46,8 +48,9 @@ def AimGlobalCheck(Board):
 def Oups(Board, value):
     if OupsCheck(Board, value) == True:
         Board = OupsPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def OupsPlay(Board, value):
@@ -80,8 +83,9 @@ def OupsGlobalCheck(Board):
 def DuckyLuck(Board, value):
     if DuckyLuckCheck(Board, value) == True:
         Board = DuckyLuckPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def DuckyLuckPlay(Board, value):
@@ -98,8 +102,9 @@ def DuckyLuckGlobalCheck(Board):
 def AimRight(Board, value):
     if AimRightCheck(Board, value) == True:
         Board = AimRightPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def AimRightPlay(Board, value):
@@ -123,8 +128,9 @@ def AimRightGlobalCheck(Board):
 def AimLeft(Board, value):
     if AimLeftCheck(Board, value) == True:
         Board = AimLeftPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def AimLeftPlay(Board, value):
@@ -148,8 +154,9 @@ def AimLeftGlobalCheck(Board):
 def TwoForOne(Board, value, value2):
     if TwoForOneCheck(Board, value, value2) == True:
         Board = TwoForOnePlay(Board, value, value2)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def TwoForOnePlay(Board, value, value2):
@@ -176,8 +183,9 @@ def TwoForOneGlobalCheck(Board):
 def DoublePan(Board, value, value2):
     if DoublePanCheck(Board, value, value2) == True:
         Board = DoublePanPlay(Board, value, value2)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def DoublePanPlay(Board, value, value2):
