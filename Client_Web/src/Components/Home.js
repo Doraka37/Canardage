@@ -12,11 +12,10 @@ function Home() {
   const [playerList, setPlayerlist] = useState(store.UserInfos.userList);
   const [playerNbr, setplayerNbr] = useState('1');
 
-  //const testArray = ["hello", "he test", "un truc"];
 
   function test_req() {
 
-    var formdata = new FormData();
+    /*var formdata = new FormData();
     formdata.append('username', 'doraka')
 
     var myHeaders = new Headers();
@@ -35,7 +34,8 @@ function Home() {
         response.text()
       })
       .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+      .catch(error => console.log('error', error));*/
+      history.push('/game');
   }
 
   function handleChange(event) {

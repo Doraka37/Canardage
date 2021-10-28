@@ -16,8 +16,8 @@ function Game() {
   return (
     <div className="App">
       <Card text={list.cards[0].desc} src={list.cards[0].src} array={array} name={list.cards[0].name} className="rectangle"/>
-      <Card text={list.cards[1].desc} src={list.cards[1].src} array={array} name={list.cards[1].name} className="rectangle2"/>
-      <Card text={list.cards[2].desc} src={list.cards[2].src} array={array} name={list.cards[2].name} className="rectangle3"/>
+      <Card text={list.cards[2].desc} src={list.cards[2].src} array={array} name={list.cards[2].name} className="rectangle2"/>
+      <Card text={list.cards[1].desc} src={list.cards[1].src} array={array} name={list.cards[1].name} className="rectangle3"/>
     </div>
   )
 }
