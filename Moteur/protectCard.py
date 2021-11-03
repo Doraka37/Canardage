@@ -4,8 +4,9 @@ from random import randrange
 def Protect(Board, value, playerID):
     if ProtectCheck(Board, value) == True:
         Board = ProtectPlay(Board, value, playerID)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def ProtectPlay(Board, value, playerID):
@@ -28,8 +29,9 @@ def ProtectGlobalCheck(Board):
 def Hide(Board, value, value2, PlayerID):
     if HideCheck(Board, value, value2, PlayerID) == True:
         Board = HidePlay(Board, value, value2)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def HidePlay(Board, value, value2):
@@ -79,8 +81,9 @@ def HideGlobalCheck(Board, PlayerID):
 def Canarchie(Board, valueList):
     if CanarchieCheck(Board) == True:
         Board = CanarchiePlay(Board, valueList)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def CanarchiePlay(Board, valueList):
@@ -108,8 +111,9 @@ def CanarchieGlobalCheck(Board):
 def CrazyDance(Board):
     if CrazyDanceCheck(Board) == True:
         Board = CrazyDancePlay(Board)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def CrazyDancePlay(Board):
@@ -135,8 +139,9 @@ def CrazyDanceGlobalCheck(Board):
 def PeaceLove(Board):
     if PeaceLoveCheck(Board) == True:
         Board = PeaceLovePlay(Board)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def PeaceLovePlay(Board):
@@ -162,8 +167,9 @@ def PeaceLoveGlobalCheck(Board):
 def WalkingDuck(Board, value):
     if WalkingDuckCheck(Board, value) == True:
         Board = WalkingDuckPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def WalkingDuckPlay(Board, value):

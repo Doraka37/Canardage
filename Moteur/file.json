@@ -1,0 +1,32 @@
+playerList = [
+    {
+        "id":0,
+        "name":"thomas",
+        "color":"red"
+    },
+    {
+        "id":0,
+        "name":"",
+        "color":"blue"
+    },
+    {
+        "id":0,
+        "name":"",
+        "color":"green"
+    },
+    {
+        "id":0,
+        "name":"",
+        "color":"yellow"
+    },
+    {
+        "id":0,
+        "name":"",
+        "color":"orange"
+    },
+    {
+        "id":0,
+        "name":"",
+        "color":"purple"
+    },
+]

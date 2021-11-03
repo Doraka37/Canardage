@@ -3,8 +3,9 @@ import board
 def Walk(Board):
     if WalkCheck(Board) == True:
         Board = WalkPlay(Board)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def WalkPlay(Board):
@@ -28,8 +29,9 @@ def WalkGlobalCheck(Board):
 def Fulguro(Board, value, PlayerID):
     if FulguroCheck(Board, value, PlayerID) == True:
         Board = FulguroPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def FulguroPlay(Board, value):
@@ -69,8 +71,9 @@ def FulguroGlobalCheck(Board, playerID):
 def DuckLeft(Board, value, PlayerID):
     if DuckLeftCheck(Board, value, PlayerID) == True:
         Board = DuckLeftPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def DuckLeftPlay(Board, value):
@@ -110,8 +113,9 @@ def DuckLeftGlobalCheck(Board, playerID):
 def DuckRight(Board, value, PlayerID):
     if DuckRightCheck(Board, value, PlayerID) == True:
         Board = DuckRightPlay(Board, value)
+        Board.ErrorMessage = 200
     else:
-        Board.ErrorMessage = "Card can't by play"
+        Board.ErrorMessage = 300
     return Board
 
 def DuckRightPlay(Board, value):

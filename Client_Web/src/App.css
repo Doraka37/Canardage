@@ -1,6 +1,8 @@
 
 .App {
   text-align: center;
+  background: #E4FF00;
+  height: 100vh;
 }
 
 .line {
@@ -30,12 +32,32 @@
   position: fixed;
   display: inline-block;
   width: 30%;
-  height: 70vh;
-  background: #FF00C1;
-  margin-top: 10vh;
+  height: 90vh;
+  margin-top: 5vh;
   left: 2.5%;
   align-content: center;
   flex-direction: column;
+}
+
+.rectangle-selec {
+  display: inline-block;
+  width: 12.5%;
+  height: 40vh;
+  margin-top: 5vh;
+  margin-left: 2.5%;
+  align-content: center;
+  flex-direction: column;
+}
+
+.lay-rectangle {
+  display: inline-block;
+  width: 90%;
+  height: 60vh;
+  margin-top: 20vh;
+  left: 5%;
+  align-content: left;
+  flex-direction: column;
+  background: blue;
 }
 
 img {
@@ -44,27 +66,35 @@ img {
 }
 
 .img-rules {
+  max-width:100%;
+  max-height:50%;
+}
+
+.img-test {
     max-width:100%;
-    max-height:70%;
+    max-height:85%;
+}
+
+.img-zoom {
+    max-width:100%;
+    max-height:100%;
 }
 
 .rectangle2 {
   position: fixed;
   display: inline-block;
   width: 30%;
-  height: 70vh;
-  background: #00FFE4;
+  height: 90vh;
   margin-left: 32.5%;
-  margin-top: 10vh;
+  margin-top: 5vh;
 }
 
 .rectangle3 {
   display: inline-block;
   width: 30%;
-  height: 70vh;
-  background: #E4FF00;
+  height: 90vh;
   left: 2.5%;
-  margin-top: 10vh;
+  margin-top: 5vh;
 }
 
 .rule-rectangle {
@@ -78,11 +108,11 @@ img {
 
 .bigCard {
   display: inline-block;
-  width: 40%;
+  width: 60%;
   height: 70vh;
   background: #E4FF00;
   margin-left: 2.5%;
-  margin-top: 10vh;
+  margin-top: 2vh;
 }
 
 .ZoomButton {
@@ -95,10 +125,26 @@ img {
   font-size: 22px;
   font-family: 'Gemunu Libre', sans-serif;
   text-align: center;
-  width: 40%;
+  width: 25%;
   height: 5vh;
   background: #00FFE4;
   margin-left: 2.5%;
+}
+
+.SelecButton {
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 22px;
+  font-family: 'Gemunu Libre', sans-serif;
+  text-align: center;
+  width: 25%;
+  height: 5vh;
+  background: #00FFE4;
+  margin-top: -5vh;
 }
 
 .Home {
@@ -134,6 +180,11 @@ img {
   background: #00FFE4;
   font-family: 'Gemunu Libre', sans-serif;
   font-size: 30px;
+}
+
+.title-font {
+  font-family: 'Gemunu Libre', sans-serif;
+  font-size: 40px;
 }
 
 .rule-font {

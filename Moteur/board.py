@@ -5,7 +5,7 @@ import protectCard
 import attackCard
 
 class ClassBoardGame:
-    ErrorMessage = ""
+    ErrorMessage = 0
     DuckList = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
     DuckDrawList = []
     CardList = [
@@ -83,6 +83,7 @@ class ClassBoardGame:
         },
     ]
     CardDrawList = []
+    CardDiscardList = []
     PlayerList = [
         {
             'duck':'red',
@@ -166,13 +167,13 @@ class ClassBoardGame:
         },
     ]
 
-    def __init__(self, value):
+    def __init__(self, value, idList):
         if value < 2 or value > 6:
             return 404
 
         for i in range(value):
             self.PlayerList[i].update({"death":1})
-            self.PlayerList[i].update({"id":randrange(1000000000)})
+            self.PlayerList[i].update({"id":idList[i]})
             for x in range(5):
                 self.DuckDrawList.append(self.DuckList[i])
 
@@ -208,16 +209,13 @@ class ClassBoardGame:
             self.BoardGame[-1].update({"hideDuck":'none'})
             self.DuckDrawList.pop(0)
 
-Board = ClassBoardGame(4)
-
 def test():
     global Board
     print(Board.BoardGame)
     Board = moveCard.WalkPlay(Board)
 
-def PlayCard(ID, value1, value2, valueList, playerID):
-    global Board
-    Board.ErrorMessage = ""
+def PlayCard(Board, ID, value, value2, valueList, playerID):
+    Board.ErrorMessage = 100
     switcher = {
         1: lambda : attackCard.Pan(Board, value),
         2: lambda : attackCard.Aim(Board, value),
@@ -239,10 +237,10 @@ def PlayCard(ID, value1, value2, valueList, playerID):
         18: lambda : moveCard.DuckRight(Board, value, playerID),
     }
 
-    Board = switcher.get(ID, lambda : "ERROR: ID not valid")()
+    return switcher.get(ID, lambda : Board)()
 
-def GlobalCheckCard(ID, playerID):
-    global Board
+def GlobalCheckCard(Board, ID, playerID):
+    Board.ErrorMessage = 100
     switcher = {
         1: lambda : attackCard.PanGlobalCheck(Board),
         2: lambda : attackCard.AimGlobalCheck(Board),
@@ -264,21 +262,8 @@ def GlobalCheckCard(ID, playerID):
         18: lambda : moveCard.DuckRightGlobalCheck(Board, playerID),
     }
 
-    return switcher.get(ID, lambda : "ERROR: ID not valid")()
+    return switcher.get(ID, lambda : "error")()
 
-def getBoard():
-    global Board
+def getBoard(value, idList):
+    Board = ClassBoardGame(value, idList)
     return Board
-
-def main():
-    valueList = [4, 3, 5, 2, 6, 1]
-    global Board
-    print(Board.CardDrawList, "\n")
-    #Board = attackCard.PanPlay(Board, 2)
-    #print(Board.BoardGame)
-
-
-# Using the special variable
-# __name__
-if __name__=="__main__":
-    main()
