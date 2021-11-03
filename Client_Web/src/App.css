@@ -145,6 +145,7 @@ img {
   height: 5vh;
   background: #00FFE4;
   margin-top: -5vh;
+  margin-right: 2.5%;
 }
 
 .Home {
@@ -191,4 +192,13 @@ img {
   font-family: 'Gemunu Libre', sans-serif;
   font-size: 30px;
   text-align: left;
+}
+
+.black{
+  background-color: black;
+  border-radius: 50%;
+}
+
+.blue{
+  background-color: blue;
 }

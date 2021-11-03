@@ -30,7 +30,7 @@ idList = [
         "isHere":True
     },
     {
-        "id":0,
+        "id":213213253,
         "isHere":False
     },
     {
@@ -79,6 +79,7 @@ playerList = [
 class playCard(Resource):
     def post(self):
         global Board
+        started = True
         if started == False:
             response = app.response_class(
                 response=json.dumps({"data":"game is not started"}),
@@ -91,7 +92,7 @@ class playCard(Resource):
             valueList = request.form.get("valueList")
             playerID = request.form.get("playerID")
             cardID = request.form.get("cardID")
-            Board = board.PlayCard(Board, cardID, value1, value2, valueList, PlayerID)
+            Board = board.PlayCard(Board, cardID, value1, value2, valueList, playerID)
             if Board.ErrorMessage == 200:
                 if Board.CardDrawList == []:
                     Board.CardDrawList = Board.CardDiscardList
@@ -108,7 +109,7 @@ class playCard(Resource):
             else:
                 response = app.response_class(
                     response=json.dumps({"data":"Error"}),
-                    status=Board.ErrorMessage,
+                    status=555,
                     mimetype='application/json'
                 )
         return response
@@ -186,11 +187,24 @@ class userAfk(Resource):
         )
         return response
 
+class startGame(Resource):
+    def get(self):
+        global Board
+        global started
+        Board = board.getBoard(4, idList)
+        started = True
+        print("Done")
+        response = app.response_class(
+            status=300,
+            mimetype='application/json'
+        )
+        return response
 
 api.add_resource(playCard, '/playCard')
 api.add_resource(disCard, '/disCard')
 api.add_resource(addUsers, '/addUsers')
 api.add_resource(userAfk, '/userAfk')
+api.add_resource(startGame, '/startGame')
 
 def setId(id):
     for x in idList:
@@ -250,19 +264,6 @@ def addUserToParty(name):
             y.update({"id":id, "isHere":True})
             break
 
-class Connect(Resource):
-    def post(self):
-        print("voiozeiza")
-        print("hello: ", request.form.get("username"))
-        return("bravo tu es pd")
-
-class Locations(Resource):
-    # methods go here
-    pass
-
-api.add_resource(Users, '/users')  # '/users' is our entry point for Users
-api.add_resource(Locations, '/locations')  # and '/locations' is our entry point for Locations
-api.add_resource(Connect, '/connect')  # and '/locations' is our entry point for Locations
 def test2():
     global Board
     #print(Board.PlayerList)
@@ -276,7 +277,9 @@ def test():
     Board = board.PlayCard(Board, 1, 2, 0, idList, 0)
     #print(Board.BoardGame)
 
+
 if __name__ == '__main__':
+    test()
     app.run(port=4004, debug=True)
     #p1 = Process(target=checkAFK)
     #p1.start()

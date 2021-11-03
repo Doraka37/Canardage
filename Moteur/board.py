@@ -173,7 +173,7 @@ class ClassBoardGame:
 
         for i in range(value):
             self.PlayerList[i].update({"death":1})
-            self.PlayerList[i].update({"id":idList[i]})
+            self.PlayerList[i].update({"id":idList[i]["id"]})
             for x in range(5):
                 self.DuckDrawList.append(self.DuckList[i])
 
@@ -216,6 +216,10 @@ def test():
 
 def PlayCard(Board, ID, value, value2, valueList, playerID):
     Board.ErrorMessage = 100
+    ID = int(ID)
+    value = int(value)
+    value2 = int(value2)
+    playerID = int(playerID)
     switcher = {
         1: lambda : attackCard.Pan(Board, value),
         2: lambda : attackCard.Aim(Board, value),
