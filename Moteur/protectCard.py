@@ -4,7 +4,7 @@ from random import randrange
 def Protect(Board, value, playerID):
     Board = ProtectCheck(Board, value)
     if Board.ErrorMessage == 200:
-        Board = ProtecBoard(Board, value, playerID)
+        Board = ProtectPlay(Board, value, playerID)
     return Board
 
 def ProtectPlay(Board, value, playerID):
@@ -86,9 +86,12 @@ def HideGlobalCheck(Board, PlayerID):
     return False
 
 def Canarchie(Board, valueList):
+    valueList = valueList.replace(',', '')
+    valueList = valueList.replace('[', '')
+    valueList = valueList.replace(']', '')
     Board = CanarchieCheck(Board, valueList)
     if Board.ErrorMessage == 200:
-        Board = CanarcBoarday(Board, valueList)
+        Board = CanarchiePlay(Board, valueList)
     return Board
 
 def CanarchiePlay(Board, valueList):
@@ -102,8 +105,8 @@ def CanarchiePlay(Board, valueList):
 
 
     for i in range(6):
-        Board.BoardGame[valueList[i] - 1].update({"duck":BoardGameTmp[i]["duck"]})
-        Board.BoardGame[valueList[i] - 1].update({"hideDuck":BoardGameTmp[i]["hideDuck"]})
+        Board.BoardGame[int(valueList[i]) - 1].update({"duck":BoardGameTmp[i]["duck"]})
+        Board.BoardGame[int(valueList[i]) - 1].update({"hideDuck":BoardGameTmp[i]["hideDuck"]})
 
     return Board
 
@@ -111,7 +114,7 @@ def CanarchieCheck(Board, valueList):
     print("len: ", len(valueList))
     for x in valueList:
         print("value: ", x)
-    if len(valueList) != 5:
+    if len(valueList) != 6:
         Board.ErrorMessage = 1102
         return Board
 
@@ -137,7 +140,7 @@ def CanarchieGlobalCheck(Board):
 def CrazyDance(Board):
     Board = CrazyDanceCheck(Board)
     if Board.ErrorMessage == 200:
-        Board = CrazyDBoardlay(Board)
+        Board = CrazyDancePlay(Board)
     return Board
 
 def CrazyDancePlay(Board):
@@ -164,7 +167,7 @@ def CrazyDanceGlobalCheck(Board):
 def PeaceLove(Board):
     Board = PeaceLoveCheck(Board)
     if Board.ErrorMessage == 200:
-        Board = PeaceLBoarday(Board)
+        Board = PeaceLovePlay(Board)
     return Board
 
 def PeaceLovePlay(Board):

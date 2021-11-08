@@ -216,11 +216,10 @@ def test():
 
 def PlayCard(Board, ID, value, value2, valueList, playerID):
     Board.ErrorMessage = 100
-    ##ID = int(ID)
-    ##value = int(value)
-    ##value2 = int(value2)
-    ##playerID = int(playerID)
-    print(ID)
+    ID = int(ID)
+    value = int(value)
+    value2 = int(value2)
+    playerID = int(playerID)
     switcher = {
         1: lambda : attackCard.Pan(Board, value),
         2: lambda : attackCard.Aim(Board, value),
