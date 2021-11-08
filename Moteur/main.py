@@ -81,6 +81,7 @@ class playCard(Resource):
     def post(self):
         global Board
         global started
+        started = True
         if started == False:
             response = app.response_class(
                 response=json.dumps({"data":"game is not started"}),
@@ -93,6 +94,7 @@ class playCard(Resource):
             valueList = request.form.get("valueList")
             playerID = request.form.get("playerID")
             cardID = request.form.get("cardID")
+            print("acrd id: ", cardID)
             Board = board.PlayCard(Board, cardID, value1, value2, valueList, playerID)
             print(Board.ErrorMessage)
             if Board.ErrorMessage == 200:
@@ -284,6 +286,7 @@ def test():
     #print(Board.BoardGame)
 
 if __name__ == '__main__':
+    test()
     app.run(port=4004, debug=True)
     #p1 = Process(target=checkAFK)
     #p1.start()

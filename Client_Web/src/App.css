@@ -49,6 +49,15 @@
   flex-direction: column;
 }
 
+.rectangle-color {
+  display: inline-block;
+  width: 12.5%;
+  height: 40vh;
+  margin-left: 2.5%;
+  align-content: center;
+  flex-direction: column;
+}
+
 .lay-rectangle {
   display: inline-block;
   width: 90%;
@@ -148,6 +157,23 @@ img {
   margin-right: 2.5%;
 }
 
+.SelecButton2 {
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 22px;
+  font-family: 'Gemunu Libre', sans-serif;
+  text-align: center;
+  width: 25%;
+  height: 5vh;
+  background: #00FFE4;
+  margin-top: 2.5vh;
+  margin-right: 2.5%;
+}
+
 .Home {
   margin-top: 20vh;
   flex-direction: column;
@@ -195,10 +221,5 @@ img {
 }
 
 .black{
-  background-color: black;
-  border-radius: 50%;
-}
-
-.blue{
-  background-color: blue;
+  opacity: 0.5;
 }

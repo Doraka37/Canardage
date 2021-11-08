@@ -33,7 +33,7 @@ def ProtectGlobalCheck(Board):
 def Hide(Board, value, value2, PlayerID):
     Board = HideCheck(Board, value, value2, PlayerID)
     if Board.ErrorMessage == 200:
-        Board = HidePlBoardard, value, value2)
+        Board = HidePlay(Board, value, value2)
     return Board
 
 def HidePlay(Board, value, value2):
@@ -108,7 +108,10 @@ def CanarchiePlay(Board, valueList):
     return Board
 
 def CanarchieCheck(Board, valueList):
-    if len(valueList) != 6:
+    print("len: ", len(valueList))
+    for x in valueList:
+        print("value: ", x)
+    if len(valueList) != 5:
         Board.ErrorMessage = 1102
         return Board
 
