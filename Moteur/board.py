@@ -241,9 +241,8 @@ def PlayCard(Board, ID, value, value2, valueList, playerID):
         18: lambda : moveCard.DuckRight(Board, value, playerID),
     }
 
-    test = switcher.get(ID, lambda : Board)()
-    print(test)
-    return Board
+    return switcher.get(ID, lambda : Board)()
+
 
 def GlobalCheckCard(Board, ID, playerID):
     Board.ErrorMessage = 100
@@ -270,7 +269,7 @@ def GlobalCheckCard(Board, ID, playerID):
         18: lambda : moveCard.DuckRightGlobalCheck(Board, playerID),
     }
 
-    return switcher.get(ID, lambda : "error")()
+    return switcher.get(ID, lambda : Board)()
 
 def getBoard(value, idList):
     Board = ClassBoardGame(value, idList)

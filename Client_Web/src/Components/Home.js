@@ -12,30 +12,9 @@ function Home() {
   const [playerList, setPlayerlist] = useState(store.UserInfos.userList);
   const [playerNbr, setplayerNbr] = useState('1');
 
-  //const testArray = ["hello", "he test", "un truc"];
 
   function test_req() {
-
-    var formdata = new FormData();
-    formdata.append('username', 'doraka')
-
-    var myHeaders = new Headers();
-    myHeaders.append('Access-Control-Allow-Origin', '*')
-
-    var requestOptions = {
-      method: 'POST',
-      redirect: 'follow',
-      body: formdata,
-      headers: myHeaders
-    };
-
-    fetch("http://127.0.0.1:4004/connect", requestOptions)
-      .then(response => {
-        console.log("reo: ", response);
-        response.text()
-      })
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+      history.push('/game');
   }
 
   function handleChange(event) {

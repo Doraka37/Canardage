@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from random import randrange
 from flask_cors import CORS
+from random import randrange
 import pandas as pd
 from multiprocessing import Process
 import ast
@@ -126,7 +127,7 @@ class disCard(Resource):
         if started == False:
             response = app.response_class(
                 response=json.dumps({"data":"game is not started"}),
-                status=300,
+                status=Board.ErrorMessage,
                 mimetype='application/json'
             )
         else:
@@ -137,7 +138,7 @@ class disCard(Resource):
                 if board.PlayCard(Board, ID, PlayerID) == True:
                     response = app.response_class(
                         response=json.dumps({"data":"error"}),
-                        status=300,
+                        status=Board.ErrorMessage,
                         mimetype='application/json'
                     )
                     return response
@@ -151,7 +152,7 @@ class disCard(Resource):
             Board.CardDrawList.pop(0)
             response = app.response_class(
                 response=json.dumps({"data":cardDraw}),
-                status=200,
+                status=Board.ErrorMessage,
                 mimetype='application/json'
             )
             return response

@@ -15,11 +15,10 @@ function Card(props) {
   return (
     <div className={props.className} onClick={() => handleClick(props.text, props.name, src)}>
       <h1 className="font-link-title">{props.name}</h1>
-      <img
+      <img className="img-test"
         src={src}
         alt="duck image"
       />
-      <p className="font-link"> {props.text} </p>
     </div>
   )
 }
