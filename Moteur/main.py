@@ -30,7 +30,7 @@ idList = [
         "isHere":True
     },
     {
-        "id":0,
+        "id":324123123,
         "isHere":False
     },
     {
@@ -79,6 +79,7 @@ playerList = [
 class playCard(Resource):
     def post(self):
         global Board
+        global started
         if started == False:
             response = app.response_class(
                 response=json.dumps({"data":"game is not started"}),
@@ -91,8 +92,10 @@ class playCard(Resource):
             valueList = request.form.get("valueList")
             playerID = request.form.get("playerID")
             cardID = request.form.get("cardID")
-            Board = board.PlayCard(Board, cardID, value1, value2, valueList, PlayerID)
+            Board = board.PlayCard(Board, cardID, value1, value2, valueList, playerID)
+            print(Board.ErrorMessage)
             if Board.ErrorMessage == 200:
+                print("pd1")
                 if Board.CardDrawList == []:
                     Board.CardDrawList = Board.CardDiscardList
                     random.shuffle(Board.CardDrawList)
@@ -106,17 +109,20 @@ class playCard(Resource):
                     mimetype='application/json'
                 )
             else:
+                print("pd2")
                 response = app.response_class(
                     response=json.dumps({"data":"Error"}),
                     status=Board.ErrorMessage,
                     mimetype='application/json'
                 )
+        print(response)
         return response
 
 
 class disCard(Resource):
     def post(self):
         global Board
+        global started
         if started == False:
             response = app.response_class(
                 response=json.dumps({"data":"game is not started"}),
@@ -152,6 +158,7 @@ class disCard(Resource):
 
 class addUsers(Resource):
     def post(self):
+        global started
         if started == True:
             response = app.response_class(
                 response=json.dumps({"data":"game is started"}),
@@ -186,11 +193,25 @@ class userAfk(Resource):
         )
         return response
 
+class startGame(Resource):
+    def get(self):
+        global Board
+        global started
+        Board = board.getBoard(4, idList)
+        started = True
+        print("Done")
+        response = app.response_class(
+            status=300,
+            mimetype='application/json'
+        )
+        return response
+
 
 api.add_resource(playCard, '/playCard')
 api.add_resource(disCard, '/disCard')
 api.add_resource(addUsers, '/addUsers')
 api.add_resource(userAfk, '/userAfk')
+api.add_resource(startGame, '/startGame')
 
 def setId(id):
     for x in idList:
@@ -259,8 +280,6 @@ def test():
     Board = board.getBoard(4, idList)
     #print("lol")
     #print(Board.BoardGame)
-    Board = board.PlayCard(Board, 2, 2, 0, idList, 0)
-    Board = board.PlayCard(Board, 1, 2, 0, idList, 0)
     #print(Board.BoardGame)
 
 if __name__ == '__main__':

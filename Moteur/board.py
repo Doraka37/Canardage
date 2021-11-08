@@ -173,7 +173,7 @@ class ClassBoardGame:
 
         for i in range(value):
             self.PlayerList[i].update({"death":1})
-            self.PlayerList[i].update({"id":idList[i]})
+            self.PlayerList[i].update({"id":idList[i]["id"]})
             for x in range(5):
                 self.DuckDrawList.append(self.DuckList[i])
 
@@ -216,6 +216,10 @@ def test():
 
 def PlayCard(Board, ID, value, value2, valueList, playerID):
     Board.ErrorMessage = 100
+    ID = int(ID)
+    value = int(value)
+    value2 = int(value2)
+    playerID = int(playerID)
     switcher = {
         1: lambda : attackCard.Pan(Board, value),
         2: lambda : attackCard.Aim(Board, value),
@@ -237,10 +241,14 @@ def PlayCard(Board, ID, value, value2, valueList, playerID):
         18: lambda : moveCard.DuckRight(Board, value, playerID),
     }
 
-    return switcher.get(ID, lambda : Board)()
+    test = switcher.get(ID, lambda : Board)()
+    print(test)
+    return Board
 
 def GlobalCheckCard(Board, ID, playerID):
     Board.ErrorMessage = 100
+    ID = int(ID)
+    playerID = int(playerID)
     switcher = {
         1: lambda : attackCard.PanGlobalCheck(Board),
         2: lambda : attackCard.AimGlobalCheck(Board),
@@ -267,3 +275,34 @@ def GlobalCheckCard(Board, ID, playerID):
 def getBoard(value, idList):
     Board = ClassBoardGame(value, idList)
     return Board
+
+if __name__ == '__main__':
+    idList = [
+        {
+            "id":213231,
+            "isHere":True
+        },
+        {
+            "id":345234,
+            "isHere":False
+        },
+        {
+            "id":213213213,
+            "isHere":True
+        },
+        {
+            "id":324123123,
+            "isHere":False
+        },
+        {
+            "id":0,
+            "isHere":False
+        },
+        {
+            "id":0,
+            "isHere":False
+        },
+    ]
+    list = [1,2,3,3,5]
+    Board = getBoard(4, idList)
+    print(protectCard.CanarchieCheck(Board, list))

@@ -1,9 +1,7 @@
 def Pan(Board, value):
-    if PanCheck(Board, value) == True:
+    Board = PanCheck(Board, value)
+    if Board.ErrorMessage == 200:
         Board = PanPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def PanPlay(Board, value):
@@ -13,8 +11,10 @@ def PanPlay(Board, value):
 
 def PanCheck(Board, value):
     if Board.BoardGame[value - 1]["target"] == False:
-        return False
-    return True
+        Board.ErrorMessage = 101
+        return Board
+    Board.ErrorMessage = 200
+    return Board
 
 def PanGlobalCheck(Board):
     for x in Board.BoardGame:
@@ -23,11 +23,9 @@ def PanGlobalCheck(Board):
     return False
 
 def Aim(Board, value):
-    if AimCheck(Board, value) == True:
+    Board = AimCheck(Board, value)
+    if Board.ErrorMessage == 200:
         Board = AimPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def AimPlay(Board, value):
@@ -36,8 +34,10 @@ def AimPlay(Board, value):
 
 def AimCheck(Board, value):
     if Board.BoardGame[value - 1]["target"] == True:
-        return False
-    return True
+        Board.ErrorMessage = 201
+        return Board
+    Board.ErrorMessage = 200
+    return Board
 
 def AimGlobalCheck(Board):
     for x in Board.BoardGame:
@@ -46,11 +46,9 @@ def AimGlobalCheck(Board):
     return False
 
 def Oups(Board, value):
-    if OupsCheck(Board, value) == True:
+    Board = OupsCheck(Board, value)
+    if Board.ErrorMessage == 200:
         Board = OupsPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def OupsPlay(Board, value):
@@ -67,12 +65,16 @@ def OupsPlay(Board, value):
 
 def OupsCheck(Board, value):
     if value == 1 and Board.BoardGame[value]["target"] == False:
-        return False
+        Board.ErrorMessage = 301
+        return Board
     elif value == 6 and Board.BoardGame[value - 2]["target"] == False:
-        return False
+        Board.ErrorMessage = 301
+        return Board
     elif Board.BoardGame[value - 2]["target"] == False and Board.BoardGame[value]["target"] == False:
-        return False
-    return True
+        Board.ErrorMessage = 301
+        return Board
+    Board.ErrorMessage = 200
+    return Board
 
 def OupsGlobalCheck(Board):
     for x in Board.BoardGame:
@@ -81,11 +83,9 @@ def OupsGlobalCheck(Board):
     return False
 
 def DuckyLuck(Board, value):
-    if DuckyLuckCheck(Board, value) == True:
+    Board = DuckyLuckCheck(Board, value)
+    if Board.ErrorMessage == 200:
         Board = DuckyLuckPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def DuckyLuckPlay(Board, value):
@@ -94,17 +94,16 @@ def DuckyLuckPlay(Board, value):
     return Board
 
 def DuckyLuckCheck(Board, value):
-    return True
+    Board.ErrorMessage = 200
+    return Board
 
 def DuckyLuckGlobalCheck(Board):
     return True
 
 def AimRight(Board, value):
-    if AimRightCheck(Board, value) == True:
+    Board = AimRightCheck(Board, value)
+    if Board.ErrorMessage == 200:
         Board = AimRightPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def AimRightPlay(Board, value):
@@ -114,10 +113,13 @@ def AimRightPlay(Board, value):
 
 def AimRightCheck(Board, value):
     if value > 5:
-        return False
+        Board.ErrorMessage = 501
+        return Board
     if Board.BoardGame[value]["target"] == True:
-        return False
-    return True
+        Board.ErrorMessage = 502
+        return Board
+    Board.ErrorMessage = 200
+    return Board
 
 def AimRightGlobalCheck(Board):
     for i in range(Board.BoardGame):
@@ -126,11 +128,9 @@ def AimRightGlobalCheck(Board):
     return False
 
 def AimLeft(Board, value):
-    if AimLeftCheck(Board, value) == True:
+    Board = AimLeftCheck(Board, value)
+    if Board.ErrorMessage == 200:
         Board = AimLeftPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def AimLeftPlay(Board, value):
@@ -140,10 +140,13 @@ def AimLeftPlay(Board, value):
 
 def AimLeftCheck(Board, value):
     if value < 2:
-        return False
+        Board.ErrorMessage = 601
+        return Board
     if Board.BoardGame[value - 2]["target"] == True:
-        return False
-    return True
+        Board.ErrorMessage = 602
+        return Board
+    Board.ErrorMessage = 200
+    return Board
 
 def AimLeftGlobalCheck(Board):
     for i in range(Board.BoardGame):
@@ -152,11 +155,9 @@ def AimLeftGlobalCheck(Board):
     return False
 
 def TwoForOne(Board, value, value2):
-    if TwoForOneCheck(Board, value, value2) == True:
+    Board = TwoForOneCheck(Board, value, value2)
+    if Board.ErrorMessage == 200:
         Board = TwoForOnePlay(Board, value, value2)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def TwoForOnePlay(Board, value, value2):
@@ -166,13 +167,17 @@ def TwoForOnePlay(Board, value, value2):
 
 def TwoForOneCheck(Board, value, value2):
     if value2 > value + 1 or value2 < value - 1 or value == value2:
-        return False
+        Board.ErrorMessage = 701
+        return Board
 
     if Board.BoardGame[value - 1]["target"] == True:
-        return False
+        Board.ErrorMessage = 702
+        return Board
     if Board.BoardGame[value2 - 1]["target"] == True:
-        return False
-    return True
+        Board.ErrorMessage = 702
+        return Board
+    Board.ErrorMessage = 200
+    return Board
 
 def TwoForOneGlobalCheck(Board):
     for i in range(Board.BoardGame):
@@ -181,11 +186,9 @@ def TwoForOneGlobalCheck(Board):
     return False
 
 def DoublePan(Board, value, value2):
-    if DoublePanCheck(Board, value, value2) == True:
+    Board = DoublePanCheck(Board, value, value2)
+    if Board.ErrorMessage == 200:
         Board = DoublePanPlay(Board, value, value2)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def DoublePanPlay(Board, value, value2):
@@ -201,13 +204,17 @@ def DoublePanPlay(Board, value, value2):
 
 def DoublePanCheck(Board, value, value2):
     if value2 > value + 1 or value2 < value - 1 or value == value2:
-        return False
+        Board.ErrorMessage = 801
+        return Board
 
     if Board.BoardGame[value - 1]["target"] == False:
-        return False
+        Board.ErrorMessage = 802
+        return Board
     if Board.BoardGame[value2 - 1]["target"] == False:
-        return False
-    return True
+        Board.ErrorMessage = 802
+        return Board
+    Board.ErrorMessage = 200
+    return Board
 
 def DoublePanGlobalCheck(Board):
     for i in range(Board.BoardGame):

@@ -1,11 +1,9 @@
 import board
 
 def Walk(Board):
-    if WalkCheck(Board) == True:
+    Board = WalkCheck(Board)
+    if Board.ErrorMessage == 200:
         Board = WalkPlay(Board)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def WalkPlay(Board):
@@ -21,17 +19,16 @@ def WalkPlay(Board):
     return Board
 
 def WalkCheck(Board):
-    return True
+    Board.ErrorMessage = 200
+    return Board
 
 def WalkGlobalCheck(Board):
     return True
 
 def Fulguro(Board, value, PlayerID):
-    if FulguroCheck(Board, value, PlayerID) == True:
+    Board = FulguroCheck(Board, value, PlayerID)
+    if Board.ErrorMessage == 200:
         Board = FulguroPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def FulguroPlay(Board, value):
@@ -47,14 +44,17 @@ def FulguroPlay(Board, value):
 
 def FulguroCheck(Board, value, playerID):
     if value < 2 or value > 6:
-        return False
+        Board.ErrorMessage = 1601
+        return Board
 
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value]["duck"]:
-                return True
+                Board.ErrorMessage = 200
+                return Board
 
-    return False
+    Board.ErrorMessage = 1602
+    return Board
 
 def FulguroGlobalCheck(Board, playerID):
     playerDuckTmp = ""
@@ -69,11 +69,9 @@ def FulguroGlobalCheck(Board, playerID):
     return False
 
 def DuckLeft(Board, value, PlayerID):
-    if DuckLeftCheck(Board, value, PlayerID) == True:
+    Board = DuckLeftCheck(Board, value, PlayerID)
+    if Board.ErrorMessage == 200:
         Board = DuckLeftPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def DuckLeftPlay(Board, value):
@@ -89,14 +87,17 @@ def DuckLeftPlay(Board, value):
 
 def DuckLeftCheck(Board, value, playerID):
     if value == 1:
-        return False
+        Board.ErrorMessage = 1701
+        return Board
 
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value - 1]["duck"]:
-                return True
+                Board.ErrorMessage = 200
+                return Board
 
-    return False
+    Board.ErrorMessage = 1702
+    return Board
 
 def DuckLeftGlobalCheck(Board, playerID):
     playerDuckTmp = ""
@@ -111,11 +112,9 @@ def DuckLeftGlobalCheck(Board, playerID):
     return False
 
 def DuckRight(Board, value, PlayerID):
-    if DuckRightCheck(Board, value, PlayerID) == True:
+    Board = DuckRightCheck(Board, value, PlayerID)
+    if Board.ErrorMessage == 200:
         Board = DuckRightPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def DuckRightPlay(Board, value):
@@ -131,14 +130,17 @@ def DuckRightPlay(Board, value):
 
 def DuckRightCheck(Board, value, playerID):
     if value == 6:
-        return False
+        Board.ErrorMessage = 1801
+        return Board
 
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value - 1]["duck"]:
-                return True
+                Board.ErrorMessage = 200
+                return Board
 
-    return False
+    Board.ErrorMessage = 1802
+    return Board
 
 def DuckRightGlobalCheck(Board, PlayerID):
     playerDuckTmp = ""

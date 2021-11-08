@@ -2,11 +2,9 @@ import random
 from random import randrange
 
 def Protect(Board, value, playerID):
-    if ProtectCheck(Board, value) == True:
-        Board = ProtectPlay(Board, value, playerID)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
+    Board = ProtectCheck(Board, value)
+    if Board.ErrorMessage == 200:
+        Board = ProtecBoard(Board, value, playerID)
     return Board
 
 def ProtectPlay(Board, value, playerID):
@@ -15,23 +13,27 @@ def ProtectPlay(Board, value, playerID):
     return Board
 
 def ProtectCheck(Board, value):
+    if Board.BoardGame[value - 1]["protected"] != 'none':
+        Board.ErrorMessage = 901
+        return Board
+
     if Board.BoardGame[value - 1]["duck"] == 'empty':
-        return False
-    return True
+        Board.ErrorMessage = 902
+        return Board
+    Board.ErrorMessage = 200
+    return Board
 
 def ProtectGlobalCheck(Board):
     for x in Board.BoardGame:
-        if x["duck"] != "empty":
+        if x["duck"] != "empty" and x['protected'] == 'none':
             return True
 
     return False
 
 def Hide(Board, value, value2, PlayerID):
-    if HideCheck(Board, value, value2, PlayerID) == True:
-        Board = HidePlay(Board, value, value2)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
+    Board = HideCheck(Board, value, value2, PlayerID)
+    if Board.ErrorMessage == 200:
+        Board = HidePlBoardard, value, value2)
     return Board
 
 def HidePlay(Board, value, value2):
@@ -47,19 +49,24 @@ def HidePlay(Board, value, value2):
 
 def HideCheck(Board, value, value2, playerID):
     if value2 > value + 1 or value2 < value - 1 or value == value2:
-        return False
+        Board.ErrorMessage = 1001
+        return Board
 
     if Board.BoardGame[value2 - 1]["duck"] == 'empty':
-        return False
+        Board.ErrorMessage = 1002
+        return Board
     if Board.BoardGame[value2 - 1]["hideDuck"] != 'none':
-        return False
+        Board.ErrorMessage = 1003
+        return Board
 
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value - 1]["duck"]:
-                return True
+                Board.ErrorMessage = 200
+                return Board
 
-    return False
+    Board.ErrorMessage = 1004
+    return Board
 
 def HideGlobalCheck(Board, PlayerID):
     playerDuckTmp = ""
@@ -79,11 +86,9 @@ def HideGlobalCheck(Board, PlayerID):
     return False
 
 def Canarchie(Board, valueList):
-    if CanarchieCheck(Board) == True:
-        Board = CanarchiePlay(Board, valueList)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
+    Board = CanarchieCheck(Board, valueList)
+    if Board.ErrorMessage == 200:
+        Board = CanarcBoarday(Board, valueList)
     return Board
 
 def CanarchiePlay(Board, valueList):
@@ -102,18 +107,34 @@ def CanarchiePlay(Board, valueList):
 
     return Board
 
-def CanarchieCheck(Board):
-    return True
+def CanarchieCheck(Board, valueList):
+    if len(valueList) != 6:
+        Board.ErrorMessage = 1102
+        return Board
+
+    tmp = ""
+    i = 0
+    while i < 6:
+        tmp = valueList[i]
+        j = i + 1
+        while j < 6:
+            if tmp == valueList[j]:
+                Board.ErrorMessage = 1101
+                return Board
+            j += 1
+        i += 1
+
+
+    Board.ErrorMessage = 200
+    return Board
 
 def CanarchieGlobalCheck(Board):
     return True
 
 def CrazyDance(Board):
-    if CrazyDanceCheck(Board) == True:
-        Board = CrazyDancePlay(Board)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
+    Board = CrazyDanceCheck(Board)
+    if Board.ErrorMessage == 200:
+        Board = CrazyDBoardlay(Board)
     return Board
 
 def CrazyDancePlay(Board):
@@ -131,17 +152,16 @@ def CrazyDancePlay(Board):
     return Board
 
 def CrazyDanceCheck(Board):
-    return True
+    Board.ErrorMessage = 200
+    return Board
 
 def CrazyDanceGlobalCheck(Board):
     return True
 
 def PeaceLove(Board):
-    if PeaceLoveCheck(Board) == True:
-        Board = PeaceLovePlay(Board)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
+    Board = PeaceLoveCheck(Board)
+    if Board.ErrorMessage == 200:
+        Board = PeaceLBoarday(Board)
     return Board
 
 def PeaceLovePlay(Board):
@@ -153,9 +173,11 @@ def PeaceLovePlay(Board):
 def PeaceLoveCheck(Board):
     for x in Board.BoardGame:
         if x["target"] == True:
-            return True
+            Board.ErrorMessage = 200
+            return Board
 
-    return False
+    Board.ErrorMessage = 1301
+    return Board
 
 def PeaceLoveGlobalCheck(Board):
     for x in Board.BoardGame:
@@ -165,11 +187,9 @@ def PeaceLoveGlobalCheck(Board):
     return False
 
 def WalkingDuck(Board, value):
-    if WalkingDuckCheck(Board, value) == True:
+    Board = WalkingDuckCheck(Board, value)
+    if Board.ErrorMessage == 200:
         Board = WalkingDuckPlay(Board, value)
-        Board.ErrorMessage = 200
-    else:
-        Board.ErrorMessage = 300
     return Board
 
 def WalkingDuckPlay(Board, value):
@@ -180,8 +200,10 @@ def WalkingDuckPlay(Board, value):
 
 def WalkingDuckCheck(Board, value):
     if Board.PlayerList[value - 1]["death"] < 2:
-        return False
-    return True
+        Board.ErrorMessage = 200
+        return Board
+    Board.ErrorMessage = 1401
+    return Board
 
 def WalkingDuckGlobalCheck(Board):
     for x in Board.PlayerList:
