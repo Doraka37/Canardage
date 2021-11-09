@@ -103,7 +103,7 @@ class playCard(Resource):
             print("acrd id: ", cardID)
             """if checkTurn(playerID) == False:
                 response = app.response_class(
-                    response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer"}),
+                    response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer","status":300}),
                     status=300,
                     mimetype='application/json'
                 )
@@ -142,7 +142,7 @@ class disCard(Resource):
         global started
         if started == False:
             response = app.response_class(
-                response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé"}),
+                response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé","status":300}),
                 status=300,
                 mimetype='application/json'
             )
@@ -155,7 +155,7 @@ class disCard(Resource):
             valueList = []
             if checkTurn(playerID) == False:
                 response = app.response_class(
-                    response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer"}),
+                    response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer","status":300}),
                     status=300,
                     mimetype='application/json'
                 )
@@ -171,7 +171,7 @@ class disCard(Resource):
 
             if valueList != []:
                 response = app.response_class(
-                    response=json.dumps({"data":valueList, "Message": "Une ou plusieurs cartes sont jouables"}),
+                    response=json.dumps({"data":valueList, "Message": "Une ou plusieurs cartes sont jouables","status":300}),
                     status=300,
                     mimetype='application/json'
                 )
@@ -186,7 +186,7 @@ class disCard(Resource):
             Board.CardDrawList.pop(0)
             updateTurn()
             response = app.response_class(
-                response=json.dumps({"data":cardDraw, "Message":"La carte a été corectement jeté"}),
+                response=json.dumps({"data":cardDraw, "Message":"La carte a été corectement jeté","status":200}),
                 status=200,
                 mimetype='application/json'
             )
@@ -197,7 +197,7 @@ class addUsers(Resource):
         global started
         if started == True:
             response = app.response_class(
-                response=json.dumps({"data":"Error", "Message": "La partie a déja commencé"}),
+                response=json.dumps({"data":"Error", "Message": "La partie a déja commencé","status":300}),
                 status=300,
                 mimetype='application/json'
             )
@@ -205,14 +205,14 @@ class addUsers(Resource):
             user = request.form.get("name")
             if checkUserName(user) == False:
                 response = app.response_class(
-                    response=json.dumps({"data":"Error", "Message":"Ce nom est déja utilisé"}),
+                    response=json.dumps({"data":"Error", "Message":"Ce nom est déja utilisé","status":300}),
                     status=300,
                     mimetype='application/json'
                 )
             else:
                 addUserToParty(user)
                 response = app.response_class(
-                    response=json.dumps({"data":playerList, "Message":"Le joueur a été ajouté"}),
+                    response=json.dumps({"data":playerList, "Message":"Le joueur a été ajouté","status":200}),
                     status=200,
                     mimetype='application/json'
                 )
@@ -230,13 +230,13 @@ class userAfk(Resource):
             card2 = getNextCard()
             card3 = getNextCard()
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started, "card1": card1, "card2": card2, "card3": card3}),
+                response=json.dumps({"data":playerList, "started": started, "card1": card1, "card2": card2, "card3": card3,"status":result}),
                 status=result,
                 mimetype='application/json'
             )
         else:
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started}),
+                response=json.dumps({"data":playerList, "started": started,"status":result}),
                 status=result,
                 mimetype='application/json'
             )
