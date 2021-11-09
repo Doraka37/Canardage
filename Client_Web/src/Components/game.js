@@ -42,8 +42,8 @@ function Game() {
   array.push(a_couvert);
   array.push(canarchie);
   array.push(dispersion);
-  array.push(peace_and_love);
   array.push(walking_duck);
+  array.push(peace_and_love);
   array.push(en_avant_marche);
   array.push(banzai);
   array.push(palme_avant);

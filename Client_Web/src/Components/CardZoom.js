@@ -17,7 +17,7 @@ function CardZoom(props) {
   const [id, setId] = useState(0);
   const [value1, setValue1] = useState(0);
   const [value2, setValue2] = useState(0);
-  const [valueList, setValueList] = useState(["", "", "", "", "", ""]);
+  const [valueList, setValueList] = useState([0, 0, 0, 0, 0, 0]);
   const [cpt, setCpt] = useState(1);
   const [errMess, setErrMess] = useState("No Error Message");
   const [isClicked, setIsClicked] = useState(["", "", "", "", "", "", ""])
@@ -46,7 +46,6 @@ function CardZoom(props) {
       if (value2 == '') {
         return
       }
-
     }
     var formdata = new FormData();
     formdata.append('value1', value1)
@@ -148,14 +147,23 @@ function CardZoom(props) {
       console.log("je joue la carte : ", infos.pos);
       switch(infos.pos) {
         case 1:
+          if (infos.type == "NoChoice") {
+            validate(0, "No")
+          }
           console.log("hello1: ", infos.type);
           setParam(infos.type)
           break;
         case 2:
+          if (infos.type == "NoChoice") {
+            validate(0, "No")
+          }
           console.log("hello2: ", infos.type);
           setParam(infos.type)
           break;
         case 3:
+          if (infos.type == "NoChoice") {
+            validate(0, "No")
+          }
           console.log("hello3: ", infos.type);
           setParam(infos.type)
           break;

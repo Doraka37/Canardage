@@ -213,8 +213,8 @@ def WalkingDuck(Board, value):
     return Board
 
 def WalkingDuckPlay(Board, value):
-    Board.PlayerList[value - 1]["death"].update({"death":Board.PlayerList[value - 1]["death"] - 1})
-    BoardGame.DuckDrawList.append(Board.PlayerList[value - 1]["duck"])
+    Board.PlayerList[value - 1].update({"death":Board.PlayerList[value - 1]["death"] - 1})
+    Board.DuckDrawList.append(Board.PlayerList[value - 1]["duck"])
 
     return Board
 

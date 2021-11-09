@@ -69,7 +69,7 @@
         {
           "name": "Danse des canards",
           "id": 12,
-          "type": "SingleChoice",
+          "type": "NoChoice",
           "src": 11
         },
         {
@@ -81,13 +81,13 @@
         {
           "name": "Peace and love",
           "id": 14,
-          "type": "SingleChoice",
+          "type": "NoChoice",
           "src": 13
         },
         {
           "name": "En avant marche",
           "id": 15,
-          "type": "SingleChoice",
+          "type": "NoChoice",
           "src": 14
         },
         {
