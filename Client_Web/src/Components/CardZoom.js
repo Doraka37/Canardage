@@ -8,6 +8,7 @@ import pink from '../ressources/dos_carte_rose.png'
 import purple from '../ressources/dos_carte_violet.png'
 import yellow from '../ressources/dos_carte_jeune.png'
 import orange from '../ressources/dos_carte_orange.png'
+import Store from '../store';
 
 function CardZoom(props) {
 
@@ -18,7 +19,9 @@ function CardZoom(props) {
   const [value2, setValue2] = useState(0);
   const [valueList, setValueList] = useState(["", "", "", "", "", ""]);
   const [cpt, setCpt] = useState(1);
+  const [errMess, setErrMess] = useState("No Error Message");
   const [isClicked, setIsClicked] = useState(["", "", "", "", "", "", ""])
+  const history = useHistory();
 
   function reset() {
     setValue1(0);
@@ -70,9 +73,25 @@ function CardZoom(props) {
       .then(result => {
         if (result.error) {
           console.log(result.error)
+          setParam("Error")
+          setErrMess(result.error)
+        } else {
+          console.log("new_card: ", result.data);
+          const store = Store.getState();
+          let new_hand = store.UserInfos.hand
+          new_hand[location.state.pos - 1] = result.data
+          console.log("new_hand: ", new_hand);
+          let action = {
+            type: 'SET_HAND',
+            value: new_hand
+          };
+          Store.dispatch(action);
+          reset()
+          //setParam('')
+          history.push({
+            pathname: '/Game',
+          });
         }
-        console.log(result.data);
-        reset()
       })
       .catch(error => console.log('error oui la bonne', error));
   }
@@ -87,7 +106,7 @@ function CardZoom(props) {
     //className={`circle ${props.clicked ? 'blue': 'black'}`}
     return (
       <div className={"rectangle-selec"} onClick={() => handleClick(props.id, props.type)}>
-        <img className={`banner ${isClicked[props.id] ? "black" : ""}`}
+        <img className={`img-sel ${isClicked[props.id] ? "black" : ""}`}
           src={src}
           alt="duck image"
         />
@@ -102,7 +121,7 @@ function CardZoom(props) {
     let src = props.color;
     return (
       <div className={"rectangle-selec"} onClick={() => handleClick(props.id, props.type)}>
-        <img className={`banner ${isClicked[props.id] ? "black" : ""}`}
+        <img className={`img-sel ${isClicked[props.id] ? "black" : ""}`}
           src={src}
           alt="duck image"
         />
@@ -230,81 +249,93 @@ function CardZoom(props) {
               </button>
             </div>
         );
-        case 'DoubleChoice':
-          return (
-              <div className="lay-rectangle">
-                <h1 className="title-font"> Please chose two tiles where you want to play the cards </h1>
-                <Rect_case id={1} type={"Double"}/>
-                <Rect_case id={2} type={"Double"}/>
-                <Rect_case id={3} type={"Double"}/>
-                <Rect_case id={4} type={"Double"}/>
-                <Rect_case id={5} type={"Double"}/>
-                <Rect_case id={6} type={"Double"}/>
-                <button className="SelecButton" type="button" onClick={() => setParam('')}>
-                  Close
-                </button>
-                <button className="SelecButton" type="button" onClick={() => validate(id, "Double")}>
-                  Validate
-                </button>
-                <button className="SelecButton" type="button" onClick={() => reset(id, false)}>
-                  Reset
-                </button>
-              </div>
-          );
-          case 'WalkingDuck':
-            return (
-                <div className="lay-rectangle">
-                <h1 className="title-font"> Please chose which color you wish to revive a duck from </h1>
-                <Color_case id={1} color={blue}/>
-                <Color_case id={2} color={green}/>
-                <Color_case id={3} color={pink}/>
-                <Color_case id={4} color={purple}/>
-                <Color_case id={5} color={yellow}/>
-                <Color_case id={6} color={orange}/>
-                <button className="SelecButton" type="button" onClick={() => setParam('')}>
-                  Close
-                </button>
-                <button className="SelecButton" type="button" onClick={() => validate(id, "Single")}>
-                  Validate
-                </button>
-                </div>
-            );
-            case 'Canarchie':
-              return (
-                <div className="lay-rectangle">
-                  <h1 className="title-font"> {cpt != 7 ? "Please the card you want to place at position" : "Validate or reset"} </h1>
-                  <Rect_case id={1} type={"Canarchie"}/>
-                  <Rect_case id={2} type={"Canarchie"}/>
-                  <Rect_case id={3} type={"Canarchie"}/>
-                  <Rect_case id={4} type={"Canarchie"}/>
-                  <Rect_case id={5} type={"Canarchie"}/>
-                  <Rect_case id={6} type={"Canarchie"}/>
-                  <button className="SelecButton" type="button" onClick={() => setParam('')}>
-                    Close
-                  </button>
-                  <button className="SelecButton" type="button" onClick={() => validate(id, "Canarchie")}>
-                    Validate
-                  </button>
-                  <button className="SelecButton" type="button" onClick={() => reset(id, false)}>
-                    Reset
-                  </button>
-                </div>
-              );
-      default:
-      return (
-        <div className="Zoom">
-          <div className="bigCard">
-            <h1 className="font-link">{location.state.name}</h1>
-            <img className="img-zoom"
-              src={location.state.src}
-              alt="duck image"
-            />
+      case 'DoubleChoice':
+        return (
+            <div className="lay-rectangle">
+              <h1 className="title-font"> Please chose two tiles where you want to play the cards </h1>
+              <Rect_case id={1} type={"Double"}/>
+              <Rect_case id={2} type={"Double"}/>
+              <Rect_case id={3} type={"Double"}/>
+              <Rect_case id={4} type={"Double"}/>
+              <Rect_case id={5} type={"Double"}/>
+              <Rect_case id={6} type={"Double"}/>
+              <button className="SelecButton" type="button" onClick={() => setParam('')}>
+                Close
+              </button>
+              <button className="SelecButton" type="button" onClick={() => validate(id, "Double")}>
+                Validate
+              </button>
+              <button className="SelecButton" type="button" onClick={() => reset(id, false)}>
+                Reset
+              </button>
+            </div>
+        );
+      case 'WalkingDuck':
+        return (
+            <div className="lay-rectangle">
+              <h1 className="title-font"> Please chose which color you wish to revive a duck from </h1>
+              <Color_case id={1} color={blue}/>
+              <Color_case id={2} color={green}/>
+              <Color_case id={3} color={pink}/>
+              <Color_case id={4} color={purple}/>
+              <Color_case id={5} color={yellow}/>
+              <Color_case id={6} color={orange}/>
+              <button className="SelecButton" type="button" onClick={() => setParam('')}>
+                Close
+              </button>
+              <button className="SelecButton" type="button" onClick={() => validate(id, "Single")}>
+                Validate
+              </button>
+            </div>
+        );
+      case 'Canarchie':
+        return (
+          <div className="lay-rectangle">
+            <h1 className="title-font"> {cpt != 7 ? "Please the card you want to place at position" : "Validate or reset"} </h1>
+            <Rect_case id={1} type={"Canarchie"}/>
+            <Rect_case id={2} type={"Canarchie"}/>
+            <Rect_case id={3} type={"Canarchie"}/>
+            <Rect_case id={4} type={"Canarchie"}/>
+            <Rect_case id={5} type={"Canarchie"}/>
+            <Rect_case id={6} type={"Canarchie"}/>
+            <button className="SelecButton" type="button" onClick={() => setParam('')}>
+              Close
+            </button>
+            <button className="SelecButton" type="button" onClick={() => validate(id, "Canarchie")}>
+              Validate
+            </button>
+            <button className="SelecButton" type="button" onClick={() => reset(id, false)}>
+              Reset
+            </button>
           </div>
-          <ButtonZoom text="Retourner a la main compléte" fct="BackToSelec()" infos={location.state}/>
-          <ButtonZoom text="Jouer" fct="Play(props.infos)" infos={location.state}/>
-          <ButtonZoom text="Défausser" fct="Discard(props.infos)" infos={location.state}/>
-        </div>
-      );
+        );
+      case 'Error':
+        return (
+          <div className="Zoom">
+            <div className="errorMess">
+              <h1 className="font-link">Impossible de jouer la carte sur les/la case selectionnées</h1>
+              <p className="font-link">{errMess}</p>
+              <button className="SelecButton" type="button" onClick={() => setParam('')}>
+                OK
+              </button>
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <div className="Zoom">
+            <div className="bigCard">
+              <h1 className="font-link">{location.state.name}</h1>
+              <img className="img-zoom"
+                src={location.state.src}
+                alt="duck image"
+              />
+            </div>
+            <ButtonZoom text="Retourner a la main compléte" fct="BackToSelec()" infos={location.state}/>
+            <ButtonZoom text="Jouer" fct="Play(props.infos)" infos={location.state}/>
+            <ButtonZoom text="Défausser" fct="Discard(props.infos)" infos={location.state}/>
+          </div>
+        );
     }
   }
   return (
