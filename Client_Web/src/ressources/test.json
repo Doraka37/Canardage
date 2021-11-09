@@ -1,18 +1,112 @@
 {
-	"cards": [{
-			"name": "Canard1",
-			"desc": "ceci est la premiére carte du jeu elle est sympa lorem ipsul dolores",
-			"src": 0
-		},
-		{
-			"name": "Canard2",
-			"desc": "ceci est la deuxiéme carte du jeu elle est cool",
-			"src": 1
-		},
-		{
-			"name": "Canard3",
-			"desc": "3e carte",
-			"src": 2
-		}
-	]
+    "cards": [
+        {
+          "name": "Pan!",
+          "id": 1,
+          "type": "SingleChoice",
+          "src": 0
+        },
+        {
+          "name": "En joue",
+          "id": 2,
+          "type": "SingleChoice",
+          "src": 1
+        },
+        {
+          "name": "Oups!",
+          "id": 3,
+          "type": "SingleChoice",
+          "src": 2
+        },
+        {
+          "name": "Ducky luck",
+          "id": 4,
+          "type": "SingleChoice",
+          "src": 3
+        },
+        {
+          "name": "Rectifier le tir (droite)",
+          "id": 5,
+          "type": "SingleChoice",
+          "src": 4
+        },
+        {
+          "name": "Rectifier le tir (gauche)",
+          "id": 6,
+          "type": "SingleChoice",
+          "src": 5
+        },
+        {
+          "name": "2 pour le prix d'un",
+          "id": 7,
+          "type": "DoubleChoice",
+          "src": 6
+        },
+        {
+          "name": "Canards enchaines",
+          "id": 8,
+          "type": "DoubleChoice",
+          "src": 7
+        },
+        {
+          "name": "A couvert",
+          "id": 9,
+          "type": "SingleChoice",
+          "src": 8
+        },
+        {
+          "name": "Planque",
+          "id": 10,
+          "type": "SingleChoice",
+          "src": 9
+        },
+        {
+          "name": "Canarchie",
+          "id": 11,
+          "type": "Canarchie",
+          "src": 10
+        },
+        {
+          "name": "Danse des canards",
+          "id": 12,
+          "type": "SingleChoice",
+          "src": 11
+        },
+        {
+          "name": "Walking duck",
+          "id": 13,
+          "type": "WalkingDuck",
+          "src": 12
+        },
+        {
+          "name": "Peace and love",
+          "id": 14,
+          "type": "SingleChoice",
+          "src": 13
+        },
+        {
+          "name": "En avant marche",
+          "id": 15,
+          "type": "SingleChoice",
+          "src": 14
+        },
+        {
+          "name": "Fulguro coin",
+          "id": 16,
+          "type": "SingleChoice",
+          "src": 15
+        },
+        {
+          "name": "Canard presse",
+          "id": 17,
+          "type": "SingleChoice",
+          "src": 16
+        },
+        {
+          "name": "Canard blase",
+          "id": 18,
+          "type": "SingleChoice",
+          "src": 17
+        }
+    ]
 }

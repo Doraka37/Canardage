@@ -30,7 +30,12 @@ function CardZoom(props) {
 
   function validate(id, type) {
     console.log("valuelist: ", valueList);
+    console.log("value1: ", value1);
+    console.log("value2: ", value2);
+    console.log("playerID: ", location.state.playerID);
+    console.log("cardID: ", location.state.cardID);
     if (type == "Single" && value1 == 0) {
+      console.log("no value1");
       return
     }
     if (type == "Double") {
@@ -44,8 +49,8 @@ function CardZoom(props) {
     formdata.append('value1', value1)
     formdata.append('value2', value2)
     formdata.append('valueList', valueList)
-    formdata.append('playerID', 2)
-    formdata.append('cardID', 11)
+    formdata.append('playerID', location.state.playerID)
+    formdata.append('cardID', location.state.cardID)
 
     var myHeaders = new Headers();
     myHeaders.append('Access-Control-Allow-Origin', '*')
@@ -53,7 +58,7 @@ function CardZoom(props) {
     var requestOptions = {
       method: 'POST',
       redirect: 'follow',
-      body: JSON.stringify(formdata),
+      body: formdata,
       headers: myHeaders
     };
 
@@ -62,8 +67,14 @@ function CardZoom(props) {
         console.log("reo: ", response);
         return response.json()
       })
-      .then(result => console.log(result.data))
-      .catch(error => console.log('error', error));
+      .then(result => {
+        if (result.error) {
+          console.log(result.error)
+        }
+        console.log(result.data);
+        reset()
+      })
+      .catch(error => console.log('error oui la bonne', error));
   }
 
 //#############################################################
@@ -114,14 +125,19 @@ function CardZoom(props) {
     }
 
     function Play(infos) {
-      console.log("je joue la carte : ", infos.name);
-      switch(infos.name) {
-        case "Canard1":
-          console.log("hello");
-          setParam('Canarchie')
+      console.log("je joue la carte : ", infos.pos);
+      switch(infos.pos) {
+        case 1:
+          console.log("hello1: ", infos.type);
+          setParam(infos.type)
           break;
-        case "Canard2":
-          // code block
+        case 2:
+          console.log("hello2: ", infos.type);
+          setParam(infos.type)
+          break;
+        case 3:
+          console.log("hello3: ", infos.type);
+          setParam(infos.type)
           break;
         default:
           // code block
@@ -180,6 +196,13 @@ function CardZoom(props) {
       click[id] = "clicked";
       setIsClicked(click)
       return;
+    }
+    if (value1 == 0) {
+      console.log("setting vlaue1");
+      setValue1(id)
+      let array = ["", "", "", "", "", "", ""];
+      array[id] = "clicked";
+      setIsClicked(array)
     }
     console.log("placing target at pos: ", id);
     let array = ["", "", "", "", "", "", ""];
@@ -284,7 +307,6 @@ function CardZoom(props) {
       );
     }
   }
-
   return (
     <div className="Zoom">
       {renderSwitch(param)}

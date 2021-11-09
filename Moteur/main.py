@@ -114,8 +114,8 @@ class playCard(Resource):
             else:
                 print("pd2")
                 response = app.response_class(
-                    response=json.dumps({"data":"Error"}),
-                    status=Board.ErrorMessage,
+                    response=json.dumps({"data":"Error","error":Board.ErrorMessage}),
+                    status=300,
                     mimetype='application/json'
                 )
         print(response)
