@@ -103,7 +103,7 @@ class playCard(Resource):
             print("acrd id: ", cardID)
             if checkTurn(playerID) == False:
                 response = app.response_class(
-                    response=json.dumps({"data":cardDraw, "Message":"Ce n'est pas votre tour de jouer"}),
+                    response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer"}),
                     status=300,
                     mimetype='application/json'
                 )
@@ -155,7 +155,7 @@ class disCard(Resource):
             valueList = []
             if checkTurn(playerID) == False:
                 response = app.response_class(
-                    response=json.dumps({"data":cardDraw, "Message":"Ce n'est pas votre tour de jouer"}),
+                    response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer"}),
                     status=300,
                     mimetype='application/json'
                 )
