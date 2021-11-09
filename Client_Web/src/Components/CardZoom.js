@@ -71,10 +71,11 @@ function CardZoom(props) {
         return response.json()
       })
       .then(result => {
-        if (result.error) {
-          console.log(result.error)
+        console.log("he suis le result;error: ", result.Message);
+        if (result.status == 300) {
+          console.log(result.Message)
           setParam("Error")
-          setErrMess(result.error)
+          setErrMess(result.Message)
         } else {
           console.log("new_card: ", result.data);
           const store = Store.getState();
@@ -93,7 +94,7 @@ function CardZoom(props) {
           });
         }
       })
-      .catch(error => console.log('error oui la bonne', error));
+      .catch(error => console.log('error oui la bonne'));
   }
 
 //#############################################################

@@ -90,7 +90,7 @@ class playCard(Resource):
         started = True
         if started == False:
             response = app.response_class(
-                response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé"}),
+                response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé","status":300}),
                 status=300,
                 mimetype='application/json'
             )
@@ -101,13 +101,13 @@ class playCard(Resource):
             playerID = request.form.get("playerID")
             cardID = request.form.get("cardID")
             print("acrd id: ", cardID)
-            if checkTurn(playerID) == False:
+            """if checkTurn(playerID) == False:
                 response = app.response_class(
                     response=json.dumps({"data":cardDraw, "Message":"Ce n'est pas votre tour de jouer"}),
                     status=300,
                     mimetype='application/json'
                 )
-                return response
+                return response"""
             Board = board.PlayCard(Board, cardID, value1, value2, valueList, playerID)
             print(Board.ErrorMessage)
             if Board.Status == True:
@@ -121,14 +121,14 @@ class playCard(Resource):
                 Board.CardDrawList.pop(0)
                 updateTurn()
                 response = app.response_class(
-                    response=json.dumps({"data":cardDraw, "Message":Board.ErrorMessage}),
+                    response=json.dumps({"data":cardDraw, "Message":Board.ErrorMessage,"status":200}),
                     status=200,
                     mimetype='application/json'
                 )
             else:
                 print("pd2")
                 response = app.response_class(
-                    response=json.dumps({"data":"Error","Message":Board.ErrorMessage}),
+                    response=json.dumps({"data":"Error","Message":Board.ErrorMessage,"status":300}),
                     status=300,
                     mimetype='application/json'
                 )
