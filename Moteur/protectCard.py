@@ -220,11 +220,11 @@ def WalkingDuckPlay(Board, value):
 
 def WalkingDuckCheck(Board, value):
     if Board.PlayerList[value - 1]["death"] < 2:
-        Board.ErrorMessage = "La carte a été joué"
-        Board.Status = True
+        Board.ErrorMessage = "Ce joueur n'as aucun canard mort"
+        Board.Status = False
         return Board
-    Board.ErrorMessage = "Ce joueur n'as aucun canard mort"
-    Board.Status = False
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def WalkingDuckGlobalCheck(Board):
