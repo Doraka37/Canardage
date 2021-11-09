@@ -1,7 +1,7 @@
 const initialState = {
   pseudo: "",
   userList: [],
-  hand: [6, 7, 12]
+  hand: [6, 7, 13]
 };
 
 function UserInfos(state = initialState, action) {

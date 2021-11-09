@@ -140,7 +140,9 @@ class disCard(Resource):
     def post(self):
         global Board
         global started
+        started = True
         if started == False:
+            print("salut1")
             response = app.response_class(
                 response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé","status":300}),
                 status=300,
@@ -153,23 +155,24 @@ class disCard(Resource):
             card2 = request.form.get("card2")
             card3 = request.form.get("card3")
             valueList = []
-            if checkTurn(playerID) == False:
+            """if checkTurn(playerID) == False:
                 response = app.response_class(
                     response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer","status":300}),
                     status=300,
                     mimetype='application/json'
                 )
-                return response
+                return response"""
             ##cardListID = request.form.get("cardListID")
             ##cardID = request.form.get("cardID")
-            if board.GlobalCheckCard(Board, card1, PlayerID) == True:
+            if board.GlobalCheckCard(Board, card1, playerID) == True:
                 valueList.append(card1)
-            if board.GlobalCheckCard(Board, card2, PlayerID) == True:
+            if board.GlobalCheckCard(Board, card2, playerID) == True:
                 valueList.append(card2)
-            if board.GlobalCheckCard(Board, card3, PlayerID) == True:
+            if board.GlobalCheckCard(Board, card3, playerID) == True:
                 valueList.append(card3)
 
             if valueList != []:
+                print("salut2")
                 response = app.response_class(
                     response=json.dumps({"data":valueList, "Message": "Une ou plusieurs cartes sont jouables","status":300}),
                     status=300,
@@ -185,9 +188,10 @@ class disCard(Resource):
             cardDraw = Board.CardDrawList[0]
             Board.CardDrawList.pop(0)
             updateTurn()
+            print("salut3")
             response = app.response_class(
-                response=json.dumps({"data":cardDraw, "Message":"La carte a été corectement jeté","status":200}),
-                status=200,
+                response=json.dumps({"data":cardDraw, "Message":"La carte a été corectement jeté","status":202}),
+                status=202,
                 mimetype='application/json'
             )
             return response

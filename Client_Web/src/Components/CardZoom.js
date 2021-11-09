@@ -22,6 +22,7 @@ function CardZoom(props) {
   const [errMess, setErrMess] = useState("No Error Message");
   const [isClicked, setIsClicked] = useState(["", "", "", "", "", "", ""])
   const history = useHistory();
+  const store = Store.getState();
 
   function reset() {
     setValue1(0);
@@ -77,7 +78,6 @@ function CardZoom(props) {
           setErrMess(result.Message)
         } else {
           console.log("new_card: ", result.data);
-          const store = Store.getState();
           let new_hand = store.UserInfos.hand
           new_hand[location.state.pos - 1] = result.data
           console.log("new_hand: ", new_hand);
@@ -173,7 +173,56 @@ function CardZoom(props) {
     }
 
     function Discard(infos) {
+      var formdata = new FormData();
+      formdata.append('card1', location.state.hand[0] + 1)
+      formdata.append('card2', location.state.hand[1] + 1)
+      formdata.append('card3', location.state.hand[2] + 1)
+      formdata.append('playerID', location.state.playerID)
+      formdata.append('cardID', location.state.cardID)
+
+      console.log("card1: ", location.state.hand[0] + 1);
+      console.log("card2: ", location.state.hand[1] + 1);
+      console.log("card3: ", location.state.hand[2] + 1);
+      var myHeaders = new Headers();
+      myHeaders.append('Access-Control-Allow-Origin', '*')
+
+      var requestOptions = {
+        method: 'POST',
+        redirect: 'follow',
+        body: formdata,
+        headers: myHeaders
+      };
       console.log("je jette la carte : ", infos.name);
+      fetch("http://127.0.0.1:4004/disCard", requestOptions)
+        .then(response => {
+          console.log("reo: ", response);
+          return response.json()
+        })
+        .then(result => {
+          console.log("RESULT: ", result);
+          console.log("he suis le result;error: ", result.Message);
+          if (result.status == 300) {
+            console.log("On est 300: ", result.Message)
+            setParam("Error")
+            setErrMess(result.Message)
+          } else {
+            console.log("new_card: ", result.data);
+            let new_hand = store.UserInfos.hand
+            new_hand[location.state.pos - 1] = result.data
+            console.log("new_hand: ", new_hand);
+            let action = {
+              type: 'SET_HAND',
+              value: new_hand
+            };
+            Store.dispatch(action);
+            reset()
+            //setParam('')
+            history.push({
+              pathname: '/Game',
+            });
+          }
+        })
+        .catch(error => console.log('error oui la bonne: ', error));
     }
 
     return (

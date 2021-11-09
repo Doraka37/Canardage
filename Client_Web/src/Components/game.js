@@ -53,9 +53,9 @@ function Game() {
   console.log("test: ", hand[0]);
   return (
     <div className="App">
-      <Card cardInfo={list.cards[hand[0]]} array={array} playerID={2} pos={1} className="rectangle"/>
-      <Card cardInfo={list.cards[hand[2]]} array={array} playerID={2} pos={3} className="rectangle2"/>
-      <Card cardInfo={list.cards[hand[1]]} array={array} playerID={2} pos={2} className="rectangle3"/>
+      <Card cardInfo={list.cards[hand[0]]} array={array} playerID={2} pos={1} hand={hand} className="rectangle"/>
+      <Card cardInfo={list.cards[hand[2]]} array={array} playerID={2} pos={3} hand={hand} className="rectangle2"/>
+      <Card cardInfo={list.cards[hand[1]]} array={array} playerID={2} pos={2} hand={hand} className="rectangle3"/>
     </div>
   )
 }

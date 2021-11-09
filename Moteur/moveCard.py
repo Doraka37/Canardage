@@ -66,7 +66,7 @@ def FulguroGlobalCheck(Board, playerID):
         if player["id"] == playerID:
             playerDuckTmp = player["duck"]
 
-    for i in range(Board.BoardGame):
+    for i in range(len(Board.BoardGame)):
         if i > 0 and Board.BoardGame[i]["duck"] == playerDuckTmp:
             return True
 
@@ -112,7 +112,7 @@ def DuckLeftGlobalCheck(Board, playerID):
         if player["id"] == playerID:
             playerDuckTmp = player["duck"]
 
-    for i in range(Board.BoardGame):
+    for i in range(len(Board.BoardGame)):
         if i > 0 and Board.BoardGame[i]["duck"] == playerDuckTmp:
             return True
 
@@ -158,7 +158,7 @@ def DuckRightGlobalCheck(Board, PlayerID):
         if player["id"] == playerID:
             playerDuckTmp = player["duck"]
 
-    for i in range(Board.BoardGame):
+    for i in range(len(Board.BoardGame)):
         if i < 5 and Board.BoardGame[i]["duck"] == playerDuckTmp:
             return True
 

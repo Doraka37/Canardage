@@ -134,7 +134,7 @@ def AimRightCheck(Board, value):
     return Board
 
 def AimRightGlobalCheck(Board):
-    for i in range(Board.BoardGame):
+    for i in range(len(Board.BoardGame)):
         if Board.BoardGame[i]["target"] == True and i < 5 and Board.BoardGame[i + 1]["target"] == False:
             return True
     return False
@@ -164,7 +164,7 @@ def AimLeftCheck(Board, value):
     return Board
 
 def AimLeftGlobalCheck(Board):
-    for i in range(Board.BoardGame):
+    for i in range(len(Board.BoardGame)):
         if Board.BoardGame[i]["target"] == True and i > 0 and Board.BoardGame[i - 1]["target"] == False:
             return True
     return False
@@ -199,7 +199,8 @@ def TwoForOneCheck(Board, value, value2):
     return Board
 
 def TwoForOneGlobalCheck(Board):
-    for i in range(Board.BoardGame):
+    print(Board.BoardGame)
+    for i in range(len(Board.BoardGame)):
         if Board.BoardGame[i]["target"] == False and i < 5 and Board.BoardGame[i + 1]["target"] == False:
             return True
     return False
@@ -239,7 +240,7 @@ def DoublePanCheck(Board, value, value2):
     return Board
 
 def DoublePanGlobalCheck(Board):
-    for i in range(Board.BoardGame):
+    for i in range(len(Board.BoardGame)):
         if Board.BoardGame[i]["target"] == True and i < 5 and Board.BoardGame[i + 1]["target"] == True:
             return True
     return False

@@ -82,7 +82,7 @@ def HideGlobalCheck(Board, PlayerID):
         if player["id"] == playerID:
             playerDuckTmp = player["duck"]
 
-    for i in range(Board.BoardGame):
+    for i in range(len(Board.BoardGame)):
         if Board.BoardGame[i]["duck"] == playerDuckTmp:
             if i == 0 and Board.BoardGame[i + 1]["hideDuck"] == 'none':
                 return True
