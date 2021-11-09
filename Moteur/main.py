@@ -185,15 +185,34 @@ class addUsers(Resource):
                 )
         return response
 
+def getNextCard():
+    global Board
+    card = Board.CardDrawList[0]
+    Board.CardDrawList.pop(0)
+    return card
+
 class userAfk(Resource):
     def get(self):
+        global started
+        
         id = request.headers.get("playerID")
+        getCard = request.headers.get("getCard")
         result = setId(id)
-        response = app.response_class(
-            response=json.dumps({"data":playerList}),
-            status=result,
-            mimetype='application/json'
-        )
+        if getCard == 'True' and started == True:
+            card1 = getNextCard()
+            card2 = getNextCard()
+            card3 = getNextCard()
+            response = app.response_class(
+                response=json.dumps({"data":playerList, "started": started, "card1": card1, "card2": card2, "card3": card3}),
+                status=result,
+                mimetype='application/json'
+            )
+        else:
+            response = app.response_class(
+                response=json.dumps({"data":playerList, "started": started}),
+                status=result,
+                mimetype='application/json'
+            )
         return response
 
 class startGame(Resource):
