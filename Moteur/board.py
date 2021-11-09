@@ -5,7 +5,8 @@ import protectCard
 import attackCard
 
 class ClassBoardGame:
-    ErrorMessage = 0
+    ErrorMessage = ""
+    Status = False
     DuckList = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
     DuckDrawList = []
     CardList = [
@@ -215,7 +216,8 @@ def test():
     Board = moveCard.WalkPlay(Board)
 
 def PlayCard(Board, ID, value, value2, valueList, playerID):
-    Board.ErrorMessage = 100
+    Board.ErrorMessage = "Une erreur est survenue"
+    Board.Status = False
     ID = int(ID)
     value = int(value)
     value2 = int(value2)
@@ -245,7 +247,8 @@ def PlayCard(Board, ID, value, value2, valueList, playerID):
 
 
 def GlobalCheckCard(Board, ID, playerID):
-    Board.ErrorMessage = 100
+    Board.ErrorMessage = "Une erreur est survenue"
+    Board.Status = False
     ID = int(ID)
     playerID = int(playerID)
     switcher = {

@@ -20,27 +20,33 @@ started = False
 idList = [
     {
         "id":213231,
-        "isHere":True
+        "isHere":True,
+        "playTurn":False
     },
     {
         "id":345234,
-        "isHere":False
+        "isHere":False,
+        "playTurn":False
     },
     {
         "id":213213213,
-        "isHere":True
+        "isHere":True,
+        "playTurn":False
     },
     {
         "id":324123123,
-        "isHere":False
+        "isHere":False,
+        "playTurn":False
     },
     {
         "id":0,
-        "isHere":False
+        "isHere":False,
+        "playTurn":False
     },
     {
         "id":0,
-        "isHere":False
+        "isHere":False,
+        "playTurn":False
     },
 ]
 
@@ -84,7 +90,7 @@ class playCard(Resource):
         started = True
         if started == False:
             response = app.response_class(
-                response=json.dumps({"data":"game is not started"}),
+                response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé"}),
                 status=300,
                 mimetype='application/json'
             )
@@ -95,26 +101,34 @@ class playCard(Resource):
             playerID = request.form.get("playerID")
             cardID = request.form.get("cardID")
             print("acrd id: ", cardID)
+            if checkTurn(playerID) == False:
+                response = app.response_class(
+                    response=json.dumps({"data":cardDraw, "Message":"Ce n'est pas votre tour de jouer"}),
+                    status=300,
+                    mimetype='application/json'
+                )
+                return response
             Board = board.PlayCard(Board, cardID, value1, value2, valueList, playerID)
             print(Board.ErrorMessage)
-            if Board.ErrorMessage == 200:
+            if Board.Status == True:
                 print("pd1")
                 if Board.CardDrawList == []:
                     Board.CardDrawList = Board.CardDiscardList
                     random.shuffle(Board.CardDrawList)
                     CardDiscardList = []
-                Board.CardDiscardList.append(cardID)
+                Board.CardDiscardList.append(int(cardID))
                 cardDraw = Board.CardDrawList[0]
                 Board.CardDrawList.pop(0)
+                updateTurn()
                 response = app.response_class(
-                    response=json.dumps({"data":cardDraw}),
-                    status=Board.ErrorMessage,
+                    response=json.dumps({"data":cardDraw, "Message":Board.ErrorMessage}),
+                    status=200,
                     mimetype='application/json'
                 )
             else:
                 print("pd2")
                 response = app.response_class(
-                    response=json.dumps({"data":"Error","error":Board.ErrorMessage}),
+                    response=json.dumps({"data":"Error","Message":Board.ErrorMessage}),
                     status=300,
                     mimetype='application/json'
                 )
@@ -128,33 +142,52 @@ class disCard(Resource):
         global started
         if started == False:
             response = app.response_class(
-                response=json.dumps({"data":"game is not started"}),
-                status=Board.ErrorMessage,
+                response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé"}),
+                status=300,
                 mimetype='application/json'
             )
         else:
             playerID = request.form.get("playerID")
-            cardListID = request.form.get("cardListID")
             cardID = request.form.get("cardID")
-            for ID in cardListID:
-                if board.PlayCard(Board, ID, PlayerID) == True:
-                    response = app.response_class(
-                        response=json.dumps({"data":"error"}),
-                        status=Board.ErrorMessage,
-                        mimetype='application/json'
-                    )
-                    return response
+            card1 = request.form.get("card1")
+            card2 = request.form.get("card2")
+            card3 = request.form.get("card3")
+            valueList = []
+            if checkTurn(playerID) == False:
+                response = app.response_class(
+                    response=json.dumps({"data":cardDraw, "Message":"Ce n'est pas votre tour de jouer"}),
+                    status=300,
+                    mimetype='application/json'
+                )
+                return response
+            ##cardListID = request.form.get("cardListID")
+            ##cardID = request.form.get("cardID")
+            if board.GlobalCheckCard(Board, card1, PlayerID) == True:
+                valueList.append(card1)
+            if board.GlobalCheckCard(Board, card2, PlayerID) == True:
+                valueList.append(card2)
+            if board.GlobalCheckCard(Board, card3, PlayerID) == True:
+                valueList.append(card3)
+
+            if valueList != []:
+                response = app.response_class(
+                    response=json.dumps({"data":valueList, "Message": "Une ou plusieurs cartes sont jouables"}),
+                    status=300,
+                    mimetype='application/json'
+                )
+                return response
 
             if Board.CardDrawList == []:
                 Board.CardDrawList = Board.CardDiscardList
                 random.shuffle(Board.CardDrawList)
                 CardDiscardList = []
-            Board.CardDiscardList.append(cardID)
+            Board.CardDiscardList.append(int(cardID))
             cardDraw = Board.CardDrawList[0]
             Board.CardDrawList.pop(0)
+            updateTurn()
             response = app.response_class(
-                response=json.dumps({"data":cardDraw}),
-                status=Board.ErrorMessage,
+                response=json.dumps({"data":cardDraw, "Message":"La carte a été corectement jeté"}),
+                status=200,
                 mimetype='application/json'
             )
             return response
@@ -164,7 +197,7 @@ class addUsers(Resource):
         global started
         if started == True:
             response = app.response_class(
-                response=json.dumps({"data":"game is started"}),
+                response=json.dumps({"data":"Error", "Message": "La partie a déja commencé"}),
                 status=300,
                 mimetype='application/json'
             )
@@ -172,29 +205,23 @@ class addUsers(Resource):
             user = request.form.get("name")
             if checkUserName(user) == False:
                 response = app.response_class(
-                    response=json.dumps({"data":"name already taken"}),
+                    response=json.dumps({"data":"Error", "Message":"Ce nom est déja utilisé"}),
                     status=300,
                     mimetype='application/json'
                 )
             else:
                 addUserToParty(user)
                 response = app.response_class(
-                    response=json.dumps({"data":playerList}),
+                    response=json.dumps({"data":playerList, "Message":"Le joueur a été ajouté"}),
                     status=200,
                     mimetype='application/json'
                 )
         return response
 
-def getNextCard():
-    global Board
-    card = Board.CardDrawList[0]
-    Board.CardDrawList.pop(0)
-    return card
-
 class userAfk(Resource):
     def get(self):
         global started
-        
+
         id = request.headers.get("playerID")
         getCard = request.headers.get("getCard")
         result = setId(id)
@@ -219,6 +246,7 @@ class startGame(Resource):
     def get(self):
         global Board
         global started
+        idList[0].update({"playTurn":True})
         Board = board.getBoard(4, idList)
         started = True
         print("Done")
@@ -234,6 +262,30 @@ api.add_resource(disCard, '/disCard')
 api.add_resource(addUsers, '/addUsers')
 api.add_resource(userAfk, '/userAfk')
 api.add_resource(startGame, '/startGame')
+
+def checkTurn(playerID):
+    playerID = int(playerID)
+    for x in idList:
+        if x["id"] == playerID:
+            return x["playTurn"]
+    return False
+
+def updateTurn():
+    for i in range(len(idList)):
+        if idList[i]["playTurn"] == True:
+            if i == 5 or idList[i + 1]["id"] == 0:
+                idList[0].update({"playTurn":True})
+            else:
+                idList[i + 1].update({"playTurn":True})
+            idList[i].update({"playTurn":False})
+
+
+
+def getNextCard():
+    global Board
+    card = Board.CardDrawList[0]
+    Board.CardDrawList.pop(0)
+    return card
 
 def setId(id):
     for x in idList:

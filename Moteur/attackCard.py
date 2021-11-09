@@ -1,6 +1,6 @@
 def Pan(Board, value):
     Board = PanCheck(Board, value)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = PanPlay(Board, value)
     return Board
 
@@ -11,9 +11,11 @@ def PanPlay(Board, value):
 
 def PanCheck(Board, value):
     if Board.BoardGame[value - 1]["target"] == False:
-        Board.ErrorMessage = 101
+        Board.ErrorMessage = "Il n'y a pas de cible sur cette case"
+        Board.Status = False
         return Board
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def PanGlobalCheck(Board):
@@ -24,7 +26,7 @@ def PanGlobalCheck(Board):
 
 def Aim(Board, value):
     Board = AimCheck(Board, value)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = AimPlay(Board, value)
     return Board
 
@@ -34,9 +36,11 @@ def AimPlay(Board, value):
 
 def AimCheck(Board, value):
     if Board.BoardGame[value - 1]["target"] == True:
-        Board.ErrorMessage = 201
+        Board.ErrorMessage = "Il y a déja une cible sur cette case"
+        Board.Status = False
         return Board
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def AimGlobalCheck(Board):
@@ -47,7 +51,7 @@ def AimGlobalCheck(Board):
 
 def Oups(Board, value):
     Board = OupsCheck(Board, value)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = OupsPlay(Board, value)
     return Board
 
@@ -65,15 +69,19 @@ def OupsPlay(Board, value):
 
 def OupsCheck(Board, value):
     if value == 1 and Board.BoardGame[value]["target"] == False:
-        Board.ErrorMessage = 301
+        Board.ErrorMessage = "Il n'y a pas de cible sur une case adjacente"
+        Board.Status = False
         return Board
     elif value == 6 and Board.BoardGame[value - 2]["target"] == False:
-        Board.ErrorMessage = 301
+        Board.ErrorMessage = "Il n'y a pas de cible sur une case adjacente"
+        Board.Status = False
         return Board
     elif Board.BoardGame[value - 2]["target"] == False and Board.BoardGame[value]["target"] == False:
-        Board.ErrorMessage = 301
+        Board.ErrorMessage = "Il n'y a pas de cible sur une case adjacente"
+        Board.Status = False
         return Board
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def OupsGlobalCheck(Board):
@@ -84,7 +92,7 @@ def OupsGlobalCheck(Board):
 
 def DuckyLuck(Board, value):
     Board = DuckyLuckCheck(Board, value)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = DuckyLuckPlay(Board, value)
     return Board
 
@@ -94,7 +102,8 @@ def DuckyLuckPlay(Board, value):
     return Board
 
 def DuckyLuckCheck(Board, value):
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def DuckyLuckGlobalCheck(Board):
@@ -102,7 +111,7 @@ def DuckyLuckGlobalCheck(Board):
 
 def AimRight(Board, value):
     Board = AimRightCheck(Board, value)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = AimRightPlay(Board, value)
     return Board
 
@@ -113,12 +122,15 @@ def AimRightPlay(Board, value):
 
 def AimRightCheck(Board, value):
     if value > 5:
-        Board.ErrorMessage = 501
+        Board.ErrorMessage = "La case ciblé est la derniere du plateau"
+        Board.Status = False
         return Board
     if Board.BoardGame[value]["target"] == True:
-        Board.ErrorMessage = 502
+        Board.ErrorMessage = "Il y a déja une cible sur la case de droite"
+        Board.Status = False
         return Board
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def AimRightGlobalCheck(Board):
@@ -129,7 +141,7 @@ def AimRightGlobalCheck(Board):
 
 def AimLeft(Board, value):
     Board = AimLeftCheck(Board, value)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = AimLeftPlay(Board, value)
     return Board
 
@@ -140,12 +152,15 @@ def AimLeftPlay(Board, value):
 
 def AimLeftCheck(Board, value):
     if value < 2:
-        Board.ErrorMessage = 601
+        Board.ErrorMessage = "La case ciblé est la premiere du plateau"
+        Board.Status = False
         return Board
     if Board.BoardGame[value - 2]["target"] == True:
-        Board.ErrorMessage = 602
+        Board.ErrorMessage = "Il y a déja une cible sur la case a gauche"
+        Board.Status = False
         return Board
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def AimLeftGlobalCheck(Board):
@@ -156,7 +171,7 @@ def AimLeftGlobalCheck(Board):
 
 def TwoForOne(Board, value, value2):
     Board = TwoForOneCheck(Board, value, value2)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = TwoForOnePlay(Board, value, value2)
     return Board
 
@@ -167,16 +182,20 @@ def TwoForOnePlay(Board, value, value2):
 
 def TwoForOneCheck(Board, value, value2):
     if value2 > value + 1 or value2 < value - 1 or value == value2:
-        Board.ErrorMessage = 701
+        Board.ErrorMessage = "Les cases ne sont pas adjacente"
+        Board.Status = False
         return Board
 
     if Board.BoardGame[value - 1]["target"] == True:
-        Board.ErrorMessage = 702
+        Board.ErrorMessage = "Il y a déja une cible sur une case ciblé"
+        Board.Status = False
         return Board
     if Board.BoardGame[value2 - 1]["target"] == True:
-        Board.ErrorMessage = 702
+        Board.ErrorMessage = "Il y a déja une cible sur une case ciblé"
+        Board.Status = False
         return Board
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def TwoForOneGlobalCheck(Board):
@@ -187,7 +206,7 @@ def TwoForOneGlobalCheck(Board):
 
 def DoublePan(Board, value, value2):
     Board = DoublePanCheck(Board, value, value2)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = DoublePanPlay(Board, value, value2)
     return Board
 
@@ -204,16 +223,19 @@ def DoublePanPlay(Board, value, value2):
 
 def DoublePanCheck(Board, value, value2):
     if value2 > value + 1 or value2 < value - 1 or value == value2:
-        Board.ErrorMessage = 801
+        Board.ErrorMessage = "Les cases ciblé ne sont pas adjacente"
         return Board
 
     if Board.BoardGame[value - 1]["target"] == False:
-        Board.ErrorMessage = 802
+        Board.ErrorMessage = "il n'y a pas de cible sur une case visé"
+        Board.Status = False
         return Board
     if Board.BoardGame[value2 - 1]["target"] == False:
-        Board.ErrorMessage = 802
+        Board.ErrorMessage = "il n'y a pas de cible sur une case visé"
+        Board.Status = False
         return Board
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def DoublePanGlobalCheck(Board):

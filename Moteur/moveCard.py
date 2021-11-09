@@ -19,7 +19,8 @@ def WalkPlay(Board):
     return Board
 
 def WalkCheck(Board):
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def WalkGlobalCheck(Board):
@@ -44,16 +45,19 @@ def FulguroPlay(Board, value):
 
 def FulguroCheck(Board, value, playerID):
     if value < 2 or value > 6:
-        Board.ErrorMessage = 1601
+        Board.ErrorMessage = "La case sélectioné est la premiere case"
+        Board.Status = False
         return Board
 
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value]["duck"]:
-                Board.ErrorMessage = 200
+                Board.ErrorMessage = "La carte a été joué"
+                Board.Status = True
                 return Board
 
-    Board.ErrorMessage = 1602
+    Board.ErrorMessage = "Le canard sélectioné n'est pas un canard allié"
+    Board.Status = False
     return Board
 
 def FulguroGlobalCheck(Board, playerID):
@@ -87,16 +91,19 @@ def DuckLeftPlay(Board, value):
 
 def DuckLeftCheck(Board, value, playerID):
     if value == 1:
-        Board.ErrorMessage = 1701
+        Board.ErrorMessage = "La case sélectioné est la premiere du plateau"
+        Board.Status = False
         return Board
 
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value - 1]["duck"]:
-                Board.ErrorMessage = 200
+                Board.ErrorMessage = "La carte a été joué"
+                Board.Status = True
                 return Board
 
-    Board.ErrorMessage = 1702
+    Board.ErrorMessage = "Le canard sélectioné n'est pas un canard allié"
+    Board.Status = False
     return Board
 
 def DuckLeftGlobalCheck(Board, playerID):
@@ -130,16 +137,19 @@ def DuckRightPlay(Board, value):
 
 def DuckRightCheck(Board, value, playerID):
     if value == 6:
-        Board.ErrorMessage = 1801
+        Board.ErrorMessage = "La case sélectioné est la derniere du plateau"
+        Board.Status = False
         return Board
 
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value - 1]["duck"]:
-                Board.ErrorMessage = 200
+                Board.ErrorMessage = "La carte a été joué"
+                Board.Status = True
                 return Board
 
-    Board.ErrorMessage = 1802
+    Board.ErrorMessage = "Le canard sélectioné n'est pas un cnard allié"
+    Board.Status = False
     return Board
 
 def DuckRightGlobalCheck(Board, PlayerID):

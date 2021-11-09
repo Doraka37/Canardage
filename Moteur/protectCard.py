@@ -3,7 +3,7 @@ from random import randrange
 
 def Protect(Board, value, playerID):
     Board = ProtectCheck(Board, value)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = ProtectPlay(Board, value, playerID)
     return Board
 
@@ -14,13 +14,16 @@ def ProtectPlay(Board, value, playerID):
 
 def ProtectCheck(Board, value):
     if Board.BoardGame[value - 1]["protected"] != 'none':
-        Board.ErrorMessage = 901
+        Board.ErrorMessage = "Cette case est déja protégé"
+        Board.Status = False
         return Board
 
     if Board.BoardGame[value - 1]["duck"] == 'empty':
-        Board.ErrorMessage = 902
+        Board.ErrorMessage = "Cette case ne possede pas de canard"
+        Board.Status = False
         return Board
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def ProtectGlobalCheck(Board):
@@ -32,7 +35,7 @@ def ProtectGlobalCheck(Board):
 
 def Hide(Board, value, value2, PlayerID):
     Board = HideCheck(Board, value, value2, PlayerID)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = HidePlay(Board, value, value2)
     return Board
 
@@ -49,23 +52,28 @@ def HidePlay(Board, value, value2):
 
 def HideCheck(Board, value, value2, playerID):
     if value2 > value + 1 or value2 < value - 1 or value == value2:
-        Board.ErrorMessage = 1001
+        Board.ErrorMessage = "Les cases ne sont pas adjacente"
+        Board.Status = False
         return Board
 
     if Board.BoardGame[value2 - 1]["duck"] == 'empty':
-        Board.ErrorMessage = 1002
+        Board.ErrorMessage = "Cette case ne posede pas de canards"
+        Board.Status = False
         return Board
     if Board.BoardGame[value2 - 1]["hideDuck"] != 'none':
-        Board.ErrorMessage = 1003
+        Board.ErrorMessage = "Un canard est déja cacché sous cette case"
+        Board.Status = False
         return Board
 
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value - 1]["duck"]:
-                Board.ErrorMessage = 200
+                Board.ErrorMessage = "La carte a été joué"
+                Board.Status = True
                 return Board
 
-    Board.ErrorMessage = 1004
+    Board.ErrorMessage = "Cette case ne contient pas de canards allié"
+    Board.Status = False
     return Board
 
 def HideGlobalCheck(Board, PlayerID):
@@ -90,7 +98,7 @@ def Canarchie(Board, valueList):
     valueList = valueList.replace('[', '')
     valueList = valueList.replace(']', '')
     Board = CanarchieCheck(Board, valueList)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = CanarchiePlay(Board, valueList)
     return Board
 
@@ -115,7 +123,8 @@ def CanarchieCheck(Board, valueList):
     for x in valueList:
         print("value: ", x)
     if len(valueList) != 6:
-        Board.ErrorMessage = 1102
+        Board.ErrorMessage = "La liste ne contient pas 6 valeurs"
+        Board.Status = False
         return Board
 
     tmp = ""
@@ -125,13 +134,15 @@ def CanarchieCheck(Board, valueList):
         j = i + 1
         while j < 6:
             if tmp == valueList[j]:
-                Board.ErrorMessage = 1101
+                Board.ErrorMessage = "Une ou plusieurs valeurs sont en double"
+                Board.Status = False
                 return Board
             j += 1
         i += 1
 
 
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def CanarchieGlobalCheck(Board):
@@ -139,7 +150,7 @@ def CanarchieGlobalCheck(Board):
 
 def CrazyDance(Board):
     Board = CrazyDanceCheck(Board)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = CrazyDancePlay(Board)
     return Board
 
@@ -158,7 +169,8 @@ def CrazyDancePlay(Board):
     return Board
 
 def CrazyDanceCheck(Board):
-    Board.ErrorMessage = 200
+    Board.ErrorMessage = "La carte a été joué"
+    Board.Status = True
     return Board
 
 def CrazyDanceGlobalCheck(Board):
@@ -166,7 +178,7 @@ def CrazyDanceGlobalCheck(Board):
 
 def PeaceLove(Board):
     Board = PeaceLoveCheck(Board)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = PeaceLovePlay(Board)
     return Board
 
@@ -179,10 +191,12 @@ def PeaceLovePlay(Board):
 def PeaceLoveCheck(Board):
     for x in Board.BoardGame:
         if x["target"] == True:
-            Board.ErrorMessage = 200
+            Board.ErrorMessage = "La carte a été joué"
+            Board.Status = True
             return Board
 
-    Board.ErrorMessage = 1301
+    Board.ErrorMessage = "Il n'y a aucune cible sur le plateau"
+    Board.Status = False
     return Board
 
 def PeaceLoveGlobalCheck(Board):
@@ -194,7 +208,7 @@ def PeaceLoveGlobalCheck(Board):
 
 def WalkingDuck(Board, value):
     Board = WalkingDuckCheck(Board, value)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = WalkingDuckPlay(Board, value)
     return Board
 
@@ -206,9 +220,11 @@ def WalkingDuckPlay(Board, value):
 
 def WalkingDuckCheck(Board, value):
     if Board.PlayerList[value - 1]["death"] < 2:
-        Board.ErrorMessage = 200
+        Board.ErrorMessage = "La carte a été joué"
+        Board.Status = True
         return Board
-    Board.ErrorMessage = 1401
+    Board.ErrorMessage = "Ce joueur n'as aucun canard mort"
+    Board.Status = False
     return Board
 
 def WalkingDuckGlobalCheck(Board):
