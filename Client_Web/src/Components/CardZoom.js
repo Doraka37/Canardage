@@ -55,6 +55,7 @@ function CardZoom(props) {
     formdata.append('playerID', location.state.playerID)
     formdata.append('cardID', location.state.cardID)
 
+    console.log("IDplayer: ", location.state.playerID);
     var myHeaders = new Headers();
     myHeaders.append('Access-Control-Allow-Origin', '*')
 

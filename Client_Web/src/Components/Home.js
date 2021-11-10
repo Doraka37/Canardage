@@ -13,6 +13,8 @@ function Home() {
   const [playerList, setPlayerlist] = useState(store.UserInfos.userList);
   const [playerNbr, setplayerNbr] = useState('1');
   const [isStarted, setIsStarted] = useState(false);
+  const [param, setParam] = useState('');
+  const [errMess, setErrMess] = useState("No Error Message");
 
   async function start_game() {
     var started = false;
@@ -51,9 +53,9 @@ function Home() {
             console.log("result: ", result);
             if (result.started == true) {
               started = true
-              hand[0] = result.card1
-              hand[1] = result.card2
-              hand[2] = result.card3
+              hand[0] = result.card1 - 1
+              hand[1] = result.card2 - 1
+              hand[2] = result.card3 - 1
               let action = {
                 type: 'SET_HAND',
                 value: hand
@@ -99,10 +101,20 @@ function Home() {
       .then(result => {
         console.log("result: ", result);
         for (var i = 0; i < result.data.length; i++) {
+          if (result.status == 300) {
+            setParam("Error")
+            setErrMess(result.Message)
+            return;
+          }
           if (result.data[i].name == value) {
             setPlayerID(result.data[i].id)
             setColor(result.data[i].color)
             start_game()
+            let action = {
+              type: 'SET_PLAYER_ID',
+              value: result.data[i].id
+            };
+            Store.dispatch(action);
           }
           if (result.data[i].id != 0) {
             list.push(result.data[i].name)
@@ -131,6 +143,7 @@ function Home() {
     const list = playerList
     list.push(value)
     setPseudo(value);
+    setParam("Loged")
     setPlayerlist(list)
     action = {
       type: 'SET_USER_LIST',
@@ -146,11 +159,10 @@ function Home() {
    return <p className="p-font">{props.value}</p>;
   }
 
-  return (
-    <div className="CardZoom">
-      <div>
-          <h2>Home</h2>
-        {pseudo !== '' ?
+  function renderSwitch(param) {
+    switch(param) {
+      case 'Loged':
+        return (
           <div className="Home">
             <div>
               <button
@@ -175,20 +187,41 @@ function Home() {
               </button>
             </div>
           </div>
-            :
-          <div className="Home">
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label className="input">
-                  <input className="input" type="text" value={value} onChange={handleChange}/>
-                </label>
+        );
+        case 'Error':
+          return (
+            <div className="Zoom">
+              <div className="errorMess">
+                <h1 className="font-link">Impossible de se conencter à la partie</h1>
+                <p className="font-link">{errMess}</p>
+                <button className="SelecButton" type="button" onClick={() => setParam('')}>
+                  OK
+                </button>
               </div>
-              <div>
-                <input className="input" type="submit" value="Rejoindre la partie" />
-              </div>
-            </form>
-          </div>
-        }
+            </div>
+          )
+        default:
+          return (
+            <div className="Home">
+              <form onSubmit={handleSubmit}>
+                <div>
+                  <label className="input">
+                    <input className="input" type="text" value={value} onChange={handleChange}/>
+                  </label>
+                </div>
+                <div>
+                  <input className="input" type="submit" value="Rejoindre la partie" />
+                </div>
+              </form>
+            </div>
+          )
+      }}
+
+  return (
+    <div className="CardZoom">
+      <div>
+        <h2>Home</h2>
+        {renderSwitch(param)}
       </div>
     </div>
   );

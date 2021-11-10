@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 
 function Card(props) {
   const history = useHistory();
+  console.log("src: ", props.cardInfo.src);
   var src = props.array[props.cardInfo.src]
   function handleClick(cardID, name, src, playerID, pos, type, hand) {
           console.log(cardID);

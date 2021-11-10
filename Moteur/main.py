@@ -85,6 +85,7 @@ playerList = [
 
 class playCard(Resource):
     def post(self):
+        print("idList: ", idList)
         global Board
         global started
         started = True
@@ -100,14 +101,15 @@ class playCard(Resource):
             valueList = request.form.get("valueList")
             playerID = request.form.get("playerID")
             cardID = request.form.get("cardID")
+            print("playerID: ", playerID)
             print("acrd id: ", cardID)
-            """if checkTurn(playerID) == False:
+            if checkTurn(playerID) == False:
                 response = app.response_class(
                     response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer","status":300}),
                     status=300,
                     mimetype='application/json'
                 )
-                return response"""
+                return response
             Board = board.PlayCard(Board, cardID, value1, value2, valueList, playerID)
             print(Board.ErrorMessage)
             if Board.Status == True:
@@ -155,13 +157,13 @@ class disCard(Resource):
             card2 = request.form.get("card2")
             card3 = request.form.get("card3")
             valueList = []
-            """if checkTurn(playerID) == False:
+            if checkTurn(playerID) == False:
                 response = app.response_class(
                     response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer","status":300}),
                     status=300,
                     mimetype='application/json'
                 )
-                return response"""
+                return response
             ##cardListID = request.form.get("cardListID")
             ##cardID = request.form.get("cardID")
             if board.GlobalCheckCard(Board, card1, playerID) == True:
@@ -303,9 +305,11 @@ def getIdLength(idList):
     return i
 
 def checkTurn(playerID):
+    print("id: ", playerID)
     playerID = int(playerID)
     for x in idList:
         if x["id"] == playerID:
+            print("ici: ", x["playTurn"])
             return x["playTurn"]
     return False
 
@@ -317,6 +321,7 @@ def updateTurn():
             else:
                 idList[i + 1].update({"playTurn":True})
             idList[i].update({"playTurn":False})
+            break
 
 
 

@@ -1,7 +1,8 @@
 const initialState = {
   pseudo: "",
   userList: [],
-  hand: [6, 7, 13]
+  hand: [6, 7, 13],
+  playerID: 0,
 };
 
 function UserInfos(state = initialState, action) {
@@ -23,6 +24,12 @@ function UserInfos(state = initialState, action) {
       nextState = {
         ...state,
         hand: action.value
+      };
+      return nextState;
+    case 'SET_PLAYER_ID':
+      nextState = {
+        ...state,
+        playerID: action.value
       };
       return nextState;
     default:
