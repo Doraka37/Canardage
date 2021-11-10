@@ -122,6 +122,10 @@ class playCard(Resource):
                 cardDraw = Board.CardDrawList[0]
                 Board.CardDrawList.pop(0)
                 updateTurn()
+                print(Board.BoardGame)
+                print("\n",Board.CardDrawList)
+                print("\n",Board.DuckDrawList)
+                print("\n",Board.PlayerList)
                 response = app.response_class(
                     response=json.dumps({"data":cardDraw, "Message":Board.ErrorMessage,"status":200}),
                     status=200,
@@ -403,7 +407,7 @@ def test():
     #print(Board.BoardGame)
 
 if __name__ == '__main__':
-    test()
+    ##test()
     app.run(port=4004, debug=True)
     #p1 = Process(target=checkAFK)
     #p1.start()

@@ -55,6 +55,7 @@ function CardZoom(props) {
     formdata.append('playerID', location.state.playerID)
     formdata.append('cardID', location.state.cardID)
 
+    reset()
     console.log("IDplayer: ", location.state.playerID);
     var myHeaders = new Headers();
     myHeaders.append('Access-Control-Allow-Origin', '*')
@@ -80,7 +81,7 @@ function CardZoom(props) {
         } else {
           console.log("new_card: ", result.data);
           let new_hand = store.UserInfos.hand
-          new_hand[location.state.pos - 1] = result.data
+          new_hand[location.state.pos - 1] = result.data - 1
           console.log("new_hand: ", new_hand);
           let action = {
             type: 'SET_HAND',
@@ -246,7 +247,7 @@ function CardZoom(props) {
       return;
     if (type == "Double") {
       if (value1 == 0) {
-        console.log("setting vlaue1");
+        console.log("setting vlaue1: ", id);
         setValue1(id)
         let array = ["", "", "", "", "", "", ""];
         array[id] = "clicked";
@@ -275,13 +276,8 @@ function CardZoom(props) {
       setIsClicked(click)
       return;
     }
-    if (value1 == 0) {
-      console.log("setting vlaue1");
-      setValue1(id)
-      let array = ["", "", "", "", "", "", ""];
-      array[id] = "clicked";
-      setIsClicked(array)
-    }
+    console.log("setting vlaue1");
+    setValue1(id)
     console.log("placing target at pos: ", id);
     let array = ["", "", "", "", "", "", ""];
     array[id] = "clicked";

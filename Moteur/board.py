@@ -212,13 +212,13 @@ class ClassBoardGame:
             self.BoardGame[-1].update({"duck":self.DuckDrawList[0]})
             self.BoardGame[-1].update({"hideDuck":'none'})
             self.DuckDrawList.pop(0)
-        if checkEnd(self.playerList) == True:
+        if checkEnd(self.PlayerList) == True:
             endGame = True
 
 def checkEnd(playerList):
     i = 0
     for x in playerList:
-        if x > 0 and x < 6:
+        if x["death"] > 0 and x["death"] < 6:
             i += 1
     if i > 1:
         return False

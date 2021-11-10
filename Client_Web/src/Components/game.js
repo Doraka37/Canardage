@@ -50,6 +50,8 @@ function Game() {
   array.push(palme_arriere);
 
   console.log("game pseduo is: ", store.UserInfos.playerID);
+  hand[0] = 9
+  hand[1] = 3
   console.log("test: ", hand[0]);
   return (
     <div className="App">
