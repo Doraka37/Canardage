@@ -1,32 +1,44 @@
-playerList = [
-    {
-        "id":0,
-        "name":"thomas",
-        "color":"red"
+card = [
+  {
+        'duck':'rouge',
+        'death':0,
+        'id':0,
+        'card': [],
+        'name' : ""
     },
     {
-        "id":0,
-        "name":"",
-        "color":"blue"
+        'duck':'bleue',
+        'death':0,
+        'id':0,
+        'card': [],
+        'name' : ""
     },
     {
-        "id":0,
-        "name":"",
-        "color":"green"
+        'duck':'vert',
+        'death':0,
+        'id':0,
+        'card': [],
+        'name' : ""
     },
     {
-        "id":0,
-        "name":"",
-        "color":"yellow"
+        'duck':'jaune',
+        'death':0,
+        'id':0,
+        'card': [],
+        'name' : ""
     },
     {
-        "id":0,
-        "name":"",
-        "color":"orange"
+        'duck':'orange',
+        'death':0,
+        'id':0,
+        'card': [],
+        'name' : ""
     },
     {
-        "id":0,
-        "name":"",
-        "color":"purple"
+        'duck':'violet',
+        'death':0,
+        'id':0,
+        'card': [],
+        'name' : ""
     },
-]
+  ]
