@@ -19,22 +19,22 @@ started = False
 
 idList = [
     {
-        "id":213231,
-        "isHere":True,
-        "playTurn":False
-    },
-    {
-        "id":345234,
+        "id":0,
         "isHere":False,
         "playTurn":False
     },
     {
-        "id":213213213,
-        "isHere":True,
+        "id":0,
+        "isHere":False,
         "playTurn":False
     },
     {
-        "id":324123123,
+        "id":0,
+        "isHere":False,
+        "playTurn":False
+    },
+    {
+        "id":0,
         "isHere":False,
         "playTurn":False
     },
@@ -54,22 +54,22 @@ playerList = [
     {
         "id":0,
         "name":"",
-        "color":"red"
+        "color":"rouge"
     },
     {
         "id":0,
         "name":"",
-        "color":"blue"
+        "color":"bleu"
     },
     {
         "id":0,
         "name":"",
-        "color":"green"
+        "color":"vert"
     },
     {
         "id":0,
         "name":"",
-        "color":"yellow"
+        "color":"jaune"
     },
     {
         "id":0,
@@ -79,7 +79,7 @@ playerList = [
     {
         "id":0,
         "name":"",
-        "color":"purple"
+        "color":"violet"
     },
 ]
 
@@ -205,6 +205,12 @@ class addUsers(Resource):
                 status=300,
                 mimetype='application/json'
             )
+        if playerList[5]["id"] != 0:
+            response = app.response_class(
+                response=json.dumps({"data":"Error", "Message": "La partie est pleine","status":300}),
+                status=300,
+                mimetype='application/json'
+            )
         else:
             user = request.form.get("name")
             if checkUserName(user) == False:
@@ -231,7 +237,18 @@ class userAfk(Resource):
         print("getCard: ", getCard)
         print("gettypeCard: ", type(getCard))
         result = setId(id)
+<<<<<<< HEAD
         if getCard == 'true' and started == True:
+=======
+        if result == 300:
+            response = app.response_class(
+                response=json.dumps({"data":playerList, "started": started, "status":result}),
+                status=result,
+                mimetype='application/json'
+            )
+            return response
+        if getCard == 'True' and started == True:
+>>>>>>> f7fe545213b4667890ff98d266d1f9df9f9348b9
             card1 = getNextCard()
             card2 = getNextCard()
             card3 = getNextCard()
@@ -240,20 +257,21 @@ class userAfk(Resource):
                 status=result,
                 mimetype='application/json'
             )
+            return response
         else:
             response = app.response_class(
                 response=json.dumps({"data":playerList, "started": started,"status":result}),
                 status=result,
                 mimetype='application/json'
             )
-        return response
+            return response
 
 class startGame(Resource):
     def get(self):
         global Board
         global started
         idList[0].update({"playTurn":True})
-        Board = board.getBoard(4, idList)
+        Board = board.getBoard(getIdLength(idList), idList)
         started = True
         print("Done")
         response = app.response_class(
@@ -268,6 +286,14 @@ api.add_resource(disCard, '/disCard')
 api.add_resource(addUsers, '/addUsers')
 api.add_resource(userAfk, '/userAfk')
 api.add_resource(startGame, '/startGame')
+
+def getIdLength(idList):
+    i = 0
+    for x in idList:
+        if x["id"] == 0:
+            break
+        i += 1
+    return i
 
 def checkTurn(playerID):
     playerID = int(playerID)

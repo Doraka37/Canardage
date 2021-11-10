@@ -7,7 +7,7 @@ import attackCard
 class ClassBoardGame:
     ErrorMessage = ""
     Status = False
-    DuckList = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
+    DuckList = ['rouge', 'bleue', 'vert', 'jaune', 'orange', 'violet']
     DuckDrawList = []
     CardList = [
         {
@@ -87,28 +87,28 @@ class ClassBoardGame:
     CardDiscardList = []
     PlayerList = [
         {
-            'duck':'red',
+            'duck':'rouge',
             'death':0,
             'id':0,
             'card': [],
             'name' : ""
         },
         {
-            'duck':'blue',
+            'duck':'bleue',
             'death':0,
             'id':0,
             'card': [],
             'name' : ""
         },
         {
-            'duck':'green',
+            'duck':'vert',
             'death':0,
             'id':0,
             'card': [],
             'name' : ""
         },
         {
-            'duck':'yellow',
+            'duck':'jaune',
             'death':0,
             'id':0,
             'card': [],
@@ -122,7 +122,7 @@ class ClassBoardGame:
             'name' : ""
         },
         {
-            'duck':'purple',
+            'duck':'violet',
             'death':0,
             'id':0,
             'card': [],
