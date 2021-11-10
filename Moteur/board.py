@@ -170,26 +170,28 @@ class ClassBoardGame:
 
     def __init__(self, value, idList):
         if value < 2 or value > 6:
-            return 404
+            self.ErrorMessage = "Le nombre de joueur doit etre comprit entre 2 et 6"
+            self.ErrorMessage = 300
 
-        for i in range(value):
-            self.PlayerList[i].update({"death":1})
-            self.PlayerList[i].update({"id":idList[i]["id"]})
-            for x in range(5):
-                self.DuckDrawList.append(self.DuckList[i])
+        else:
+            for i in range(value):
+                self.PlayerList[i].update({"death":1})
+                self.PlayerList[i].update({"id":idList[i]["id"]})
+                for x in range(5):
+                    self.DuckDrawList.append(self.DuckList[i])
 
-        for i in range(5):
-            self.DuckDrawList.append("empty")
-        random.shuffle(self.DuckDrawList)
+            for i in range(5):
+                self.DuckDrawList.append("empty")
+            random.shuffle(self.DuckDrawList)
 
-        for x in self.BoardGame:
-            x.update({"duck":self.DuckDrawList[0]})
-            self.DuckDrawList.pop(0)
+            for x in self.BoardGame:
+                x.update({"duck":self.DuckDrawList[0]})
+                self.DuckDrawList.pop(0)
 
-        for x in self.CardList:
-            for i in range(x["number"]):
-                self.CardDrawList.append(x["id"])
-        random.shuffle(self.CardDrawList)
+            for x in self.CardList:
+                for i in range(x["number"]):
+                    self.CardDrawList.append(x["id"])
+            random.shuffle(self.CardDrawList)
 
     def DeathMove(self, value):
         if self.BoardGame[value - 1]["duck"] == 'empty':

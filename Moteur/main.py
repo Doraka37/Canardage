@@ -268,10 +268,17 @@ class startGame(Resource):
         global started
         idList[0].update({"playTurn":True})
         Board = board.getBoard(getIdLength(idList), idList)
+        if Board.Status == 300:
+            response = app.response_class(
+                response=json.dumps({"data":playerList, "started": started,"status":Board.status, "Message": Board.ErrorMessage}),
+                status=300,
+                mimetype='application/json'
+            )
+            return response
         started = True
         print("Done")
         response = app.response_class(
-            status=300,
+            status=200,
             mimetype='application/json'
         )
         return response
