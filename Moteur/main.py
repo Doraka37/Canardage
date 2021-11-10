@@ -205,12 +205,14 @@ class addUsers(Resource):
                 status=300,
                 mimetype='application/json'
             )
+            return response
         if playerList[5]["id"] != 0:
             response = app.response_class(
                 response=json.dumps({"data":"Error", "Message": "La partie est pleine","status":300}),
                 status=300,
                 mimetype='application/json'
             )
+            return response
         else:
             user = request.form.get("name")
             if checkUserName(user) == False:
@@ -226,13 +228,13 @@ class addUsers(Resource):
                     status=200,
                     mimetype='application/json'
                 )
-        return response
+            return response
 
 class userAfk(Resource):
     def post(self):
         global started
 
-        id = request.form.get("playerID")
+        id = int(request.form.get("playerID"))
         getCard = request.form.get("getCard")
         print("getCard: ", getCard)
         print("gettypeCard: ", type(getCard))
