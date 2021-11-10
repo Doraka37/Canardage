@@ -6,7 +6,7 @@ import attackCard
 
 class ClassBoardGame:
     ErrorMessage = ""
-    Status = False
+    Status = 0
     DuckList = ['rouge', 'bleue', 'vert', 'jaune', 'orange', 'violet']
     DuckDrawList = []
     CardList = [
@@ -171,7 +171,7 @@ class ClassBoardGame:
     def __init__(self, value, idList):
         if value < 2 or value > 6:
             self.ErrorMessage = "Le nombre de joueur doit etre comprit entre 2 et 6"
-            self.ErrorMessage = 300
+            self.Status = 300
 
         else:
             for i in range(value):
