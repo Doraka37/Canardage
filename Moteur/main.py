@@ -237,9 +237,6 @@ class userAfk(Resource):
         print("getCard: ", getCard)
         print("gettypeCard: ", type(getCard))
         result = setId(id)
-<<<<<<< HEAD
-        if getCard == 'true' and started == True:
-=======
         if result == 300:
             response = app.response_class(
                 response=json.dumps({"data":playerList, "started": started, "status":result}),
@@ -248,7 +245,6 @@ class userAfk(Resource):
             )
             return response
         if getCard == 'True' and started == True:
->>>>>>> f7fe545213b4667890ff98d266d1f9df9f9348b9
             card1 = getNextCard()
             card2 = getNextCard()
             card3 = getNextCard()
@@ -272,10 +268,17 @@ class startGame(Resource):
         global started
         idList[0].update({"playTurn":True})
         Board = board.getBoard(getIdLength(idList), idList)
+        if Board.Status == 300:
+            response = app.response_class(
+                response=json.dumps({"data":playerList, "started": started,"status":Board.status, "Message": Board.ErrorMessage}),
+                status=300,
+                mimetype='application/json'
+            )
+            return response
         started = True
         print("Done")
         response = app.response_class(
-            status=300,
+            status=200,
             mimetype='application/json'
         )
         return response
