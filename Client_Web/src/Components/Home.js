@@ -19,9 +19,10 @@ function Home() {
   async function start_game() {
     var started = false;
     var move = false;
-    var formdata = new FormData();
     var list = []
     var hand = []
+
+    var formdata = new FormData();
     formdata.append('playerID', playerID)
     formdata.append('getCard', true)
 
@@ -42,7 +43,7 @@ function Home() {
             move = true;
             history.push('/game');
           }
-          return
+          //return
         }
         fetch("http://127.0.0.1:4004/userAfk", requestOptions)
           .then(response => {
@@ -51,7 +52,10 @@ function Home() {
           })
           .then(result => {
             console.log("result: ", result);
-            if (result.started == true) {
+            if (result.endGame == true) {
+              setParam("EndGame")
+            }
+            if (result.started == true && started == false) {
               started = true
               hand[0] = result.card1 - 1
               hand[1] = result.card2 - 1
@@ -61,6 +65,15 @@ function Home() {
                 value: hand
               };
               Store.dispatch(action);
+              formdata = new FormData();
+              formdata.append('playerID', playerID)
+              formdata.append('getCard', false)
+              requestOptions = {
+                method: 'POST',
+                redirect: 'follow',
+                body: formdata,
+                headers: myHeaders
+              };
             }
             for (var i = 0; i < result.data.length; i++) {
               if (result.data[i].id != 0) {
@@ -71,10 +84,10 @@ function Home() {
             list = []
           })
           .catch(error => console.log('error oui la bonne: ', error));
-          if (started == true) {
+          /*if (started == true) {
             clearInterval(time)
             history.push('/game');
-          }
+          }*/
       },5000);
   }
 
@@ -194,6 +207,17 @@ function Home() {
               <div className="errorMess">
                 <h1 className="font-link">Impossible de se conencter à la partie</h1>
                 <p className="font-link">{errMess}</p>
+                <button className="SelecButton" type="button" onClick={() => setParam('')}>
+                  OK
+                </button>
+              </div>
+            </div>
+          )
+        case 'EndGame':
+          return (
+            <div className="Zoom">
+              <div className="errorMess">
+                <h1 className="font-link">La partie est terminée regarder le plateau pour voir le vainqueur</h1>
                 <button className="SelecButton" type="button" onClick={() => setParam('')}>
                   OK
                 </button>

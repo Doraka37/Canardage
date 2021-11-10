@@ -81,6 +81,7 @@ function CardZoom(props) {
         } else {
           console.log("new_card: ", result.data);
           let new_hand = store.UserInfos.hand
+          console.log("new_hand: ", new_hand);
           new_hand[location.state.pos - 1] = result.data - 1
           console.log("new_hand: ", new_hand);
           let action = {

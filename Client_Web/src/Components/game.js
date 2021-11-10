@@ -25,6 +25,10 @@ import list from '../ressources/test.json'
 import Card from './Card'
 import Store from '../store';
 
+function checkAFK() {
+
+}
+
 function Game() {
   const store = Store.getState();
   const [hand, setHand] = useState(store.UserInfos.hand);
@@ -50,8 +54,8 @@ function Game() {
   array.push(palme_arriere);
 
   console.log("game pseduo is: ", store.UserInfos.playerID);
-  hand[0] = 9
-  hand[1] = 3
+  //hand[0] = 9
+  //hand[1] = 3
   console.log("test: ", hand[0]);
   return (
     <div className="App">
