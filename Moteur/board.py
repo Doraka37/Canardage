@@ -212,7 +212,7 @@ class ClassBoardGame:
             self.BoardGame[-1].update({"duck":self.DuckDrawList[0]})
             self.BoardGame[-1].update({"hideDuck":'none'})
             self.DuckDrawList.pop(0)
-        if checkEnd(self.playerList) == True:
+        if checkEnd(self.PlayerList) == True:
             endGame = True
 
 def checkEnd(playerList):
@@ -320,5 +320,5 @@ if __name__ == '__main__':
         },
     ]
     list = [1,2,3,3,5]
-    Board = getBoard(4, idList)
-    print(protectCard.CanarchieCheck(Board, list))
+    Board = getBoard(2, idList)
+    print(Board.BoardGame)

@@ -2,7 +2,7 @@ import board
 
 def Walk(Board):
     Board = WalkCheck(Board)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = WalkPlay(Board)
     return Board
 
@@ -28,7 +28,7 @@ def WalkGlobalCheck(Board):
 
 def Fulguro(Board, value, PlayerID):
     Board = FulguroCheck(Board, value, PlayerID)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = FulguroPlay(Board, value)
     return Board
 
@@ -74,7 +74,7 @@ def FulguroGlobalCheck(Board, playerID):
 
 def DuckLeft(Board, value, PlayerID):
     Board = DuckLeftCheck(Board, value, PlayerID)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = DuckLeftPlay(Board, value)
     return Board
 
@@ -120,7 +120,7 @@ def DuckLeftGlobalCheck(Board, playerID):
 
 def DuckRight(Board, value, PlayerID):
     Board = DuckRightCheck(Board, value, PlayerID)
-    if Board.ErrorMessage == 200:
+    if Board.Status == True:
         Board = DuckRightPlay(Board, value)
     return Board
 
