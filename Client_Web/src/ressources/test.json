@@ -57,7 +57,7 @@
         {
           "name": "Planque",
           "id": 10,
-          "type": "SingleChoice",
+          "type": "DoubleChoice",
           "src": 9
         },
         {

@@ -223,13 +223,15 @@ class addUsers(Resource):
         return response
 
 class userAfk(Resource):
-    def get(self):
+    def post(self):
         global started
 
-        id = request.headers.get("playerID")
-        getCard = request.headers.get("getCard")
+        id = request.form.get("playerID")
+        getCard = request.form.get("getCard")
+        print("getCard: ", getCard)
+        print("gettypeCard: ", type(getCard))
         result = setId(id)
-        if getCard == 'True' and started == True:
+        if getCard == 'true' and started == True:
             card1 = getNextCard()
             card2 = getNextCard()
             card3 = getNextCard()
