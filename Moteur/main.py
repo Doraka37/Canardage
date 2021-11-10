@@ -232,7 +232,7 @@ class userAfk(Resource):
     def post(self):
         global started
 
-        id = request.form.get("playerID")
+        id = int(request.form.get("playerID"))
         getCard = request.form.get("getCard")
         print("getCard: ", getCard)
         print("gettypeCard: ", type(getCard))
@@ -244,7 +244,9 @@ class userAfk(Resource):
                 mimetype='application/json'
             )
             return response
-        if getCard == 'True' and started == True:
+        print("getCard: ", getCard)
+        if getCard == 'true' and started == True:
+            print("je suis la")
             card1 = getNextCard()
             card2 = getNextCard()
             card3 = getNextCard()
