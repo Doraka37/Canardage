@@ -6,7 +6,8 @@ import attackCard
 
 class ClassBoardGame:
     ErrorMessage = ""
-    Status = 0
+    Status = True
+    endGame = False
     DuckList = ['rouge', 'bleue', 'vert', 'jaune', 'orange', 'violet']
     DuckDrawList = []
     CardList = [
@@ -171,7 +172,7 @@ class ClassBoardGame:
     def __init__(self, value, idList):
         if value < 2 or value > 6:
             self.ErrorMessage = "Le nombre de joueur doit etre comprit entre 2 et 6"
-            self.Status = 300
+            self.Status = False
 
         else:
             for i in range(value):
@@ -211,6 +212,17 @@ class ClassBoardGame:
             self.BoardGame[-1].update({"duck":self.DuckDrawList[0]})
             self.BoardGame[-1].update({"hideDuck":'none'})
             self.DuckDrawList.pop(0)
+        if checkEnd(self.playerList) == True:
+            endGame = True
+
+def checkEnd(playerList):
+    i = 0
+    for x in playerList:
+        if x > 0 and x < 6:
+            i += 1
+    if i > 1:
+        return False
+    return True
 
 def test():
     global Board

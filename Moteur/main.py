@@ -241,10 +241,10 @@ class userAfk(Resource):
         print("getCard: ", getCard)
         print("gettypeCard: ", type(getCard))
         result = setId(id)
-        if result == 300:
+        if result == False:
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started, "status":result}),
-                status=result,
+                response=json.dumps({"data":playerList, "started": started, "status":300}),
+                status=300,
                 mimetype='application/json'
             )
             return response
@@ -255,15 +255,15 @@ class userAfk(Resource):
             card2 = getNextCard()
             card3 = getNextCard()
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started, "card1": card1, "card2": card2, "card3": card3,"status":result}),
-                status=result,
+                response=json.dumps({"data":playerList, "started": started, "card1": card1, "card2": card2, "card3": card3,"status":200}),
+                status=200,
                 mimetype='application/json'
             )
             return response
         else:
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started,"status":result}),
-                status=result,
+                response=json.dumps({"data":playerList, "started": started,"status":200}),
+                status=200,
                 mimetype='application/json'
             )
             return response
@@ -275,9 +275,9 @@ class startGame(Resource):
         idList[0].update({"playTurn":True})
         print(getIdLength(idList))
         Board = board.getBoard(getIdLength(idList), idList)
-        if Board.Status == 300:
+        if Board.Status == False:
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started,"status":Board.Status, "Message": Board.ErrorMessage}),
+                response=json.dumps({"data":playerList, "started": started,"status":300, "Message": Board.ErrorMessage}),
                 status=300,
                 mimetype='application/json'
             )
@@ -337,8 +337,8 @@ def setId(id):
     for x in idList:
         if id == x["id"]:
             x.update({"isHere":True})
-            return 200
-    return 300
+            return True
+    return False
 
 def updatePlayer():
     i = 0

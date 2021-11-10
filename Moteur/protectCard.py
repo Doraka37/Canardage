@@ -219,8 +219,12 @@ def WalkingDuckPlay(Board, value):
     return Board
 
 def WalkingDuckCheck(Board, value):
-    if Board.PlayerList[value - 1]["death"] < 2:
+    if Board.PlayerList[value - 1]["death"] == 1:
         Board.ErrorMessage = "Ce joueur n'as aucun canard mort"
+        Board.Status = False
+        return Board
+    if Board.PlayerList[value - 1]["death"] == 6:
+        Board.ErrorMessage = "Ce joueur est éliminé"
         Board.Status = False
         return Board
     Board.ErrorMessage = "La carte a été joué"
@@ -229,7 +233,6 @@ def WalkingDuckCheck(Board, value):
 
 def WalkingDuckGlobalCheck(Board):
     for x in Board.PlayerList:
-        if x["death"] > 1:
+        if x["death"] > 1 and x["death"] < 6:
             return True
-
     return False
