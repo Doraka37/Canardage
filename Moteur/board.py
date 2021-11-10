@@ -320,5 +320,5 @@ if __name__ == '__main__':
         },
     ]
     list = [1,2,3,3,5]
-    Board = getBoard(4, idList)
-    print(protectCard.CanarchieCheck(Board, list))
+    Board = getBoard(2, idList)
+    print(Board.BoardGame)
