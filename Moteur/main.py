@@ -4,11 +4,13 @@ from random import randrange
 from flask_cors import CORS
 from random import randrange
 import pandas as pd
-from multiprocessing import Process
+from multiprocessing import Process, Queue
 import ast
 import sched, time
 import board
 import json
+import graph
+import os
 
 Board = ""
 app = Flask(__name__)
@@ -234,6 +236,7 @@ class addUsers(Resource):
                     status=200,
                     mimetype='application/json'
                 )
+                q.put({'type': "PlayerList", 'data': playerList})
             return response
 
 class userAfk(Resource):
@@ -397,18 +400,23 @@ def addUserToParty(name):
 
 def test2():
     global Board
-    #print(Board.PlayerList)
+    print(Board.PlayerList)
 
 def test():
-    global Board
-    Board = board.getBoard(4, idList)
-    #print("lol")
+    print("gello")
+    app.run(port=4004)
     #print(Board.BoardGame)
     #print(Board.BoardGame)
 
 if __name__ == '__main__':
-    ##test()
-    app.run(port=4004, debug=True)
+    q = Queue()
+    p1 = Process(target=graph.start, args=(q,))
+    p1.start()
+    test()
+    #graph.start()
+    print('parent process:', os.getppid())
+    print('process id:', os.getpid())
+
     #p1 = Process(target=checkAFK)
     #p1.start()
     #p1.join()

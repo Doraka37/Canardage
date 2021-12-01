@@ -1,14 +1,16 @@
 import arcade
 import arcade.gui
-import test
+import prepare
 import xerox
 import myconstants
+from multiprocessing import Array, Process, Queue
+import json
 
 class MyGame(arcade.Window):
     """
     Main application class.
     """
-    def __init__(self):
+    def __init__(self, q):
 
         # Call the parent class and set up the window
         super().__init__(myconstants.SCREEN_WIDTH, myconstants.SCREEN_HEIGHT, myconstants.SCREEN_TITLE)
@@ -23,6 +25,7 @@ class MyGame(arcade.Window):
         self.link = ""
         self.link_flag = False
         self.disp = "MENU"
+        self.q = q
 
         self.board_list = None
         self.board = None
@@ -34,13 +37,14 @@ class MyGame(arcade.Window):
 
     def setup(self):
         """Set up the game here. Call this function to restart the game."""
-
+        
+        print("setup")
         self.score = [0, 1, 3, 3, 4, 5]
-        self.pseudo = ["Tim", "PIt", "Jack", "John", "Lee", "Spike"]
+        self.pseudo = []
         self.turn = "Bleu"
 
-        test.create_menu(self)
-        self = test.create_lists(self)
+        prepare.create_menu(self)
+        self = prepare.create_lists(self)
 
         self.card_list = arcade.SpriteList()
         card = arcade.Sprite("../Client_Web/src/ressources/dos_carte_action.png", myconstants.POINTER_SCALING)
@@ -70,11 +74,26 @@ class MyGame(arcade.Window):
     def on_click_start(self, event):
         self.disp = "GAME"
 
+    def parse_queu(self):
+        resp = self.q.get()
+        print(resp)
+        array = []
+        if resp["type"] == "PlayerList":
+            for i in range(0, len(resp["data"]), 1):
+                print(resp["data"][i]["name"])
+                array.append(resp["data"][i]["name"])
+            self.pseudo = array
+            myconstants.PLAYER_NBR += 1
+            prepare.create_player_list(self)
+            
+
     def on_draw(self):
         """Render the screen."""
 
         arcade.start_render()
         if (self.disp == "MENU"):
+            if (self.q.empty() == False):
+               self.parse_queu()
             self.manager.draw()
             score_text = f"{self.link}"
             arcade.draw_text(score_text, 550, 700, arcade.csscolor.WHITE, 32)
@@ -101,12 +120,8 @@ class MyGame(arcade.Window):
         # Code to draw the screen goes here
 
 
-def main():
+def start(q):
     """Main function"""
-    window = MyGame()
+    window = MyGame(q)
     window.setup()
     arcade.run()
-
-
-if __name__ == "__main__":
-    main()

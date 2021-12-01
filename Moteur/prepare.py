@@ -3,8 +3,7 @@ import arcade.gui
 import myconstants
 
 link_text = ""
-
-def create_lists(self):
+def create_player_list(self):
     i = 0
     self.player_list = arcade.SpriteList()
     for y in range(780, 540, -40):
@@ -15,6 +14,9 @@ def create_lists(self):
         player.center_y = y
         self.player_list.append(player)
         i += 1
+
+def create_lists(self):
+    create_player_list(self)
 
     self.tile_list = arcade.SpriteList()
     for x in range(210, 1134, 162):
