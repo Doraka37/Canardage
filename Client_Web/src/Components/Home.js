@@ -177,15 +177,7 @@ function Home() {
       case 'Loged':
         return (
           <div className="Home">
-            <div>
-              <button
-                type="button"
-                onClick={() => test_req()}
-              >
-                test
-              </button>
-            </div>
-            <p className="p-font"> Bienvenue {pseudo} lors de cette partie vous jouer les canards {color}</p>
+            <p className="p-font"> Bienvenue {pseudo} lors de cette partie vous jouez les canards {color}</p>
             <p className="p-font"> Il y a {playerList.length} joueur·euse.s connecté </p>
             <ul>
               {playerList.map((item) => <Item value={item}/>)}
@@ -242,7 +234,7 @@ function Home() {
       }}
 
   return (
-    <div className="CardZoom">
+    <div className="App">
       <div>
         <h2>Home</h2>
         {renderSwitch(param)}
