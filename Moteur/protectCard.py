@@ -163,7 +163,9 @@ def CrazyDancePlay(Board):
             Board.BoardGame[i].update({"hideDuck":"'none'"})
 
     random.shuffle(Board.DuckDrawList)
+    print(Board.DuckDrawList)
     for x in Board.BoardGame:
+        print("lol")
         x.update({"duck":Board.DuckDrawList[0]})
         Board.DuckDrawList.pop(0)
     return Board
