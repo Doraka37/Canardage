@@ -9,28 +9,35 @@ def create_player_list(self):
     for y in range(780, 540, -40):
         if (i >= myconstants.PLAYER_NBR):
             break
-        player = arcade.Sprite("../Client_Web/src/ressources/icone_canard.png", myconstants.PLAYER_SCALING)
+        player = arcade.Sprite(myconstants.PATH + "icone_canard.png", myconstants.PLAYER_SCALING)
         player.center_x = 20
         player.center_y = y
         self.player_list.append(player)
         i += 1
 
+def create_board(self):
+    i = 0
+    self.tile_list = arcade.SpriteList()
+    for x in range(210, 1134, 162):
+        if (i < myconstants.BOARD_SIZE):
+            print(self.board[i]["duck"])
+            tile = arcade.Sprite(myconstants.PATH + self.board[i]["duck"] + ".png", myconstants.TILE_SCALING)
+            tile.center_x = x
+            tile.center_y = 250
+            self.tile_list.append(tile)
+            i += 1
+
 def create_lists(self):
     create_player_list(self)
 
-    self.tile_list = arcade.SpriteList()
-    for x in range(210, 1134, 162):
-        tile = arcade.Sprite("../Client_Web/src/ressources/icone_canard.png", myconstants.TILE_SCALING)
-        tile.center_x = x
-        tile.center_y = 250
-        self.tile_list.append(tile)
-
+    i = 0
     self.pointer_list = arcade.SpriteList()
     for x in range(213, 1147, 162):
-        pointer = arcade.Sprite("../Client_Web/src/ressources/Jeton_Cible.png", myconstants.POINTER_SCALING)
-        pointer.center_x = x
-        pointer.center_y = 395
-        self.pointer_list.append(pointer)
+        if (i < myconstants.BOARD_SIZE):
+            pointer = arcade.Sprite(myconstants.PATH + "Jeton_Cible.png", myconstants.POINTER_SCALING)
+            pointer.center_x = x
+            pointer.center_y = 395
+            self.pointer_list.append(pointer)
     return self
 
 def create_menu(self):

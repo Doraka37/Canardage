@@ -5,6 +5,7 @@ import xerox
 import myconstants
 from multiprocessing import Array, Process, Queue
 import json
+import requests
 
 class MyGame(arcade.Window):
     """
@@ -42,6 +43,7 @@ class MyGame(arcade.Window):
         self.score = [0, 1, 3, 3, 4, 5]
         self.pseudo = []
         self.turn = "Bleu"
+        self.board = []
 
         prepare.create_menu(self)
         self = prepare.create_lists(self)
@@ -72,12 +74,25 @@ class MyGame(arcade.Window):
         arcade.exit()
 
     def on_click_start(self, event):
-        self.disp = "GAME"
+        r = requests.get('http://127.0.0.1:4004/startGame')
+        test = json.loads(r.text)
+        array = []
+        if (test["status"] == 200):
+            print(test["data"])
+            resp = self.q.get()
+            print(resp["data"])
+            self.board = resp["data"]
+            prepare.create_board(self)
+            self.disp = "GAME"
 
     def parse_queu(self):
+        print("///////////////////////////////////////")
         resp = self.q.get()
-        print(resp)
+        print("Turn resp: ", resp)
         array = []
+        if resp["type"] == "Board":
+            self.board = resp["data"]
+            prepare.create_board(self)
         if resp["type"] == "PlayerList":
             for i in range(0, len(resp["data"]), 1):
                 print(resp["data"][i]["name"])
@@ -91,9 +106,9 @@ class MyGame(arcade.Window):
         """Render the screen."""
 
         arcade.start_render()
+        if (self.q.empty() == False):
+            self.parse_queu()
         if (self.disp == "MENU"):
-            if (self.q.empty() == False):
-               self.parse_queu()
             self.manager.draw()
             score_text = f"{self.link}"
             arcade.draw_text(score_text, 550, 700, arcade.csscolor.WHITE, 32)

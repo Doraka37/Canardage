@@ -7,3 +7,5 @@ TILE_SCALING = 0.5
 POINTER_SCALING = 0.4
 PLAYER_SCALING = 0.15
 PLAYER_NBR = 0
+PATH = "../Client_Web/src/ressources/"
+BOARD_SIZE = 6

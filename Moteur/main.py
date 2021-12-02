@@ -133,6 +133,8 @@ class playCard(Resource):
                     status=200,
                     mimetype='application/json'
                 )
+                print("i played card and send q")
+                q.put({'type': "Board", 'data': Board.BoardGame, 'card': cardID})
             else:
                 print("pd2")
                 response = app.response_class(
@@ -293,9 +295,11 @@ class startGame(Resource):
             started = True
             print("Done")
             response = app.response_class(
+                response=json.dumps({"data":idList, "started": started,"status":200, "Message": "GameStarted"}),
                 status=200,
                 mimetype='application/json'
             )
+            q.put({'type': "Board", 'data': Board.BoardGame})
             return response
 
 
