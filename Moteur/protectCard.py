@@ -157,10 +157,10 @@ def CrazyDance(Board):
 def CrazyDancePlay(Board):
     for i in range(6):
         Board.DuckDrawList.append(Board.BoardGame[i]["duck"])
-        Board.BoardGame[i].update({"duck":"'none'"})
+        Board.BoardGame[i].update({"duck":"none"})
         if Board.BoardGame[i]["hideDuck"] != 'none':
             Board.DuckDrawList.append(Board.BoardGame[i]["hideDuck"])
-            Board.BoardGame[i].update({"hideDuck":"'none'"})
+            Board.BoardGame[i].update({"hideDuck":"none"})
 
     random.shuffle(Board.DuckDrawList)
     for x in Board.BoardGame:

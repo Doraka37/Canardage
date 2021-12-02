@@ -9,12 +9,12 @@ def Walk(Board):
 def WalkPlay(Board):
     Board.DuckDrawList.append(Board.BoardGame[0]["duck"])
     Board.DuckDrawList.append(Board.BoardGame[0]["hideDuck"])
-    for i in range(len(Board.BoardGame)):
+    for i in range(1, 5, 1):
         Board.BoardGame[i - 1].update({"duck":Board.BoardGame[i]["duck"]})
         Board.BoardGame[i - 1].update({"hideDuck":Board.BoardGame[i]["hideDuck"]})
         i += 1
-    Board.BoardGame[-1].update({"duck":Board.DuckDrawList[0]})
-    Board.BoardGame[-1].update({"hideDuck":'none'})
+    Board.BoardGame[5].update({"duck":Board.DuckDrawList[0]})
+    Board.BoardGame[5].update({"hideDuck":'none'})
     Board.DuckDrawList.pop(0)
     return Board
 
@@ -51,7 +51,7 @@ def FulguroCheck(Board, value, playerID):
 
     for player in Board.PlayerList:
         if player["id"] == playerID:
-            if player["duck"] == Board.BoardGame[value]["duck"]:
+            if player["duck"] == Board.BoardGame[value - 1]["duck"]:
                 Board.ErrorMessage = "La carte a été joué"
                 Board.Status = True
                 return Board
