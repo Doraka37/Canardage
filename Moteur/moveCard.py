@@ -98,8 +98,12 @@ def DuckLeftCheck(Board, value, playerID):
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value - 1]["duck"]:
-                Board.ErrorMessage = "La carte a été joué"
-                Board.Status = True
+                if Board.BoardGame[value - 2]["duck"] == 'empty':
+                    Board.ErrorMessage = "La carte a gauche n'est pas un canard"
+                    Board.Status = False
+                else:
+                    Board.ErrorMessage = "La carte a été joué"
+                    Board.Status = True
                 return Board
 
     Board.ErrorMessage = "Le canard sélectioné n'est pas un canard allié"
@@ -114,7 +118,10 @@ def DuckLeftGlobalCheck(Board, playerID):
 
     for i in range(len(Board.BoardGame)):
         if i > 0 and Board.BoardGame[i]["duck"] == playerDuckTmp:
-            return True
+                if Board.BoardGame[i - 1]["duck"] != 'empty':
+                    return True
+                else:
+                    continue
 
     return False
 
@@ -144,9 +151,14 @@ def DuckRightCheck(Board, value, playerID):
     for player in Board.PlayerList:
         if player["id"] == playerID:
             if player["duck"] == Board.BoardGame[value - 1]["duck"]:
-                Board.ErrorMessage = "La carte a été joué"
-                Board.Status = True
+                if Board.BoardGame[value]["duck"] == 'empty':
+                    Board.ErrorMessage = "La carte a droite n'est pas un canard"
+                    Board.Status = False
+                else:
+                    Board.ErrorMessage = "La carte a été joué"
+                    Board.Status = True
                 return Board
+
 
     Board.ErrorMessage = "Le canard sélectioné n'est pas un cnard allié"
     Board.Status = False
@@ -160,6 +172,9 @@ def DuckRightGlobalCheck(Board, playerID):
 
     for i in range(len(Board.BoardGame)):
         if i < 5 and Board.BoardGame[i]["duck"] == playerDuckTmp:
-            return True
+            if Board.BoardGame[i + 1]["duck"] != 'empty':
+                return True
+            else:
+                continue
 
     return False
