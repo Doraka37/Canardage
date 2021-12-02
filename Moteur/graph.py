@@ -46,7 +46,7 @@ class MyGame(arcade.Window):
         self.board = []
 
         prepare.create_menu(self)
-        self = prepare.create_lists(self)
+        prepare.create_lists(self)
 
         self.card_list = arcade.SpriteList()
         card = arcade.Sprite("../Client_Web/src/ressources/dos_carte_action.png", myconstants.POINTER_SCALING)
@@ -90,9 +90,10 @@ class MyGame(arcade.Window):
         resp = self.q.get()
         print("Turn resp: ", resp)
         array = []
-        if resp["type"] == "Board":
+        if resp["type"] == "CardPlay":
             self.board = resp["data"]
             prepare.create_board(self)
+            prepare.create_lists(self)
         if resp["type"] == "PlayerList":
             for i in range(0, len(resp["data"]), 1):
                 print(resp["data"][i]["name"])

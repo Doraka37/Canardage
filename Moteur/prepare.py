@@ -33,12 +33,14 @@ def create_lists(self):
     i = 0
     self.pointer_list = arcade.SpriteList()
     for x in range(213, 1147, 162):
-        if (i < myconstants.BOARD_SIZE):
-            pointer = arcade.Sprite(myconstants.PATH + "Jeton_Cible.png", myconstants.POINTER_SCALING)
-            pointer.center_x = x
-            pointer.center_y = 395
-            self.pointer_list.append(pointer)
-    return self
+        print("Board len: ", len(self.board))
+        if (i < len(self.board)):
+            if (self.board[i]["target"] == True):
+                pointer = arcade.Sprite(myconstants.PATH + "Jeton_Cible.png", myconstants.POINTER_SCALING)
+                pointer.center_x = x
+                pointer.center_y = 395
+                self.pointer_list.append(pointer)
+            i += 1
 
 def create_menu(self):
 
