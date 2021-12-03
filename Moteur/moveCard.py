@@ -10,7 +10,7 @@ def WalkPlay(Board):
     Board.DuckDrawList.append(Board.BoardGame[0]["duck"])
     if Board.BoardGame[0]["hideDuck"] != 'none':
         Board.DuckDrawList.append(Board.BoardGame[0]["hideDuck"])
-    for i in range(1, 5, 1):
+    for i in range(1, 6, 1):
         Board.BoardGame[i - 1].update({"duck":Board.BoardGame[i]["duck"]})
         Board.BoardGame[i - 1].update({"hideDuck":Board.BoardGame[i]["hideDuck"]})
     Board.BoardGame[5].update({"duck":Board.DuckDrawList[0]})
