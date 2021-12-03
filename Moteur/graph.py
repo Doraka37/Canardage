@@ -32,6 +32,7 @@ class MyGame(arcade.Window):
         self.board = None
         self.players_infos = None
         self.id_list = None
+        self.players = None
         self.v_box = arcade.gui.UIBoxLayout()
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
@@ -44,6 +45,7 @@ class MyGame(arcade.Window):
         print("setup")
         self.score = [0, 0, 0, 0, 0, 0]
         self.pseudo = []
+        self.players = []
         self.turn = "Bleu"
         self.board = []
         self.players_infos = []
@@ -86,7 +88,10 @@ class MyGame(arcade.Window):
             resp = self.q.get()
             print(resp["data"])
             self.board = resp["data"]
+            self.id_list = resp["idList"]
+            self.players_infos = resp["playerList"]
             prepare.create_board(self)
+            prepare.update_players(self)
             self.disp = "GAME"
 
     def parse_queu(self):
@@ -107,6 +112,7 @@ class MyGame(arcade.Window):
                 print(resp["data"][i]["name"])
                 array.append(resp["data"][i]["name"])
             self.pseudo = array
+            self.players = resp["data"]
             myconstants.PLAYER_NBR += 1
             prepare.create_player_list(self)
             
@@ -137,7 +143,7 @@ class MyGame(arcade.Window):
             self.player_list.draw()
             y = 770
             for i in range(0, myconstants.PLAYER_NBR, 1):
-                score_text = f"Dead Ducks: {self.score[i]}"
+                score_text = f"{self.pseudo[i]} Dead Ducks: {self.score[i]}"
                 arcade.draw_text(score_text, 42, y, arcade.csscolor.WHITE, 18)
                 y -= 40
             score_text = f"C'est le tour du joueur: {self.turn}"

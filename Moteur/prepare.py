@@ -9,7 +9,7 @@ def create_player_list(self):
     for y in range(780, 540, -40):
         if (i >= myconstants.PLAYER_NBR):
             break
-        player = arcade.Sprite(myconstants.PATH + "icone_canard.png", myconstants.PLAYER_SCALING)
+        player = arcade.Sprite(myconstants.PATH + self.players[i]["color"] + ".png", myconstants.PLAYER_SCALING)
         player.center_x = 20
         player.center_y = y
         self.player_list.append(player)

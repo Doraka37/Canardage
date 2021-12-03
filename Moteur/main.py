@@ -61,7 +61,7 @@ playerList = [
     {
         "id":0,
         "name":"",
-        "color":"bleu"
+        "color":"bleue"
     },
     {
         "id":0,
@@ -299,7 +299,7 @@ class startGame(Resource):
                 status=200,
                 mimetype='application/json'
             )
-            q.put({'type': "Board", 'data': Board.BoardGame})
+            q.put({'type': "Board", 'data': Board.BoardGame, 'idList': idList, 'playerList': Board.PlayerList})
             return response
 
 
