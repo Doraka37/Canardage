@@ -27,6 +27,13 @@ def create_board(self):
             self.tile_list.append(tile)
             i += 1
 
+def update_players(self):
+    for i in range(0, myconstants.PLAYER_NBR, 1):
+        self.score[i] = self.players_infos[i]["death"] - 1
+        if (self.id_list[i]["playTurn"] == True):
+            self.turn = self.pseudo[i]
+
+
 def create_lists(self):
     create_player_list(self)
 

@@ -30,6 +30,8 @@ class MyGame(arcade.Window):
 
         self.board_list = None
         self.board = None
+        self.players_infos = None
+        self.id_list = None
         self.v_box = arcade.gui.UIBoxLayout()
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
@@ -40,10 +42,12 @@ class MyGame(arcade.Window):
         """Set up the game here. Call this function to restart the game."""
         
         print("setup")
-        self.score = [0, 1, 3, 3, 4, 5]
+        self.score = [0, 0, 0, 0, 0, 0]
         self.pseudo = []
         self.turn = "Bleu"
         self.board = []
+        self.players_infos = []
+        self.id_list = []
 
         prepare.create_menu(self)
         prepare.create_lists(self)
@@ -94,6 +98,10 @@ class MyGame(arcade.Window):
             self.board = resp["data"]
             prepare.create_board(self)
             prepare.create_lists(self)
+            self.players_infos = resp["playerList"]
+            print("id_list: ", resp["idlist"])
+            self.id_list = resp["idlist"]
+            prepare.update_players(self)
         if resp["type"] == "PlayerList":
             for i in range(0, len(resp["data"]), 1):
                 print(resp["data"][i]["name"])
@@ -101,6 +109,7 @@ class MyGame(arcade.Window):
             self.pseudo = array
             myconstants.PLAYER_NBR += 1
             prepare.create_player_list(self)
+            
             
 
     def on_draw(self):
