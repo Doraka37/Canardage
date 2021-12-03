@@ -3,6 +3,13 @@ import arcade.gui
 import myconstants
 
 link_text = ""
+
+def check_card(self):
+    print("Crad: ", self.card)
+    if (self.card["id"] == '1' or self.card["id"] == '3'):
+        print("explode true")
+        self.explosion = True
+
 def create_player_list(self):
     i = 0
     self.player_list = arcade.SpriteList()

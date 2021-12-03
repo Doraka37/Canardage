@@ -134,7 +134,7 @@ class playCard(Resource):
                     mimetype='application/json'
                 )
                 print("i played card and send q")
-                q.put({'type': "CardPlay", 'data': Board.BoardGame, 'card': cardID, 'playerList': Board.PlayerList, 'idlist': idList})
+                q.put({'type': "CardPlay", 'data': Board.BoardGame, 'card': {'id': cardID, 'value1': value1, 'value2': value2, 'valueList': valueList}, 'playerList': Board.PlayerList, 'idlist': idList})
             else:
                 print("pd2")
                 response = app.response_class(

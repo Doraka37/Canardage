@@ -6,6 +6,7 @@ import myconstants
 from multiprocessing import Array, Process, Queue
 import json
 import requests
+import time
 
 class MyGame(arcade.Window):
     """
@@ -27,12 +28,17 @@ class MyGame(arcade.Window):
         self.link_flag = False
         self.disp = "MENU"
         self.q = q
+        self.animation = None
+        self.explosion = None
+        self.card = None
 
         self.board_list = None
         self.board = None
         self.players_infos = None
         self.id_list = None
         self.players = None
+        self.image_x = 0
+        self.image_y = 0
         self.v_box = arcade.gui.UIBoxLayout()
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
@@ -66,6 +72,7 @@ class MyGame(arcade.Window):
         self.board.center_x = 700
         self.board.center_y = 300
         self.board_list.append(self.board)
+        self.animation = arcade.SpriteList()
 
     def on_click_disp(self, event):
         if (self.link == ""):
@@ -107,6 +114,8 @@ class MyGame(arcade.Window):
             print("id_list: ", resp["idlist"])
             self.id_list = resp["idlist"]
             prepare.update_players(self)
+            self.card = resp["card"]
+            prepare.check_card(self)
         if resp["type"] == "PlayerList":
             for i in range(0, len(resp["data"]), 1):
                 print(resp["data"][i]["name"])
@@ -115,8 +124,7 @@ class MyGame(arcade.Window):
             self.players = resp["data"]
             myconstants.PLAYER_NBR += 1
             prepare.create_player_list(self)
-            
-            
+        
 
     def on_draw(self):
         """Render the screen."""
@@ -148,6 +156,21 @@ class MyGame(arcade.Window):
                 y -= 40
             score_text = f"C'est le tour du joueur: {self.turn}"
             arcade.draw_text(score_text, 400, 700, arcade.csscolor.WHITE, 32)
+            if (self.explosion == True):
+                self.animation = arcade.SpriteList()
+                tmpSprite = arcade.Sprite(myconstants.PATH + "explosion.png", 3, self.image_x, self.image_y, 100, 100)
+                tmpSprite.center_x = (48 + (int(self.card["value1"]) * 162))
+                tmpSprite.center_y = 250
+                self.animation.append(tmpSprite)
+                self.image_x += 100
+                if (self.image_x >= 1000):
+                    self.image_x = 0
+                    self.image_y += 100
+                    if (self.image_y >= 800):
+                        self.explosion = False
+                        self.image_x = 0
+                        self.image_y = 0
+                self.animation.draw()
         # Code to draw the screen goes here
 
 
