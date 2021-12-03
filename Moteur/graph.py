@@ -7,6 +7,7 @@ from multiprocessing import Array, Process, Queue
 import json
 import requests
 import time
+import animations
 
 class MyGame(arcade.Window):
     """
@@ -29,14 +30,16 @@ class MyGame(arcade.Window):
         self.disp = "MENU"
         self.q = q
         self.animation = None
-        self.explosion = None
+        self.animate = None
         self.card = None
 
         self.board_list = None
         self.board = None
+        self.boardTmp = None
         self.players_infos = None
         self.id_list = None
         self.players = None
+        self.isUpdate = True
         self.image_x = 0
         self.image_y = 0
         self.v_box = arcade.gui.UIBoxLayout()
@@ -54,6 +57,7 @@ class MyGame(arcade.Window):
         self.players = []
         self.turn = "Bleu"
         self.board = []
+        self.boardTmp = []
         self.players_infos = []
         self.id_list = []
 
@@ -95,6 +99,7 @@ class MyGame(arcade.Window):
             resp = self.q.get()
             print(resp["data"])
             self.board = resp["data"]
+            self.boardTmp = resp["data"]
             self.id_list = resp["idList"]
             self.players_infos = resp["playerList"]
             prepare.create_board(self)
@@ -107,8 +112,7 @@ class MyGame(arcade.Window):
         print("Turn resp: ", resp)
         array = []
         if resp["type"] == "CardPlay":
-            self.board = resp["data"]
-            prepare.create_board(self)
+            self.boardTmp = resp["data"]
             prepare.create_lists(self)
             self.players_infos = resp["playerList"]
             print("id_list: ", resp["idlist"])
@@ -116,6 +120,11 @@ class MyGame(arcade.Window):
             prepare.update_players(self)
             self.card = resp["card"]
             prepare.check_card(self)
+            print("WILL UPDATE")
+            if (self.isUpdate == True):
+                print("is UPDATE PLS")
+                self.board = resp["data"]
+                prepare.create_board(self)
         if resp["type"] == "PlayerList":
             for i in range(0, len(resp["data"]), 1):
                 print(resp["data"][i]["name"])
@@ -151,26 +160,15 @@ class MyGame(arcade.Window):
             self.player_list.draw()
             y = 770
             for i in range(0, myconstants.PLAYER_NBR, 1):
-                score_text = f"{self.pseudo[i]} Dead Ducks: {self.score[i]}"
+                score_text = f"{self.pseudo[i]} Canards morts: {self.score[i]}"
                 arcade.draw_text(score_text, 42, y, arcade.csscolor.WHITE, 18)
                 y -= 40
             score_text = f"C'est le tour du joueur: {self.turn}"
             arcade.draw_text(score_text, 400, 700, arcade.csscolor.WHITE, 32)
-            if (self.explosion == True):
-                self.animation = arcade.SpriteList()
-                tmpSprite = arcade.Sprite(myconstants.PATH + "explosion.png", 3, self.image_x, self.image_y, 100, 100)
-                tmpSprite.center_x = (48 + (int(self.card["value1"]) * 162))
-                tmpSprite.center_y = 250
-                self.animation.append(tmpSprite)
-                self.image_x += 100
-                if (self.image_x >= 1000):
-                    self.image_x = 0
-                    self.image_y += 100
-                    if (self.image_y >= 800):
-                        self.explosion = False
-                        self.image_x = 0
-                        self.image_y = 0
-                self.animation.draw()
+            animations.explosion(self)
+            animations.move_all(self)
+            animations.death_move(self)
+            animations.switch_move(self)
         # Code to draw the screen goes here
 
 

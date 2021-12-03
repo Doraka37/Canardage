@@ -7,8 +7,17 @@ link_text = ""
 def check_card(self):
     print("Crad: ", self.card)
     if (self.card["id"] == '1' or self.card["id"] == '3'):
-        print("explode true")
-        self.explosion = True
+        self.animate = "Explosion"
+        self.isUpdate = False
+    if (self.card["id"] == '15'):
+        self.animate = "MoveAll"
+        self.isUpdate = False
+    if (self.card["id"] == '17'):
+        self.animate = "SwitchLeft"
+        self.isUpdate = False
+    if (self.card["id"] == '18'):
+        self.animate = "SwitchRight"
+        self.isUpdate = False
 
 def create_player_list(self):
     i = 0
@@ -23,6 +32,8 @@ def create_player_list(self):
         i += 1
 
 def create_board(self):
+    print("createBoard")
+    self.board = self.boardTmp
     i = 0
     self.tile_list = arcade.SpriteList()
     for x in range(210, 1134, 162):
@@ -47,9 +58,9 @@ def create_lists(self):
     i = 0
     self.pointer_list = arcade.SpriteList()
     for x in range(213, 1147, 162):
-        print("Board len: ", len(self.board))
-        if (i < len(self.board)):
-            if (self.board[i]["target"] == True):
+        print("Board len: ", len(self.boardTmp))
+        if (i < len(self.boardTmp)):
+            if (self.boardTmp[i]["target"] == True):
                 pointer = arcade.Sprite(myconstants.PATH + "Jeton_Cible.png", myconstants.POINTER_SCALING)
                 pointer.center_x = x
                 pointer.center_y = 395
