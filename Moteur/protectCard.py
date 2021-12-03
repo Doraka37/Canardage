@@ -219,6 +219,10 @@ def WalkingDuckPlay(Board, value):
     return Board
 
 def WalkingDuckCheck(Board, value):
+    if Board.PlayerList[value - 1]["death"] == 0:
+        Board.ErrorMessage = "Ce joueur n'es pas dans la partie"
+        Board.Status = False
+        return Board
     if Board.PlayerList[value - 1]["death"] == 1:
         Board.ErrorMessage = "Ce joueur n'as aucun canard mort"
         Board.Status = False
