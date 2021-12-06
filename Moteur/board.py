@@ -274,7 +274,7 @@ def GlobalCheckCard(Board, ID, playerID):
         6: lambda : attackCard.AimLeftGlobalCheck(Board),
         7: lambda : attackCard.TwoForOneGlobalCheck(Board),
         8: lambda : attackCard.DoublePanGlobalCheck(Board),
-        9: lambda : protectCard.ProtectGlobalCheck(Board, playerID),
+        9: lambda : protectCard.ProtectGlobalCheck(Board),
         10: lambda : protectCard.HideGlobalCheck(Board, playerID),
         11: lambda : protectCard.CanarchieGlobalCheck(Board),
         12: lambda : protectCard.CrazyDanceGlobalCheck(Board),
