@@ -225,9 +225,7 @@ def checkEnd(playerList):
     return True
 
 def test():
-    global Board
-    print(Board.BoardGame)
-    Board = moveCard.WalkPlay(Board)
+    return
 
 def PlayCard(Board, ID, value, value2, valueList, playerID):
     Board.ErrorMessage = "Une erreur est survenue"
@@ -311,14 +309,16 @@ if __name__ == '__main__':
             "isHere":False
         },
         {
-            "id":0,
+            "id":213213123,
             "isHere":False
         },
         {
-            "id":0,
+            "id":2132144123123,
             "isHere":False
         },
     ]
     list = [1,2,3,3,5]
-    Board = getBoard(2, idList)
+    i = 6
+    Board = getBoard(i, idList)
     print(Board.BoardGame)
+    print(protectCard.ProtectGlobalCheck(Board))

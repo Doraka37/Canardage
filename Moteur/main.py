@@ -2,7 +2,6 @@ from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from random import randrange
 from flask_cors import CORS
-from random import randrange
 import pandas as pd
 from multiprocessing import Process, Queue
 import ast
@@ -91,7 +90,6 @@ class playCard(Resource):
         print("idList: ", idList)
         global Board
         global started
-        started = True
         if started == False:
             response = app.response_class(
                 response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé","status":300}),
@@ -120,11 +118,11 @@ class playCard(Resource):
                 if Board.CardDrawList == []:
                     Board.CardDrawList = Board.CardDiscardList
                     random.shuffle(Board.CardDrawList)
-                    CardDiscardList = []
+                    Board.CardDiscardList = []
                 Board.CardDiscardList.append(int(cardID))
                 cardDraw = Board.CardDrawList[0]
                 Board.CardDrawList.pop(0)
-                updateTurn()
+                Board = updateTurn(Board)
                 print(Board.BoardGame)
                 print("\n",Board.CardDrawList)
                 print("\n",Board.DuckDrawList)
@@ -151,7 +149,6 @@ class disCard(Resource):
     def post(self):
         global Board
         global started
-        started = True
         if started == False:
             response = app.response_class(
                 response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé","status":300}),
@@ -192,18 +189,19 @@ class disCard(Resource):
             if Board.CardDrawList == []:
                 Board.CardDrawList = Board.CardDiscardList
                 random.shuffle(Board.CardDrawList)
-                CardDiscardList = []
+                Board.CardDiscardList = []
             Board.CardDiscardList.append(int(cardID))
             cardDraw = Board.CardDrawList[0]
             Board.CardDrawList.pop(0)
-            updateTurn()
+            Board = updateTurn(Board)
+            print("salut3")
             response = app.response_class(
                 response=json.dumps({"data":cardDraw, "Message":"La carte a été corectement jeté","status":202}),
                 status=202,
                 mimetype='application/json'
             )
             return response
-
+ 
 class addUsers(Resource):
     def post(self):
         global started
@@ -322,15 +320,35 @@ def checkTurn(playerID):
             return x["playTurn"]
     return False
 
-def updateTurn():
+def updateTurn(Board):
     for i in range(len(idList)):
         if idList[i]["playTurn"] == True:
-            if i == 5 or idList[i + 1]["id"] == 0:
-                idList[0].update({"playTurn":True})
-            else:
-                idList[i + 1].update({"playTurn":True})
             idList[i].update({"playTurn":False})
-            break
+            while 1:
+                if i == 5:
+                    i = 0
+                else:
+                    i += 1
+                if idList[i]["id"] != 0:
+                    idList[i].update({"playTurn":True})
+                    Board = updateProtect(idList[i]["id"], Board)
+                    break
+        break
+    return Board
+
+def updateProtect(id, Board):
+    for x in Board.BoardGame:
+        if x['protected'] == id:
+            x.update({"protected":'none'})
+    
+    return Board
+
+    """if i == 5 or idList[i + 1]["id"] == 0:
+        idList[0].update({"playTurn":True})
+    else:
+        idList[i + 1].update({"playTurn":True})
+    idList[i].update({"playTurn":False})
+    break"""
 
 
 

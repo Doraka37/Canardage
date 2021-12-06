@@ -160,7 +160,7 @@ def DuckRightCheck(Board, value, playerID):
                 return Board
 
 
-    Board.ErrorMessage = "Le canard sélectioné n'est pas un cnard allié"
+    Board.ErrorMessage = "Le canard sélectioné n'est pas un canard allié"
     Board.Status = False
     return Board
 
