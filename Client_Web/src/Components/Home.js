@@ -68,7 +68,7 @@ function Home() {
               };
               Store.dispatch(action);
               formdata = new FormData();
-              formdata.append('playerID', playerID)
+              formdata.append('playerID', id)
               formdata.append('getCard', false)
               requestOptions = {
                 method: 'POST',
@@ -125,12 +125,12 @@ function Home() {
             setPlayerID(result.data[i].id)
             console.log("I GOT ID: ", result.data[i].id);
             setColor(result.data[i].color)
-            start_game(result.data[i].id)
             let action = {
               type: 'SET_PLAYER_ID',
               value: result.data[i].id
             };
             Store.dispatch(action);
+            start_game(result.data[i].id)
           }
           if (result.data[i].id != 0) {
             list.push(result.data[i].name)

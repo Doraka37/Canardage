@@ -18,6 +18,16 @@ def check_card(self):
     if (self.card["id"] == '18'):
         self.animate = "SwitchRight"
         self.isUpdate = False
+    if (self.card["id"] == '16'):
+        self.animate = "Fulguro"
+        self.isUpdate = False
+    if (self.card["id"] == '2'):
+        self.animate = "Aim"
+    if (self.card["id"] == '7'):
+        self.animate = "DoubleAim"
+    if (self.card["id"] == '8'):
+        self.animate = "DoubleExplosion"
+        self.isUpdate = False
 
 def create_player_list(self):
     i = 0

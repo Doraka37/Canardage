@@ -333,7 +333,7 @@ def updateTurn(Board):
                     idList[i].update({"playTurn":True})
                     Board = updateProtect(idList[i]["id"], Board)
                     break
-        break
+            break
     return Board
 
 def updateProtect(id, Board):

@@ -166,9 +166,14 @@ class MyGame(arcade.Window):
             score_text = f"C'est le tour du joueur: {self.turn}"
             arcade.draw_text(score_text, 400, 700, arcade.csscolor.WHITE, 32)
             animations.explosion(self)
+            animations.doubleExplosion(self)
             animations.move_all(self)
             animations.death_move(self)
+            animations.double_death_move(self)
             animations.switch_move(self)
+            animations.fulguro(self)
+            animations.aim(self)
+            animations.doubleAim(self)
         # Code to draw the screen goes here
 
 
