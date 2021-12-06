@@ -13,17 +13,17 @@ function Home() {
   const [playerList, setPlayerlist] = useState(store.UserInfos.userList);
   const [playerNbr, setplayerNbr] = useState('1');
   const [isStarted, setIsStarted] = useState(false);
-  const [param, setParam] = useState('');
+  const [param, setParam] = useState(store.UserInfos.param);
   const [errMess, setErrMess] = useState("No Error Message");
 
-  async function start_game() {
+  async function start_game(id) {
     var started = false;
     var move = false;
     var list = []
     var hand = []
 
     var formdata = new FormData();
-    formdata.append('playerID', playerID)
+    formdata.append('playerID', id)
     formdata.append('getCard', true)
 
     var myHeaders = new Headers();
@@ -45,6 +45,7 @@ function Home() {
           }
           //return
         }
+        console.log("playerID: ", id);
         fetch("http://127.0.0.1:4004/userAfk", requestOptions)
           .then(response => {
             console.log("userafk: ", response);
@@ -55,6 +56,7 @@ function Home() {
             if (result.endGame == true) {
               setParam("EndGame")
             }
+            console.log("ERROR MESSSAGE: ", result.Message);
             if (result.started == true && started == false) {
               started = true
               hand[0] = result.card1 - 1
@@ -121,8 +123,9 @@ function Home() {
           }
           if (result.data[i].name == value) {
             setPlayerID(result.data[i].id)
+            console.log("I GOT ID: ", result.data[i].id);
             setColor(result.data[i].color)
-            start_game()
+            start_game(result.data[i].id)
             let action = {
               type: 'SET_PLAYER_ID',
               value: result.data[i].id
@@ -157,6 +160,11 @@ function Home() {
     list.push(value)
     setPseudo(value);
     setParam("Loged")
+    action = {
+      type: 'SET_PARAM',
+      value: "Loged"
+    }
+    Store.dispatch(action);
     setPlayerlist(list)
     action = {
       type: 'SET_USER_LIST',
@@ -182,15 +190,6 @@ function Home() {
             <ul>
               {playerList.map((item) => <Item value={item}/>)}
             </ul>
-            <div>
-              <button
-              className="RuleButton"
-                type="button"
-                onClick={() => history.push('/Rules')}
-              >
-                Regles du jeu
-              </button>
-            </div>
           </div>
         );
         case 'Error':
@@ -228,11 +227,21 @@ function Home() {
                 <div>
                   <input className="input" type="submit" value="Rejoindre la partie" />
                 </div>
+                <div>
+                  <button
+                  className="RuleButton"
+                    type="button"
+                    onClick={() => history.push('/Rules')}
+                  >
+                    Regles du jeu
+                  </button>
+                </div>
               </form>
             </div>
           )
       }}
 
+  console.log("param: ", param, " store: ", store.UserInfos.param)
   return (
     <div className="App">
       <div>

@@ -11,6 +11,7 @@ import board
 import json
 import graph
 import os
+import random
 
 Board = ""
 app = Flask(__name__)
@@ -152,7 +153,6 @@ class disCard(Resource):
         global started
         started = True
         if started == False:
-            print("salut1")
             response = app.response_class(
                 response=json.dumps({"data":"Error","Message":"La partie n'est pas commencé","status":300}),
                 status=300,
@@ -182,7 +182,6 @@ class disCard(Resource):
                 valueList.append(card3)
 
             if valueList != []:
-                print("salut2")
                 response = app.response_class(
                     response=json.dumps({"data":valueList, "Message": "Une ou plusieurs cartes sont jouables","status":300}),
                     status=300,
@@ -198,7 +197,6 @@ class disCard(Resource):
             cardDraw = Board.CardDrawList[0]
             Board.CardDrawList.pop(0)
             updateTurn()
-            print("salut3")
             response = app.response_class(
                 response=json.dumps({"data":cardDraw, "Message":"La carte a été corectement jeté","status":202}),
                 status=202,
@@ -247,17 +245,16 @@ class userAfk(Resource):
 
         id = int(request.form.get("playerID"))
         getCard = request.form.get("getCard")
-        print("getCard: ", getCard)
-        print("gettypeCard: ", type(getCard))
+        print("ID: ", id)
         result = setId(id)
         if result == False:
+            print("JE SUIS LA", idList)
             response = app.response_class(
                 response=json.dumps({"data":playerList, "started": started, "status":300}),
                 status=300,
                 mimetype='application/json'
             )
             return response
-        print("getCard: ", getCard)
         if getCard == 'true' and started == True:
             print("je suis la")
             card1 = getNextCard()
@@ -270,6 +267,7 @@ class userAfk(Resource):
             )
             return response
         else:
+            print("JE SUIS ICI")
             response = app.response_class(
                 response=json.dumps({"data":playerList, "started": started,"status":200}),
                 status=200,
@@ -282,9 +280,9 @@ class startGame(Resource):
         global Board
         global started
         idList[0].update({"playTurn":True})
-        print(getIdLength(idList))
         Board = board.getBoard(getIdLength(idList), idList)
         if Board.Status == False:
+            print("NOT STARTED")
             response = app.response_class(
                 response=json.dumps({"data":playerList, "started": started,"status":300, "Message": Board.ErrorMessage}),
                 status=300,
@@ -292,8 +290,8 @@ class startGame(Resource):
             )
             return response
         else:
+            print("GAME STARTED")
             started = True
-            print("Done")
             response = app.response_class(
                 response=json.dumps({"data":idList, "started": started,"status":200, "Message": "GameStarted"}),
                 status=200,
@@ -318,11 +316,9 @@ def getIdLength(idList):
     return i
 
 def checkTurn(playerID):
-    print("id: ", playerID)
     playerID = int(playerID)
     for x in idList:
         if x["id"] == playerID:
-            print("ici: ", x["playTurn"])
             return x["playTurn"]
     return False
 
@@ -349,12 +345,12 @@ def setId(id):
         if id == x["id"]:
             x.update({"isHere":True})
             return True
+    print("je susi faux: ", id)
     return False
 
 def updatePlayer():
     i = 0
     for x in idList:
-        print(i, "   ", x["id"])
         if x["id"] == 0 and i < 5:
             while i < 5 and idList[i + 1]["id"] != 0:
                 print("lol")
@@ -408,7 +404,7 @@ def test2():
 
 def test():
     print("gello")
-    app.run(port=4004)
+    app.run(host='0.0.0.0', port=4004)
     #print(Board.BoardGame)
     #print(Board.BoardGame)
 
@@ -418,8 +414,6 @@ if __name__ == '__main__':
     p1.start()
     test()
     #graph.start()
-    print('parent process:', os.getppid())
-    print('process id:', os.getpid())
 
     #p1 = Process(target=checkAFK)
     #p1.start()

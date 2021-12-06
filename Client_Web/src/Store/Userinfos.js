@@ -3,7 +3,8 @@ const initialState = {
   userList: [],
   hand: [6, 7, 13],
   playerID: 0,
-  gameEnded: false
+  gameEnded: false,
+  param: ""
 };
 
 function UserInfos(state = initialState, action) {
@@ -37,6 +38,12 @@ function UserInfos(state = initialState, action) {
       nextState = {
         ...state,
         gameEnded: action.value
+      };
+      return nextState;
+    case 'SET_PARAM':
+      nextState = {
+        ...state,
+        param: action.value
       };
       return nextState;
     default:
