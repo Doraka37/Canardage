@@ -14,13 +14,17 @@ def PanCheck(Board, value):
         Board.ErrorMessage = "Il n'y a pas de cible sur cette case"
         Board.Status = False
         return Board
+    if Board.BoardGame[value - 1]["protected"] != 'none':
+        Board.ErrorMessage = "Cette case est protégé"
+        Board.Status = False
+        return Board
     Board.ErrorMessage = "La carte a été joué"
     Board.Status = True
     return Board
 
 def PanGlobalCheck(Board):
     for x in Board.BoardGame:
-        if x["target"] == True:
+        if x["target"] == True and x['protected'] != 'none':
             return True
     return False
 
@@ -80,14 +84,23 @@ def OupsCheck(Board, value):
         Board.ErrorMessage = "Il n'y a pas de cible sur une case adjacente"
         Board.Status = False
         return Board
+    elif Board.BoardGame[value - 1]["protected"] != 'none':
+        Board.ErrorMessage = "Cette case est protégé"
+        Board.Status = False
+        return Board
     Board.ErrorMessage = "La carte a été joué"
     Board.Status = True
     return Board
 
 def OupsGlobalCheck(Board):
-    for x in Board.BoardGame:
-        if x["target"] == True:
-            return True
+    for i in range(len(Board.BoardGame)):
+        if Board.BoardGame[i]["target"] == True:
+            if i == 0 and Board.BoardGame[i + 1]["protected"] == 'none':
+                return True
+            elif i == 5 and Board.BoardGame[i - 1]["protected"] == 'none':
+                return True
+            elif Board.BoardGame[i - 1]["protected"] == 'none' or Board.BoardGame[i + 1]["protected"] == 'none':
+                return True
     return False
 
 def DuckyLuck(Board, value):
@@ -102,6 +115,10 @@ def DuckyLuckPlay(Board, value):
     return Board
 
 def DuckyLuckCheck(Board, value):
+    if Board.BoardGame[value - 1]["protected"] != 'none':
+        Board.ErrorMessage = "Cette case est protégé"
+        Board.Status = False
+        return Board
     Board.ErrorMessage = "La carte a été joué"
     Board.Status = True
     return Board
@@ -226,7 +243,17 @@ def DoublePanCheck(Board, value, value2):
     if value2 > value + 1 or value2 < value - 1 or value == value2:
         Board.ErrorMessage = "Les cases ciblé ne sont pas adjacente"
         return Board
+    
+    if Board.BoardGame[value - 1]["protected"] != 'none':
+        Board.ErrorMessage = "Cette case est protégé"
+        Board.Status = False
+        return Board
 
+    if Board.BoardGame[value2 - 1]["protected"] != 'none':
+        Board.ErrorMessage = "Cette case est protégé"
+        Board.Status = False
+        return Board
+    
     if Board.BoardGame[value - 1]["target"] == False:
         Board.ErrorMessage = "il n'y a pas de cible sur une case visé"
         Board.Status = False
@@ -241,6 +268,7 @@ def DoublePanCheck(Board, value, value2):
 
 def DoublePanGlobalCheck(Board):
     for i in range(len(Board.BoardGame)):
-        if Board.BoardGame[i]["target"] == True and i < 5 and Board.BoardGame[i + 1]["target"] == True:
-            return True
+        if i < 5 and Board.BoardGame[i]["target"] == True and Board.BoardGame[i + 1]["target"] == True:
+            if i < 5 and Board.BoardGame[i]["protected"] != 'none' and Board.BoardGame[i + 1]["protected"] != 'none':
+                return True
     return False

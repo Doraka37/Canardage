@@ -56,12 +56,18 @@ def HideCheck(Board, value, value2, playerID):
         Board.Status = False
         return Board
 
+    if Board.BoardGame[value - 1]["hideDuck"] != 'none':
+        Board.ErrorMessage = "Un canard est caché sous votre canard"
+        Board.Status = False
+        return Board
+
     if Board.BoardGame[value2 - 1]["duck"] == 'empty':
         Board.ErrorMessage = "Cette case ne posede pas de canards"
         Board.Status = False
         return Board
+    
     if Board.BoardGame[value2 - 1]["hideDuck"] != 'none':
-        Board.ErrorMessage = "Un canard est déja cacché sous cette case"
+        Board.ErrorMessage = "Un canard est déja caché sous cette case"
         Board.Status = False
         return Board
 
@@ -83,12 +89,14 @@ def HideGlobalCheck(Board, PlayerID):
             playerDuckTmp = player["duck"]
 
     for i in range(len(Board.BoardGame)):
-        if Board.BoardGame[i]["duck"] == playerDuckTmp:
-            if i == 0 and Board.BoardGame[i + 1]["hideDuck"] == 'none':
+        if Board.BoardGame[i]["duck"] == playerDuckTmp and Board.BoardGame[i]["hideDuck"] == 'none':
+            if i == 0 and Board.BoardGame[i + 1]["hideDuck"] == 'none' and Board.BoardGame[i + 1]["duck"] != 'empty':
                 return True
-            elif i == 5 and Board.BoardGame[i - 1]["hideDuck"] == 'none':
+            elif i == 5 and Board.BoardGame[i - 1]["hideDuck"] == 'none' and Board.BoardGame[i - 1]["duck"] != 'empty':
                 return True
-            elif Board.BoardGame[i - 1]["hideDuck"] == 'none' or Board.BoardGame[i + 1]["hideDuck"] == 'none':
+            elif Board.BoardGame[i - 1]["hideDuck"] == 'none' and Board.BoardGame[i - 1]["duck"] != 'empty':
+                return True
+            elif Board.BoardGame[i + 1]["hideDuck"] == 'none' and Board.BoardGame[i + 1]["duck"] != 'empty':
                 return True
 
     return False
