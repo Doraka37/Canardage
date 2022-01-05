@@ -9,6 +9,7 @@ def check_card(self):
     if (self.card["id"] == '1' or self.card["id"] == '3'):
         self.animate = "Explosion"
         self.isUpdate = False
+        self.bang.play(pan=self.pan, volume=2)
     if (self.card["id"] == '15'):
         self.animate = "MoveAll"
         self.isUpdate = False
@@ -27,6 +28,9 @@ def check_card(self):
         self.animate = "DoubleAim"
     if (self.card["id"] == '8'):
         self.animate = "DoubleExplosion"
+        self.isUpdate = False
+    if (self.card["id"] == '14'):
+        self.animate = "Peace"
         self.isUpdate = False
 
 def create_player_list(self):

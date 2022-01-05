@@ -1,6 +1,7 @@
 import arcade
 import myconstants
 import prepare
+import time
 
 def animation_handler(self):
     print("ok")
@@ -17,6 +18,7 @@ def explosion(self):
             self.image_x = 0
             self.image_y += 100
             if (self.image_y >= 800):
+                self.quack.play(pan=self.pan, volume=2)
                 self.animate = "MoveFrom"
                 self.image_x = 0
                 self.image_y = 0
@@ -38,6 +40,7 @@ def doubleExplosion(self):
             self.image_x = 0
             self.image_y += 100
             if (self.image_y >= 800):
+                self.quack.play(pan=self.pan, volume=2)
                 self.animate = "DoubleMoveFrom"
                 self.image_x = 0
                 self.image_y = 0
@@ -162,4 +165,20 @@ def doubleAim(self):
             return
         self.pointer_list[size - 1].scale -= 0.1
         self.pointer_list[size - 2].scale -= 0.1
-        
+
+def peace(self):
+    if (self.animate == "Peace"):
+        self.animation = arcade.SpriteList()
+        tmpSprite = arcade.Sprite(myconstants.PATH + "sheet-peaceandlove.png", 3, self.image_x, self.image_y, 143, 287)
+        tmpSprite.center_x = 700
+        tmpSprite.center_y = 250
+        self.animation.append(tmpSprite)
+        self.animation.draw()
+        time.sleep(0.2)
+        self.image_x += 143
+        if (self.image_x > 520):
+            self.image_x = 0
+            self.image_y += 287
+            if (self.image_y > 288):
+                self.animate = ""
+                self.isUpdate = True

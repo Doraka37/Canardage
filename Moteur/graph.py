@@ -33,6 +33,13 @@ class MyGame(arcade.Window):
         self.animate = None
         self.card = None
 
+        self.sound = arcade.Sound("../Client_Web/src/ressources/music.mp3", streaming=True)
+        self.playing = False
+        self.pan = 0.5
+        self.volume = 0.5
+        self.bang = arcade.Sound("../Client_Web/src/ressources/gunshot.wav")
+        self.quack = arcade.Sound("../Client_Web/src/ressources/quack.wav")
+
         self.board_list = None
         self.board = None
         self.boardTmp = None
@@ -138,6 +145,9 @@ class MyGame(arcade.Window):
     def on_draw(self):
         """Render the screen."""
 
+        if (self.playing == False):
+            self.sound.play(pan=self.pan, volume=self.volume)
+            self.playing = True
         arcade.start_render()
         if (self.q.empty() == False):
             self.parse_queu()
@@ -174,6 +184,7 @@ class MyGame(arcade.Window):
             animations.fulguro(self)
             animations.aim(self)
             animations.doubleAim(self)
+            animations.peace(self)
         # Code to draw the screen goes here
 
 
