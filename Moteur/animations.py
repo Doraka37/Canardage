@@ -18,7 +18,6 @@ def explosion(self):
             self.image_x = 0
             self.image_y += 100
             if (self.image_y >= 800):
-                self.quack.play(pan=self.pan, volume=2)
                 self.animate = "MoveFrom"
                 self.image_x = 0
                 self.image_y = 0
@@ -40,7 +39,6 @@ def doubleExplosion(self):
             self.image_x = 0
             self.image_y += 100
             if (self.image_y >= 800):
-                self.quack.play(pan=self.pan, volume=2)
                 self.animate = "DoubleMoveFrom"
                 self.image_x = 0
                 self.image_y = 0
@@ -58,14 +56,15 @@ def move_all(self):
 def death_move(self):
     if (self.animate == "MoveFrom"):
         val = int(self.card["value1"])
+        if (self.board[val - 1]["duck"] == "empty"):
+            self.animate = ""
+            self.isUpdate = True
+            return
         if (val == 6):
             self.animate = ""
             self.isUpdate = True
             prepare.create_board(self)
-            return
-        if (self.board[val - 1]["duck"] == "empty"):
-            self.animate = ""
-            self.isUpdate = True
+            self.quack.play(pan=self.pan, volume=2)    
             return
         self.tile_list[(val - 1)].center_y = -2000
         for i in range(val, myconstants.BOARD_SIZE, 1):
@@ -73,7 +72,8 @@ def death_move(self):
         if (self.tile_list[val].center_x <= (48 + val * 162)):
             self.animate = ""
             self.isUpdate = True
-            prepare.create_board(self)
+            self.quack.play(pan=self.pan, volume=2)
+            prepare.create_board(self)   
 
 def double_death_move(self):
     if (self.animate == "DoubleMoveFrom"):
@@ -94,6 +94,7 @@ def double_death_move(self):
         if (val == 6 or val2 == 6):
             self.animate = ""
             self.isUpdate = True
+            self.quack.play(pan=self.pan, volume=2)
             prepare.create_board(self)
             return
         self.tile_list[(val - 1)].center_y = -2000
@@ -103,6 +104,7 @@ def double_death_move(self):
         if (self.tile_list[val].center_x <= (48 - 162 + val * 162) or self.tile_list[val2].center_x <= (48 - 162 + val2 * 162)):
             self.animate = ""
             self.isUpdate = True
+            self.quack.play(pan=self.pan, volume=2)
             prepare.create_board(self)
 
 def switch_move(self):
