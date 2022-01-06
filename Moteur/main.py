@@ -21,7 +21,17 @@ started = False
 
 idList = [
     {
+        "id":132123,
+        "isHere":False,
+        "playTurn":True
+    },
+    {
         "id":0,
+        "isHere":False,
+        "playTurn":False
+    },
+    {
+        "id":213123,
         "isHere":False,
         "playTurn":False
     },
@@ -36,17 +46,7 @@ idList = [
         "playTurn":False
     },
     {
-        "id":0,
-        "isHere":False,
-        "playTurn":False
-    },
-    {
-        "id":0,
-        "isHere":False,
-        "playTurn":False
-    },
-    {
-        "id":0,
+        "id":2313123,
         "isHere":False,
         "playTurn":False
     },
@@ -431,6 +431,21 @@ if __name__ == '__main__':
     p1 = Process(target=graph.start, args=(q,))
     p1.start()
     test()
+    """Board = board.getBoard(getIdLength(idList), idList)
+    for x in idList:
+        print(x)
+    print("___")
+    Board = updateTurn(Board)
+    for x in idList:
+        print(x)
+    print("___")
+    Board = updateTurn(Board)
+    for x in idList:
+        print(x)
+    print("___")
+    Board = updateTurn(Board)
+    for x in idList:
+        print(x)"""
     #graph.start()
 
     #p1 = Process(target=checkAFK)
