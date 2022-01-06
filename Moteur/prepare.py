@@ -6,6 +6,8 @@ link_text = ""
 
 def check_card(self):
     print("Crad: ", self.card)
+    self.sound.set_volume(volume=self.volume, player=self.player)
+    self.danse.set_volume(volume=0, player=self.dance_player)
     if (self.card["id"] == '1' or self.card["id"] == '3'):
         self.animate = "Explosion"
         self.isUpdate = False
@@ -32,6 +34,9 @@ def check_card(self):
     if (self.card["id"] == '14'):
         self.animate = "Peace"
         self.isUpdate = False
+    if (self.card["id"] == '12'):
+        self.dance_player = self.danse.play(pan=self.pan, volume=3)
+        self.sound.set_volume(volume=0, player=self.player)
 
 def create_player_list(self):
     i = 0

@@ -39,6 +39,9 @@ class MyGame(arcade.Window):
         self.volume = 0.5
         self.bang = arcade.Sound("../Client_Web/src/ressources/gunshot.wav")
         self.quack = arcade.Sound("../Client_Web/src/ressources/quack.wav")
+        self.danse = arcade.Sound("../Client_Web/src/ressources/danse.wav")
+        self.player = None
+        self.dance_player = None
 
         self.board_list = None
         self.board = None
@@ -146,7 +149,7 @@ class MyGame(arcade.Window):
         """Render the screen."""
 
         if (self.playing == False):
-            self.sound.play(pan=self.pan, volume=self.volume)
+            self.player = self.sound.play(pan=self.pan, volume=self.volume, loop=True)
             self.playing = True
         arcade.start_render()
         if (self.q.empty() == False):
