@@ -142,6 +142,10 @@ def AimRightCheck(Board, value):
         Board.ErrorMessage = "La case ciblé est la derniere du plateau"
         Board.Status = False
         return Board
+    if Board.BoardGame[value - 1]["target"] == False:
+        Board.ErrorMessage = "il n'y a pas de cible sur cette case"
+        Board.Status = False
+        return Board
     if Board.BoardGame[value]["target"] == True:
         Board.ErrorMessage = "Il y a déja une cible sur la case de droite"
         Board.Status = False
@@ -170,6 +174,10 @@ def AimLeftPlay(Board, value):
 def AimLeftCheck(Board, value):
     if value < 2:
         Board.ErrorMessage = "La case ciblé est la premiere du plateau"
+        Board.Status = False
+        return Board
+    if Board.BoardGame[value - 1]["target"] == False:
+        Board.ErrorMessage = "il n'y a pas de cible sur cette case"
         Board.Status = False
         return Board
     if Board.BoardGame[value - 2]["target"] == True:
@@ -243,7 +251,7 @@ def DoublePanCheck(Board, value, value2):
     if value2 > value + 1 or value2 < value - 1 or value == value2:
         Board.ErrorMessage = "Les cases ciblé ne sont pas adjacente"
         return Board
-    
+
     if Board.BoardGame[value - 1]["protected"] != 'none':
         Board.ErrorMessage = "Cette case est protégé"
         Board.Status = False
@@ -253,7 +261,7 @@ def DoublePanCheck(Board, value, value2):
         Board.ErrorMessage = "Cette case est protégé"
         Board.Status = False
         return Board
-    
+
     if Board.BoardGame[value - 1]["target"] == False:
         Board.ErrorMessage = "il n'y a pas de cible sur une case visé"
         Board.Status = False
