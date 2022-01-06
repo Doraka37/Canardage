@@ -106,7 +106,7 @@ class playCard(Resource):
             print("acrd id: ", cardID)
             if checkTurn(playerID) == False:
                 response = app.response_class(
-                    response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer","status":300, "endGame":Board.endGame}),
+                    response=json.dumps({"data":"Error", "Message":"Ce n'est pas votre tour de jouer","status":300}),
                     status=300,
                     mimetype='application/json'
                 )
@@ -128,7 +128,7 @@ class playCard(Resource):
                 print("\n",Board.DuckDrawList)
                 print("\n",Board.PlayerList)
                 response = app.response_class(
-                    response=json.dumps({"data":cardDraw, "Message":Board.ErrorMessage,"status":200, "endGame":Board.endGame}),
+                    response=json.dumps({"data":cardDraw, "Message":Board.ErrorMessage,"status":200}),
                     status=200,
                     mimetype='application/json'
                 )
@@ -201,7 +201,7 @@ class disCard(Resource):
                 mimetype='application/json'
             )
             return response
- 
+
 class addUsers(Resource):
     def post(self):
         global started
@@ -240,7 +240,7 @@ class addUsers(Resource):
 class userAfk(Resource):
     def post(self):
         global started
-
+        global Board
         id = int(request.form.get("playerID"))
         getCard = request.form.get("getCard")
         print("ID: ", id)
@@ -248,7 +248,7 @@ class userAfk(Resource):
         if result == False:
             print("JE SUIS LA", idList)
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started, "status":300}),
+                response=json.dumps({"data":playerList, "started": started, "status":300, "endGame":Board.endGame}),
                 status=300,
                 mimetype='application/json'
             )
@@ -259,7 +259,7 @@ class userAfk(Resource):
             card2 = getNextCard()
             card3 = getNextCard()
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started, "card1": card1, "card2": card2, "card3": card3,"status":200}),
+                response=json.dumps({"data":playerList, "started": started, "card1": card1, "card2": card2, "card3": card3, "status":200, "endGame":Board.endGame}),
                 status=200,
                 mimetype='application/json'
             )
@@ -267,7 +267,7 @@ class userAfk(Resource):
         else:
             print("JE SUIS ICI")
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started,"status":200}),
+                response=json.dumps({"data":playerList, "started": started, "status":200, "endGame":Board.endGame}),
                 status=200,
                 mimetype='application/json'
             )
@@ -340,7 +340,7 @@ def updateProtect(id, Board):
     for x in Board.BoardGame:
         if x['protected'] == id:
             x.update({"protected":'none'})
-    
+
     return Board
 
     """if i == 5 or idList[i + 1]["id"] == 0:
