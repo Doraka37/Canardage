@@ -142,31 +142,55 @@ def fulguro(self):
 def aim(self):
     size = len(self.pointer_list)
     if (self.animate == "Aim"):
-        self.pointer_list[size - 1].scale += 0.1
-        if (self.pointer_list[size - 1].scale >= 2.5):
+        val = int(self.card["value1"]) - 1
+        for x in range(0, len(self.pointer_id), 1):
+            if (val == self.pointer_id[x]):
+                place = x
+                break
+        self.pointer_list[place].scale += 0.1
+        if (self.pointer_list[place].scale >= 2.5):
             self.animate = "Aim2"
     if (self.animate == "Aim2"):
-        if (self.pointer_list[size - 1].scale <= 0.4):
-            self.pointer_list[size - 1].scale = 0.4
+        val = int(self.card["value1"]) - 1
+        for x in range(0, len(self.pointer_id), 1):
+            if (val == self.pointer_id[x]):
+                place = x
+                break
+        if (self.pointer_list[place].scale <= 0.4):
+            self.pointer_list[place].scale = 0.4
             self.animate = ""
             return
-        self.pointer_list[size - 1].scale -= 0.1
+        self.pointer_list[place].scale -= 0.1
 
 def doubleAim(self):
     size = len(self.pointer_list)
     if (self.animate == "DoubleAim"):
-        self.pointer_list[size - 1].scale += 0.1
-        self.pointer_list[size - 2].scale += 0.1
-        if (self.pointer_list[size - 1].scale >= 2.5):
+        val = int(self.card["value1"]) - 1
+        val2 = int(self.card["value2"]) - 1
+        for x in range(0, len(self.pointer_id), 1):
+            if (val == self.pointer_id[x]):
+                place = x
+            if (val2 == self.pointer_id[x]):
+                place2 = x
+        self.pointer_list[place].scale += 0.1
+        self.pointer_list[place2].scale += 0.1
+        if (self.pointer_list[place].scale >= 2.5):
             self.animate = "DoubleAim2"
     if (self.animate == "DoubleAim2"):
-        if (self.pointer_list[size - 1].scale <= 0.4):
-            self.pointer_list[size - 1].scale = 0.4
-            self.pointer_list[size - 2].scale = 0.4
+        val = int(self.card["value1"]) - 1
+        val2 = int(self.card["value2"]) - 1
+        for x in range(0, len(self.pointer_id), 1):
+            if (val == self.pointer_id[x]):
+                place = x
+            if (val2 == self.pointer_id[x]):
+                place2 = x
+        if (self.pointer_list[place].scale <= 0.4):
+            self.pointer_list[place].scale = 0.4
+            self.pointer_list[place2].scale = 0.4
             self.animate = ""
             return
-        self.pointer_list[size - 1].scale -= 0.1
-        self.pointer_list[size - 2].scale -= 0.1
+        self.pointer_list[place].scale -= 0.1
+        self.pointer_list[place2].scale -= 0.1
 
 def peace(self):
     if (self.animate == "Peace"):

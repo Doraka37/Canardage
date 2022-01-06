@@ -20,6 +20,7 @@ class MyGame(arcade.Window):
 
         self.tile_list = None
         self.pointer_list = None
+        self.pointer_id = None
         self.card_list = None
         self.player_list = None
         self.score = [0, 1, 3, 3, 4, 5]
@@ -33,7 +34,7 @@ class MyGame(arcade.Window):
         self.animate = None
         self.card = None
 
-        self.sound = arcade.Sound("../Client_Web/src/ressources/music.mp3", streaming=True)
+        self.sound = arcade.load_sound("../Client_Web/src/ressources/Happy_2.wav")
         self.playing = False
         self.pan = 0.5
         self.volume = 0.5
@@ -149,8 +150,10 @@ class MyGame(arcade.Window):
         """Render the screen."""
 
         if (self.playing == False):
-            self.player = self.sound.play(pan=self.pan, volume=self.volume, loop=True)
+            self.player = arcade.play_sound(sound=self.sound, pan=self.pan, volume=self.volume, looping=True)
             self.playing = True
+        if (self.dance_player != None and self.danse.is_complete(self.dance_player)):
+            self.sound.set_volume(volume=self.volume, player=self.player)
         arcade.start_render()
         if (self.q.empty() == False):
             self.parse_queu()

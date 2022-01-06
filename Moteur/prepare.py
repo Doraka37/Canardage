@@ -7,7 +7,8 @@ link_text = ""
 def check_card(self):
     print("Crad: ", self.card)
     self.sound.set_volume(volume=self.volume, player=self.player)
-    self.danse.set_volume(volume=0, player=self.dance_player)
+    if (self.dance_player != None):
+        self.danse.set_volume(volume=0, player=self.dance_player)
     if (self.card["id"] == '1' or self.card["id"] == '3'):
         self.animate = "Explosion"
         self.isUpdate = False
@@ -76,6 +77,7 @@ def create_lists(self):
 
     i = 0
     self.pointer_list = arcade.SpriteList()
+    self.pointer_id = []
     for x in range(213, 1147, 162):
         print("Board len: ", len(self.boardTmp))
         if (i < len(self.boardTmp)):
@@ -84,6 +86,7 @@ def create_lists(self):
                 pointer.center_x = x
                 pointer.center_y = 395
                 self.pointer_list.append(pointer)
+                self.pointer_id.append(i)
             i += 1
 
 def create_menu(self):
