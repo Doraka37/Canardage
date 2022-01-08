@@ -206,5 +206,95 @@ def peace(self):
             self.image_x = 0
             self.image_y += 287
             if (self.image_y > 288):
+                self.image_y = 0
                 self.animate = ""
                 self.isUpdate = True
+
+def peace(self):
+    if (self.animate == "Peace"):
+        self.animation = arcade.SpriteList()
+        tmpSprite = arcade.Sprite(myconstants.PATH + "sheet-peaceandlove.png", 3, self.image_x, self.image_y, 143, 287)
+        tmpSprite.center_x = 700
+        tmpSprite.center_y = 250
+        self.animation.append(tmpSprite)
+        self.animation.draw()
+        time.sleep(0.2)
+        self.image_x += 143
+        if (self.image_x > 520):
+            self.image_x = 0
+            self.image_y += 287
+            if (self.image_y > 288):
+                self.image_y = 0
+                self.sound.set_volume(volume=self.volume, player=self.player)
+                self.animate = ""
+                self.isUpdate = True
+
+def revive(self):
+    if (self.animate == "Revive"):
+        self.animation = arcade.SpriteList()
+        tmpSprite = arcade.Sprite(myconstants.PATH + "walking_duck_sheet.png", 3, self.image_x, self.image_y, 240, 240)
+        tmpSprite.center_x = 700
+        tmpSprite.center_y = 400
+        self.animation.append(tmpSprite)
+        self.animation.draw()
+        time.sleep(0.4)
+        self.image_x += 240
+        if (self.image_x > 1200):
+            self.image_x = 0
+            self.image_y += 240
+            if (self.image_y > 240):
+                self.image_y = 0
+                self.animate = ""
+                self.sound.set_volume(volume=self.volume, player=self.player)
+                self.isUpdate = True
+
+def canarchie(self):
+    if (self.animate == "Canarchie"):
+        self.animation = arcade.SpriteList()
+        tmpSprite = arcade.Sprite(myconstants.PATH + "canarchie_sheet.png", 2, self.image_x, 0, 360, 349)
+        tmpSprite.center_x = 700
+        tmpSprite.center_y = 400
+        self.animation.append(tmpSprite)
+        self.animation.draw()
+        time.sleep(0.2)
+        self.image_x += 360
+        if (self.image_x > 1080):
+            self.image_x = 0
+            self.image_y += 1
+            if (self.image_y > 5):
+                self.image_y = 0
+                self.animate = ""
+                self.isUpdate = True
+
+def luke(self):
+    if (self.animate == "Luke"):
+        self.animation = arcade.SpriteList()
+        tmpSprite = arcade.Sprite(myconstants.PATH + "tumbleweed.png", 1, self.image_x, self.image_y, 288, 576)
+        tmpSprite.center_x = self.center_x
+        tmpSprite.center_y = 400
+        self.animation.append(tmpSprite)
+        self.animation.draw()
+        self.image_x += 288
+        self.center_x += 50
+        time.sleep(0.1)
+        if (self.image_x > 1152):
+            self.image_x = 0
+            if (self.center_x > 1000):
+                self.center_x = 0
+                self.animate = "LukeShoot"
+                self.gun.play(pan=self.pan, volume=2)
+    if (self.animate == "LukeShoot"):
+        self.animation = arcade.SpriteList()
+        tmpSprite = arcade.Sprite(myconstants.PATH + "tirs.png", 0.5, self.image_x, self.image_y, 328, 198)
+        tmpSprite.center_x = (48 + (int(self.card["value1"]) * 162))
+        tmpSprite.center_y = 250
+        self.animation.append(tmpSprite)
+        self.animation.draw()
+        time.sleep(0.2)
+        self.image_y += 198
+        if (self.image_y > 397):
+            time.sleep(0.4)
+            self.animate = "MoveFrom"
+            self.sound.set_volume(volume=self.volume, player=self.player)
+            self.image_x = 0
+            self.image_y = 0

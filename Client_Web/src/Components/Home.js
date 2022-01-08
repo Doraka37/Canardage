@@ -53,8 +53,11 @@ function Home() {
           })
           .then(result => {
             console.log("result: ", result);
-            if (result.endGame == true) {
+            console.log("ENDGAME: ", result.endGame);
+            if (result.endGame == "true" || result.endGame == "True" || result.endGame == true) {
+              console.log("go to endgame");
               setParam("EndGame")
+              return
             }
             console.log("ERROR MESSSAGE: ", result.Message);
             if (result.started == true && started == false) {

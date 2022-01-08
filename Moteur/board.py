@@ -213,7 +213,7 @@ class ClassBoardGame:
             self.BoardGame[-1].update({"hideDuck":'none'})
             self.DuckDrawList.pop(0)
         if checkEnd(self.PlayerList) == True:
-            endGame = True
+            self.endGame = True
 
 def checkEnd(playerList):
     i = 0

@@ -41,8 +41,16 @@ class MyGame(arcade.Window):
         self.bang = arcade.Sound("../Client_Web/src/ressources/gunshot.wav")
         self.quack = arcade.Sound("../Client_Web/src/ressources/quack.wav")
         self.danse = arcade.Sound("../Client_Web/src/ressources/danse.wav")
+        self.luke = arcade.Sound("../Client_Web/src/ressources/western.wav")
+        self.gun = arcade.Sound("../Client_Web/src/ressources/gun_sound.wav")
+        self.fight = arcade.Sound("../Client_Web/src/ressources/fight.wav")
+        self.revive = arcade.Sound("../Client_Web/src/ressources/revive.wav")
+        self.peace = arcade.Sound("../Client_Web/src/ressources/peace.wav")
         self.player = None
         self.dance_player = None
+        self.luke_player = None
+        self.revive_player = None
+        self.peace_player = None
 
         self.board_list = None
         self.board = None
@@ -53,6 +61,8 @@ class MyGame(arcade.Window):
         self.isUpdate = True
         self.image_x = 0
         self.image_y = 0
+        self.center_x = 0
+        self.center_y = 0
         self.v_box = arcade.gui.UIBoxLayout()
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
@@ -154,6 +164,10 @@ class MyGame(arcade.Window):
             self.playing = True
         if (self.dance_player != None and self.danse.is_complete(self.dance_player)):
             self.sound.set_volume(volume=self.volume, player=self.player)
+        if (self.luke_player != None and self.luke.is_complete(self.luke_player)):
+            self.sound.set_volume(volume=self.volume, player=self.player)
+        if (self.revive_player != None and self.revive.is_complete(self.revive_player)):
+            self.sound.set_volume(volume=self.volume, player=self.player)
         arcade.start_render()
         if (self.q.empty() == False):
             self.parse_queu()
@@ -179,7 +193,15 @@ class MyGame(arcade.Window):
                 score_text = f"{self.pseudo[i]} Canards morts: {self.score[i]}"
                 arcade.draw_text(score_text, 42, y, arcade.csscolor.WHITE, 18)
                 y -= 40
-            score_text = f"C'est le tour du joueur: {self.turn}"
+            endgame = 0
+            for x in range(0, myconstants.PLAYER_NBR, 1):
+                if (self.score[x] < 5):
+                    winner = self.pseudo[x]
+                    endgame += 1
+            if (endgame <= 1):
+                score_text = f"{winner} a gagner"
+            else:
+                score_text = f"C'est le tour du joueur: {self.turn}"
             arcade.draw_text(score_text, 400, 700, arcade.csscolor.WHITE, 32)
             animations.explosion(self)
             animations.doubleExplosion(self)
@@ -191,6 +213,9 @@ class MyGame(arcade.Window):
             animations.aim(self)
             animations.doubleAim(self)
             animations.peace(self)
+            animations.luke(self)
+            animations.canarchie(self)
+            animations.revive(self)
         # Code to draw the screen goes here
 
 

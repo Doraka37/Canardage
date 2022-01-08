@@ -21,7 +21,7 @@ started = False
 
 idList = [
     {
-        "id":132123,
+        "id":0,
         "isHere":False,
         "playTurn":True
     },
@@ -31,11 +31,6 @@ idList = [
         "playTurn":False
     },
     {
-        "id":213123,
-        "isHere":False,
-        "playTurn":False
-    },
-    {
         "id":0,
         "isHere":False,
         "playTurn":False
@@ -46,7 +41,12 @@ idList = [
         "playTurn":False
     },
     {
-        "id":2313123,
+        "id":0,
+        "isHere":False,
+        "playTurn":False
+    },
+    {
+        "id":0,
         "isHere":False,
         "playTurn":False
     },
@@ -244,15 +244,23 @@ class userAfk(Resource):
         id = int(request.form.get("playerID"))
         getCard = request.form.get("getCard")
         print("ID: ", id)
+        if (q3.empty() == False):
+            Qres = q3.get()
+            print("Qres: ", Qres)
+            idTest = Qres["idList"]
+            AFKarray = Qres["array"]
+            print(idTest)
+            print(AFKarray)
         result = setId(id)
         if result == False:
             print("JE SUIS LA", idList)
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started, "status":300, "endGame":Board.endGame}),
+                response=json.dumps({"data":playerList, "started": started, "status":300}),
                 status=300,
                 mimetype='application/json'
             )
             return response
+        q2.put(idList)
         if getCard == 'true' and started == True:
             print("je suis la")
             card1 = getNextCard()
@@ -264,10 +272,17 @@ class userAfk(Resource):
                 mimetype='application/json'
             )
             return response
+        elif started == True:
+            response = app.response_class(
+                response=json.dumps({"data":playerList, "started": started, "status":200, "endGame":Board.endGame}),
+                status=200,
+                mimetype='application/json'
+            )
+            return response
         else:
             print("JE SUIS ICI")
             response = app.response_class(
-                response=json.dumps({"data":playerList, "started": started, "status":200, "endGame":Board.endGame}),
+                response=json.dumps({"data":playerList, "started": started, "status":200}),
                 status=200,
                 mimetype='application/json'
             )
@@ -380,19 +395,27 @@ def updatePlayer():
             break
         i += 1
 
-def checkAFK():
+def checkAFK(q2, q3):
+    afkWile = True
+    idList = []
     while afkWile == True:
+        print("I AM SECONDARYT")
+        while (q2.empty() == False):
+            idList = q2.get()
         print("\n idList \n")
         print(idList)
         print("\n")
+        array = []
         for x in idList:
             if x["id"] != 0:
                 if x["isHere"] == True:
                     x.update({"isHere":False})
                 else:
+                    array.append(x.id)
                     x.update({"id":0})
                     if started == False:
                         updatePlayer()
+        q3.put({'idList': idList, 'array': array})
         print("\n update player \n")
         print(idList)
         print("\n")
@@ -430,6 +453,10 @@ if __name__ == '__main__':
     q = Queue()
     p1 = Process(target=graph.start, args=(q,))
     p1.start()
+    q2 = Queue()
+    q3 = Queue()
+    p2 = Process(target=checkAFK, args=(q2,q3,))
+    p2.start()
     test()
     """Board = board.getBoard(getIdLength(idList), idList)
     for x in idList:

@@ -34,7 +34,21 @@ def check_card(self):
         self.isUpdate = False
     if (self.card["id"] == '14'):
         self.animate = "Peace"
+        self.peace_player = self.peace.play(pan=self.pan, volume=3)
+        self.sound.set_volume(volume=0, player=self.player)
+    if (self.card["id"] == '13'):
+        self.animate = "Revive"
+        self.revive_player = self.revive.play(pan=self.pan, volume=3)
+        self.sound.set_volume(volume=0, player=self.player)
         self.isUpdate = False
+    if (self.card["id"] == '4'):
+        self.animate = "Luke"
+        self.luke_player = self.luke.play(pan=self.pan, volume=3)
+        self.sound.set_volume(volume=0, player=self.player)
+        self.isUpdate = False
+    if (self.card["id"] == '11'):
+        self.animate = "Canarchie"
+        self.fight.play(pan=self.pan, volume=3)
     if (self.card["id"] == '12'):
         self.dance_player = self.danse.play(pan=self.pan, volume=3)
         self.sound.set_volume(volume=0, player=self.player)
