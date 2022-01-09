@@ -162,12 +162,17 @@ class MyGame(arcade.Window):
         if (self.playing == False):
             self.player = arcade.play_sound(sound=self.sound, pan=self.pan, volume=self.volume, looping=True)
             self.playing = True
+        #print("dance player: ", self.dance_player)
         if (self.dance_player != None and self.danse.is_complete(self.dance_player)):
-            self.sound.set_volume(volume=self.volume, player=self.player)
+            print("passed in if")
+            self.sound.set_volume(volume=0.5, player=self.player)
+            self.dance_player = None
         if (self.luke_player != None and self.luke.is_complete(self.luke_player)):
             self.sound.set_volume(volume=self.volume, player=self.player)
+            self.luke_player = None
         if (self.revive_player != None and self.revive.is_complete(self.revive_player)):
             self.sound.set_volume(volume=self.volume, player=self.player)
+            self.revive_player = None
         arcade.start_render()
         if (self.q.empty() == False):
             self.parse_queu()

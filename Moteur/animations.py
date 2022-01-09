@@ -64,7 +64,7 @@ def death_move(self):
             self.animate = ""
             self.isUpdate = True
             prepare.create_board(self)
-            self.quack.play(pan=self.pan, volume=2)    
+            self.quack.play(pan=self.pan, volume=5)    
             return
         self.tile_list[(val - 1)].center_y = -2000
         for i in range(val, myconstants.BOARD_SIZE, 1):
@@ -72,7 +72,7 @@ def death_move(self):
         if (self.tile_list[val].center_x <= (48 + val * 162)):
             self.animate = ""
             self.isUpdate = True
-            self.quack.play(pan=self.pan, volume=2)
+            self.quack.play(pan=self.pan, volume=5)
             prepare.create_board(self)   
 
 def double_death_move(self):
@@ -94,7 +94,7 @@ def double_death_move(self):
         if (val == 6 or val2 == 6):
             self.animate = ""
             self.isUpdate = True
-            self.quack.play(pan=self.pan, volume=2)
+            self.quack.play(pan=self.pan, volume=5)
             prepare.create_board(self)
             return
         self.tile_list[(val - 1)].center_y = -2000
@@ -104,7 +104,7 @@ def double_death_move(self):
         if (self.tile_list[val].center_x <= (48 - 162 + val * 162) or self.tile_list[val2].center_x <= (48 - 162 + val2 * 162)):
             self.animate = ""
             self.isUpdate = True
-            self.quack.play(pan=self.pan, volume=2)
+            self.quack.play(pan=self.pan, volume=5)
             prepare.create_board(self)
 
 def switch_move(self):
@@ -225,9 +225,14 @@ def peace(self):
             self.image_y += 287
             if (self.image_y > 288):
                 self.image_y = 0
-                self.sound.set_volume(volume=self.volume, player=self.player)
-                self.animate = ""
-                self.isUpdate = True
+                self.center_x += 1
+                if (self.center_x <= 4):
+                    self.image_x = 0
+                    self.image_y += 287
+                else:
+                    self.sound.set_volume(volume=self.volume, player=self.player)
+                    self.animate = ""
+                    self.isUpdate = True
 
 def revive(self):
     if (self.animate == "Revive"):
@@ -279,7 +284,7 @@ def luke(self):
         time.sleep(0.1)
         if (self.image_x > 1152):
             self.image_x = 0
-            if (self.center_x > 1000):
+            if (self.center_x > 1400):
                 self.center_x = 0
                 self.animate = "LukeShoot"
                 self.gun.play(pan=self.pan, volume=2)
@@ -293,7 +298,7 @@ def luke(self):
         time.sleep(0.2)
         self.image_y += 198
         if (self.image_y > 397):
-            time.sleep(0.4)
+            time.sleep(1)
             self.animate = "MoveFrom"
             self.sound.set_volume(volume=self.volume, player=self.player)
             self.image_x = 0
