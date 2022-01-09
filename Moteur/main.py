@@ -418,7 +418,7 @@ def updateId(idList):
     i = 0
     for x in idList:
         if x["id"] == 0 and i < 5:
-            while i < 5 and idList[i + 1]["id"] != 0:
+            while i < 5:
                 print("lol")
                 idList[i].update({"id":idList[i + 1]["id"]})
                 idList[i].update({"isHere":idList[i + 1]["isHere"]})
@@ -433,7 +433,7 @@ def updatePlayer(playerList, id):
     i = 0
     for x in playerList:
         if x["id"] == id and i < 5:
-            while i < 5 and playerList[i + 1]["id"] != 0:
+            while i < 5:
                 print("lol")
                 playerList[i].update({"id":playerList[i + 1]["id"]})
                 playerList[i].update({"name":playerList[i + 1]["name"]})
@@ -442,6 +442,7 @@ def updatePlayer(playerList, id):
                 i += 1
             break
         i += 1
+    q.put({'type': "PlayerList", 'data': playerList})
     return playerList
 
 def checkAFK(q2, q3):
