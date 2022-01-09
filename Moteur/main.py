@@ -200,6 +200,7 @@ class disCard(Resource):
                 status=202,
                 mimetype='application/json'
             )
+            q.put({'type': "CardPlay", 'data': Board.BoardGame, 'card': {'id': 0, 'value1': 0, 'value2': 0, 'valueList': 0}, 'playerList': Board.PlayerList, 'idlist': idList})
             return response
 
 class addUsers(Resource):
