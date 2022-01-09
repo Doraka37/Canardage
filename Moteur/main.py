@@ -252,6 +252,9 @@ class userAfk(Resource):
             print(idTest)
             print(AFKarray)
         result = setId(id)
+        """if AFKarray != []:
+            for id in AFKarray:
+                Board = removePlayer(Board, id)"""
         if result == False:
             print("JE SUIS LA", idList)
             response = app.response_class(
@@ -319,6 +322,26 @@ api.add_resource(disCard, '/disCard')
 api.add_resource(addUsers, '/addUsers')
 api.add_resource(userAfk, '/userAfk')
 api.add_resource(startGame, '/startGame')
+
+def removePlayer(Board, id):
+    i = 0
+    j = 0
+    for player in Board.PlayerList:
+        if player["id"] == id:
+            while i < 6:
+                if player["duck"] == Board.BoardGame[i]["duck"]:
+                    Board.deathMove(i + 1)
+                else:
+                    i += 1
+            while 1:
+                if j >= len(Board.DuckDrawList):
+                    break
+                if player["duck"] == Board.DuckDrawList[j]:
+                    Board.DuckDrawList.pop(j)
+                else:
+                    j += 1
+            break
+    return Board
 
 def getIdLength(idList):
     i = 0
