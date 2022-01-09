@@ -252,8 +252,11 @@ class userAfk(Resource):
             idTest = Qres["idList"]
             if (idTest != []):
                 idList = idTest
+            playerTest = Qres["playerList"]
+            if (playerTest != []):
+                playerList = playerTest
             AFKarray = Qres["array"]
-            print(idTest)
+            print(playerTest)
             print(AFKarray)
             if AFKarray != [] and started == True:
                 print("\n\n\nBONJOUR\n")
@@ -268,7 +271,7 @@ class userAfk(Resource):
                 mimetype='application/json'
             )
             return response
-        q2.put(idList)
+        q2.put({"idList": idList, "playerList": playerList})
         if getCard == 'true' and started == True:
             print("je suis la")
             card1 = getNextCard()
@@ -410,7 +413,7 @@ def setId(id):
     print("je susi faux: ", id)
     return False
 
-def updatePlayer(idList):
+def updateId(idList):
     i = 0
     for x in idList:
         if x["id"] == 0 and i < 5:
@@ -420,6 +423,17 @@ def updatePlayer(idList):
                 idList[i].update({"isHere":idList[i + 1]["isHere"]})
                 idList[i + 1].update({"isHere":False})
                 idList[i].update({"id":0})
+                i += 1
+            break
+        i += 1
+    return idList
+
+def updatePlayer(playerList):
+    i = 0
+    for x in playerList:
+        if x["id"] == 0 and i < 5:
+            while i < 5 and playerList[i + 1]["id"] != 0:
+                print("lol")
                 playerList[i].update({"id":playerList[i + 1]["id"]})
                 playerList[i].update({"name":playerList[i + 1]["name"]})
                 playerList[i + 1].update({"name":""})
@@ -427,7 +441,7 @@ def updatePlayer(idList):
                 i += 1
             break
         i += 1
-    return idList
+    return playerList
 
 def checkAFK(q2, q3):
     afkWile = True
@@ -435,7 +449,10 @@ def checkAFK(q2, q3):
     while afkWile == True:
         print("I AM SECONDARYT")
         while (q2.empty() == False):
-            idList = q2.get()
+            Qres = q2.get()
+            print("Qres: ", Qres)
+            idList = Qres["idList"]
+            playerList = Qres["playerList"]
         print("\n idList \n")
         print(idList)
         print("\n")
@@ -448,8 +465,9 @@ def checkAFK(q2, q3):
                     array.append(x["id"])
                     x.update({"id":0})
         if started == False:
-            idList = updatePlayer(idList)
-        q3.put({'idList': idList, 'array': array})
+            idList = updateId(idList)
+            playerList = updatePlayer(playerList)
+        q3.put({'idList': idList, 'array': array, 'playerList': playerList})
         print("\n update player \n")
         print(idList)
         print("\n")
