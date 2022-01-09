@@ -19,6 +19,7 @@ class MyGame(arcade.Window):
         super().__init__(myconstants.SCREEN_WIDTH, myconstants.SCREEN_HEIGHT, myconstants.SCREEN_TITLE)
 
         self.tile_list = None
+        self.protect_list = None
         self.pointer_list = None
         self.pointer_id = None
         self.card_list = None
@@ -194,6 +195,7 @@ class MyGame(arcade.Window):
         if (self.disp == "GAME"):
             self.board_list.draw()
             self.tile_list.draw()
+            self.protect_list.draw()
             self.pointer_list.draw()
             self.card_list.draw()
             self.player_list.draw()

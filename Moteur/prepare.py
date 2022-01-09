@@ -70,12 +70,24 @@ def create_board(self):
     self.board = self.boardTmp
     i = 0
     self.tile_list = arcade.SpriteList()
+    self.protect_list = arcade.SpriteList()
     for x in range(210, 1134, 162):
         if (i < myconstants.BOARD_SIZE):
-            print(self.board[i]["duck"])
-            tile = arcade.Sprite(myconstants.PATH + self.board[i]["duck"] + ".png", myconstants.TILE_SCALING)
-            tile.center_x = x
-            tile.center_y = 250
+            print("Duck: ", self.board[i]["duck"])
+            print("protect: ", self.board[i]["protected"])
+            if (self.board[i]["protected"] != "none"):
+                protect = arcade.Sprite(myconstants.PATH + "roseau.png", myconstants.TILE_SCALING)
+                protect.center_x = x
+                protect.center_y = 270
+                self.protect_list.append(protect)
+            if (self.board[i]["hideDuck"] != "none"):
+                tile = arcade.Sprite(myconstants.PATH + self.board[i]["duck"] + "-" + self.board[i]["hideDuck"] + ".png", myconstants.TILE_SCALING)
+                tile.center_x = x
+                tile.center_y = 270
+            else:
+                tile = arcade.Sprite(myconstants.PATH + self.board[i]["duck"] + ".png", myconstants.TILE_SCALING)
+                tile.center_x = x
+                tile.center_y = 250
             self.tile_list.append(tile)
             i += 1
 
