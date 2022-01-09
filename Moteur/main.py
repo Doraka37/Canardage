@@ -243,6 +243,7 @@ class userAfk(Resource):
         global started
         global Board
         global idList
+        global playerList
         id = int(request.form.get("playerID"))
         getCard = request.form.get("getCard")
         print("ID: ", id)
@@ -446,6 +447,7 @@ def updatePlayer(playerList):
 def checkAFK(q2, q3):
     afkWile = True
     idList = []
+    playerList = []
     while afkWile == True:
         print("I AM SECONDARYT")
         while (q2.empty() == False):
@@ -453,6 +455,7 @@ def checkAFK(q2, q3):
             print("Qres: ", Qres)
             idList = Qres["idList"]
             playerList = Qres["playerList"]
+            print("playerList: ", playerList)
         print("\n idList \n")
         print(idList)
         print("\n")

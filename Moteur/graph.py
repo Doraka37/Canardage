@@ -132,6 +132,7 @@ class MyGame(arcade.Window):
         resp = self.q.get()
         print("Turn resp: ", resp)
         array = []
+        cpt = 0
         if resp["type"] == "CardPlay":
             self.boardTmp = resp["data"]
             prepare.create_lists(self)
@@ -152,7 +153,10 @@ class MyGame(arcade.Window):
                 array.append(resp["data"][i]["name"])
             self.pseudo = array
             self.players = resp["data"]
-            myconstants.PLAYER_NBR += 1
+            for i in range(0, len(resp["data"]), 1):
+                if (resp["data"][i]["id"] != 0):
+                    cpt += 1
+            myconstants.PLAYER_NBR = cpt
             prepare.create_player_list(self)
         
 
