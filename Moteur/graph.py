@@ -8,12 +8,13 @@ import json
 import requests
 import time
 import animations
+import socket
 
 class MyGame(arcade.Window):
     """
     Main application class.
     """
-    def __init__(self, q):
+    def __init__(self, q, addr):
 
         # Call the parent class and set up the window
         super().__init__(myconstants.SCREEN_WIDTH, myconstants.SCREEN_HEIGHT, myconstants.SCREEN_TITLE)
@@ -31,6 +32,7 @@ class MyGame(arcade.Window):
         self.link_flag = False
         self.disp = "MENU"
         self.q = q
+        self.addr = addr
         self.animation = None
         self.animate = None
         self.card = None
@@ -102,12 +104,13 @@ class MyGame(arcade.Window):
 
     def on_click_disp(self, event):
         if (self.link == ""):
-            self.link = "hello there"
+            self.link = "http://" + self.addr + ":4005"
         else:
-            self.link = ""
+            self.link = "" 
 
     def on_click_copy(self, event):
-        xerox.copy(u'is tgis reealy working')
+        good = "http://" + self.addr + ":4005"
+        xerox.copy(good)
     
     def on_click_quit(self, event):
         arcade.exit()
@@ -230,8 +233,8 @@ class MyGame(arcade.Window):
         # Code to draw the screen goes here
 
 
-def start(q):
+def start(q, addr):
     """Main function"""
-    window = MyGame(q)
+    window = MyGame(q, addr)
     window.setup()
     arcade.run()

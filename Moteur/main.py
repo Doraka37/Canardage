@@ -11,6 +11,8 @@ import json
 import graph
 import os
 import random
+import sys
+
 
 Board = ""
 app = Flask(__name__)
@@ -510,14 +512,19 @@ def test():
     #print(Board.BoardGame)
 
 if __name__ == '__main__':
-    q = Queue()
-    p1 = Process(target=graph.start, args=(q,))
-    p1.start()
-    q2 = Queue()
-    q3 = Queue()
-    p2 = Process(target=checkAFK, args=(q2,q3,))
-    p2.start()
-    test()
+    print ('Number of arguments:', len(sys.argv), 'arguments.')
+    print ('Argument List:', str(sys.argv))
+    if (len(sys.argv) < 2):
+        print("NOT ENOUGH ARGUMENTS")
+    else:
+        q = Queue()
+        p1 = Process(target=graph.start, args=(q,sys.argv[1],))
+        p1.start()
+        q2 = Queue()
+        q3 = Queue()
+        p2 = Process(target=checkAFK, args=(q2,q3,))
+        p2.start()
+        test()
     #graph.start()
 
     #p1 = Process(target=checkAFK)
