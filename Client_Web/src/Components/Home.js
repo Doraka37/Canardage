@@ -46,7 +46,7 @@ function Home() {
           //return
         }
         console.log("playerID: ", id);
-        fetch("http://127.0.0.1:4004/userAfk", requestOptions)
+        fetch("http://82.66.98.16:4004/userAfk", requestOptions)
           .then(response => {
             console.log("userafk: ", response);
             return response.json()
@@ -111,7 +111,7 @@ function Home() {
       body: formdata,
       headers: myHeaders
     };
-    fetch("http://127.0.0.1:4004/addUsers", requestOptions)
+    fetch("http://82.66.98.16:4004/addUsers", requestOptions)
       .then(response => {
         console.log("reo: ", response);
         return response.json()

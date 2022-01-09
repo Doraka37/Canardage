@@ -252,7 +252,8 @@ class userAfk(Resource):
             print("Qres: ", Qres)
             idTest = Qres["idList"]
             if (idTest != []):
-                idList = idTest
+                for i in range(0, len(idTest), 1):
+                    idList[i].update({"id": idTest[i]["id"], "isHere": idTest[i]["isHere"]})
             playerTest = Qres["playerList"]
             if (playerTest != []):
                 playerList = playerTest
@@ -272,7 +273,7 @@ class userAfk(Resource):
                 mimetype='application/json'
             )
             return response
-        q2.put({"idList": idList, "playerList": playerList})
+        q2.put({"idList": idList, "playerList": playerList, "started": started})
         if getCard == 'true' and started == True:
             print("je suis la")
             card1 = getNextCard()
@@ -449,6 +450,7 @@ def checkAFK(q2, q3):
     afkWile = True
     idList = []
     playerList = []
+    started = False
     while afkWile == True:
         print("I AM SECONDARYT")
         while (q2.empty() == False):
@@ -456,6 +458,7 @@ def checkAFK(q2, q3):
             print("Qres: ", Qres)
             idList = Qres["idList"]
             playerList = Qres["playerList"]
+            started = Qres["started"]
             print("playerList: ", playerList)
         print("\n idList \n")
         print(idList)
@@ -468,7 +471,7 @@ def checkAFK(q2, q3):
                 else:
                     array.append(x["id"])
                     x.update({"id":0})
-        if started == False:
+        if started == False and array != []:
             idList = updateId(idList)
             for id in array:
                 playerList = updatePlayer(playerList, id)
@@ -515,21 +518,6 @@ if __name__ == '__main__':
     p2 = Process(target=checkAFK, args=(q2,q3,))
     p2.start()
     test()
-    """Board = board.getBoard(getIdLength(idList), idList)
-    for x in idList:
-        print(x)
-    print("___")
-    Board = updateTurn(Board)
-    for x in idList:
-        print(x)
-    print("___")
-    Board = updateTurn(Board)
-    for x in idList:
-        print(x)
-    print("___")
-    Board = updateTurn(Board)
-    for x in idList:
-        print(x)"""
     #graph.start()
 
     #p1 = Process(target=checkAFK)

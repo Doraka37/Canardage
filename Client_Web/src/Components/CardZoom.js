@@ -4,7 +4,7 @@ import walking from '../ressources/template_carte.png'
 import dark from '../ressources/template_carte_dark.png'
 import blue from '../ressources/dos_carte_bleu.png'
 import green from '../ressources/dos_carte_vert.png'
-import pink from '../ressources/dos_carte_rose.png'
+import red from '../ressources/dos_carte_rouge.png'
 import purple from '../ressources/dos_carte_violet.png'
 import yellow from '../ressources/dos_carte_jeune.png'
 import orange from '../ressources/dos_carte_orange.png'
@@ -67,7 +67,7 @@ function CardZoom(props) {
       headers: myHeaders
     };
 
-    fetch("http://127.0.0.1:4004/playCard", requestOptions)
+    fetch("http://82.66.98.16:4004/playCard", requestOptions)
       .then(response => {
         console.log("reo: ", response);
         return response.json()
@@ -196,7 +196,7 @@ function CardZoom(props) {
         headers: myHeaders
       };
       console.log("je jette la carte : ", infos.name);
-      fetch("http://127.0.0.1:4004/disCard", requestOptions)
+      fetch("http://82.66.98.16:4004/disCard", requestOptions)
         .then(response => {
           console.log("reo: ", response);
           return response.json()
@@ -211,7 +211,7 @@ function CardZoom(props) {
           } else {
             console.log("new_card: ", result.data);
             let new_hand = store.UserInfos.hand
-            new_hand[location.state.pos - 1] = result.data
+            new_hand[location.state.pos - 1] = result.data - 1
             console.log("new_hand: ", new_hand);
             let action = {
               type: 'SET_HAND',
@@ -330,12 +330,12 @@ function CardZoom(props) {
         return (
             <div className="lay-rectangle">
               <h1 className="title-font"> Please chose which color you wish to revive a duck from </h1>
-              <Color_case id={1} color={blue}/>
-              <Color_case id={2} color={green}/>
-              <Color_case id={3} color={pink}/>
-              <Color_case id={4} color={purple}/>
-              <Color_case id={5} color={yellow}/>
-              <Color_case id={6} color={orange}/>
+              <Color_case id={1} color={red}/>
+              <Color_case id={2} color={blue}/>
+              <Color_case id={3} color={green}/>
+              <Color_case id={4} color={yellow}/>
+              <Color_case id={5} color={orange}/>
+              <Color_case id={6} color={purple}/>
               <button className="SelecButton" type="button" onClick={() => setParam('')}>
                 Close
               </button>
