@@ -242,6 +242,7 @@ class userAfk(Resource):
     def post(self):
         global started
         global Board
+        global idList
         id = int(request.form.get("playerID"))
         getCard = request.form.get("getCard")
         print("ID: ", id)
@@ -249,13 +250,16 @@ class userAfk(Resource):
             Qres = q3.get()
             print("Qres: ", Qres)
             idTest = Qres["idList"]
+            if (idTest != []):
+                idList = idTest
             AFKarray = Qres["array"]
             print(idTest)
             print(AFKarray)
+            if AFKarray != [] and started == True:
+                print("\n\n\nBONJOUR\n")
+                for id in AFKarray:
+                    Board = removePlayer(Board, id)
         result = setId(id)
-        """if AFKarray != []:
-            for id in AFKarray:
-                Board = removePlayer(Board, id)"""
         if result == False:
             print("JE SUIS LA", idList)
             response = app.response_class(
@@ -331,7 +335,7 @@ def removePlayer(Board, id):
         if player["id"] == id:
             while i < 6:
                 if player["duck"] == Board.BoardGame[i]["duck"]:
-                    Board.deathMove(i + 1)
+                    Board.DeathMove(i + 1)
                 else:
                     i += 1
             while 1:
@@ -342,6 +346,7 @@ def removePlayer(Board, id):
                 else:
                     j += 1
             break
+    q.put({'type': "CardPlay", 'data': Board.BoardGame, 'card': {'id': 0, 'value1': 0, 'value2': 0, 'valueList': 0}, 'playerList': Board.PlayerList, 'idlist': idList})
     return Board
 
 def getIdLength(idList):
@@ -405,7 +410,7 @@ def setId(id):
     print("je susi faux: ", id)
     return False
 
-def updatePlayer():
+def updatePlayer(idList):
     i = 0
     for x in idList:
         if x["id"] == 0 and i < 5:
@@ -415,9 +420,14 @@ def updatePlayer():
                 idList[i].update({"isHere":idList[i + 1]["isHere"]})
                 idList[i + 1].update({"isHere":False})
                 idList[i].update({"id":0})
+                playerList[i].update({"id":playerList[i + 1]["id"]})
+                playerList[i].update({"name":playerList[i + 1]["name"]})
+                playerList[i + 1].update({"name":""})
+                playerList[i].update({"id":0})
                 i += 1
             break
         i += 1
+    return idList
 
 def checkAFK(q2, q3):
     afkWile = True
@@ -435,10 +445,10 @@ def checkAFK(q2, q3):
                 if x["isHere"] == True:
                     x.update({"isHere":False})
                 else:
-                    array.append(x.id)
+                    array.append(x["id"])
                     x.update({"id":0})
-                    if started == False:
-                        updatePlayer()
+        if started == False:
+            idList = updatePlayer(idList)
         q3.put({'idList': idList, 'array': array})
         print("\n update player \n")
         print(idList)
